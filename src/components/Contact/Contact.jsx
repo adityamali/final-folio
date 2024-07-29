@@ -13,7 +13,7 @@ export default function Contact() {
         <div className={styles.contactContainer}>
             <a href={"mailto:adityamali2003@icloud.com"} id={styles.mail}>
                 <div className={styles.blackbox} id={styles.mail}>
-                    <p><b>Let's work together</b> — To get started, have a 1:1 chat with me!</p>
+                    <p><b>Let{"'"}s work together</b> — To get started, have a 1:1 chat with me!</p>
                     <Button content={"Mail Me"} backgroundColor={"var(--white)"} color={"var(--black)"}
                             border={"none"}/>
                 </div>
