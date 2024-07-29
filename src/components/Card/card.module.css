@@ -1,0 +1,67 @@
+.listWrapper{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+}
+
+.listWrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.CardList{
+    display: flex;
+    flex-direction: column;
+    /*flex-wrap: nowrap;*/
+    gap: 2rem;
+    padding: 0 2rem;
+    margin: 0;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /*width: calc(100vw - 40px);*/
+    width: 100%;
+    height: auto;
+    border-radius: 60px;
+    transition: all 0.3s;
+    background-color: var(--secondary-light);
+    text-overflow: ellipsis;
+}
+
+.img{
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: auto;
+    border-radius: 60px;
+}
+
+.cardContent{
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 2rem;
+}
+
+.content {
+    font-weight: 400;
+    text-wrap: pretty;
+}
+
+@media screen and (min-width: 768px){
+    .card{
+        width: 30rem;
+    }
+
+    .CardList{
+        width: max-content;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .listWrapper{
+        overflow-x: scroll;
+        width: 100vw;
+    }
+}

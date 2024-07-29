@@ -1,0 +1,21 @@
+.button{
+    display: flex;
+    text-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 100px;
+    backdrop-filter: blur(20px);
+}
+
+.button:active{
+    transform: scale(0.95);
+    filter: grayscale(0.3);
+}
+
+.buttonImg{
+    border-radius: 0px;
+    transform: translateY(2px);
+}
