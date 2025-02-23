@@ -21,7 +21,7 @@ const Page: NextPage<Props> = ({}) => {
         <p className="text-center w-full sm:w-[25rem] text-foreground/60">
           I am a Full Stack Developer who loves to build web applications and
           solve problems. I am a self-taught developer and I love to learn new
-          technologies.
+          technologies. Freelancer.
         </p>
       </section>
 
