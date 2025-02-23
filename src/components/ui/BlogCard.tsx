@@ -1,9 +1,7 @@
-import { useState } from "react";
-import { Heart, Share2, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 import { BlogType } from "@/types";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function BlogCard(blog: BlogType) {
   const handleClick = () => {
@@ -23,10 +21,10 @@ export default function BlogCard(blog: BlogType) {
   return (
     <div
       onClick={handleClick}
-      className="relative w-full overflow-hidden rounded-2xl border border-border bg-background dark:bg-foreground/10 cursor-pointer"
+      className="relative w-full overflow-hidden rounded-2xl border border-foreground-200/20 bg-background-100 dark:bg-background-800 cursor-pointer"
     >
       {/* Image Container */}
-      <div className="relative h-64 w-full overflow-hidden bg-foreground/5">
+      <div className="relative h-64 w-full overflow-hidden bg-foreground-100/10">
         <Image
           src={blog.image_url}
           alt={blog.title}
@@ -39,18 +37,26 @@ export default function BlogCard(blog: BlogType) {
 
       {/* Content Container */}
       <div className="p-6">
+        {/* Platform Badge (for external blogs) */}
         {blog.type === "external" && blog.platform && (
           <div className="flex items-center gap-2 mb-3">
-            <span className="px-3 py-1 bg-primary-light dark:bg-primary-dark text-primary rounded-full text-xs font-medium">
+            <span className="px-3 py-1 bg-primary-100 dark:bg-primary-800/80 text-primary-800 dark:text-primary-100 rounded-full text-xs font-medium">
               {blog.platform}
               <ExternalLink className="inline-block w-3 h-3 ml-1" />
             </span>
           </div>
         )}
 
-        <p className="text-sm text-foreground mb-2">{formattedDate}</p>
-        <h3 className="text-xl font-bold text-foreground mb-3">{blog.title}</h3>
-        <p className="text-foreground/60 text-sm line-clamp-3 mb-4">
+        {/* Date */}
+        <p className="text-sm text-foreground-500 mb-2">{formattedDate}</p>
+
+        {/* Title */}
+        <h3 className="text-xl font-bold text-foreground-900 dark:text-foreground-100 mb-3">
+          {blog.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-foreground-600 dark:text-foreground-300 text-sm line-clamp-3 mb-4">
           {blog.description}
         </p>
 

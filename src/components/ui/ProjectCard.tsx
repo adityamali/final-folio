@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Heart, Share2, ExternalLink } from "lucide-react";
+import { Share2, ExternalLink } from "lucide-react";
 import { ProjectType } from "@/types";
 import Image from "next/image";
 

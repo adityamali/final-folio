@@ -3,7 +3,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { ProjectType } from "@/types";
-import Image from "next/image";
 import ProjectCard from "../ui/ProjectCard";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -12,11 +11,10 @@ function Projects() {
 
   useEffect(() => {
     async function fetchProjects() {
-      let { data, error } = await supabase.from("projects").select("*");
+      const { data, error } = await supabase.from("projects").select("*");
       if (error) {
         console.error(error);
       } else {
-        // Shuffle the projects array
         const shuffledProjects = [...(data || [])].sort(
           () => Math.random() - 0.5
         );

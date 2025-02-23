@@ -11,7 +11,7 @@ function Skills() {
 
   useEffect(() => {
     async function fetchSkills() {
-      let { data, error } = await supabase.from("skills").select("*");
+      const { data, error } = await supabase.from("skills").select("*");
       if (error) {
         console.error(error);
       } else {

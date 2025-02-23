@@ -38,9 +38,9 @@ export default function Contact() {
     <div className="flex flex-col gap-12 w-full max-w-7xl mx-auto py-16">
       <div className="flex flex-col gap-4 text-center">
         <h2 className="text-4xl font-bold">Get in Touch</h2>
-        <p className="text-foreground-600 dark:text-foreground-400 text-lg max-w-2xl mx-auto">
+        <p className="text-foreground/60 text-lg max-w-2xl mx-auto">
           Whether you have a project in mind, want to collaborate, or just want
-          to say hi, I'd love to hear from you!
+          to say hi, I&apos;d love to hear from you!
         </p>
       </div>
 
@@ -48,7 +48,7 @@ export default function Contact() {
         {/* Left Column - Contact Methods */}
         <div className="flex flex-col gap-8 p-6 bg-background dark:bg-background dark:bg-foreground/10 rounded-2xl border border-border">
           <div className="space-y-6">
-            <h3 className="text-2xl font-semibold">Let's Talk</h3>
+            <h3 className="text-2xl font-semibold">Let&apos;s Talk</h3>
             <div className="flex flex-col gap-8">
               {/* Email Section */}
               <div className="space-y-4">
@@ -145,6 +145,7 @@ export default function Contact() {
           </div>
         </div>
       </div>
+      <p className="text-foreground/60">Let&apos;s talk about your project</p>
     </div>
   );
 }

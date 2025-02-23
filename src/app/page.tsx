@@ -1,18 +1,16 @@
 import { Blogs, Contact, Projects, Skills } from "@/components/sections";
 import { NextPage } from "next";
 import Image from "next/image";
-import DoodleBackground from "@/components/ui/DoodleBackground";
+// import DoodleBackground from "@/components/ui/DoodleBackground";
 
-interface Props {}
-
-const Page: NextPage<Props> = ({}) => {
+const Page: NextPage = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <section className="relative flex flex-col items-center justify-center gap-4 w-full pb-40">
         {/* <DoodleBackground /> */}
         <Image
           src="/me.jpeg"
-          alt="Next.js"
+          alt="Profile Picture"
           width={200}
           height={200}
           className="aspect-square object-cover rounded-full shadow-xl"

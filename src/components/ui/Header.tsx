@@ -1,5 +1,6 @@
 "use client";
 import { Command } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Header() {
@@ -24,9 +25,9 @@ export default function Header() {
       <header className="relative bg-background dark:bg-background dark:bg-foreground/10/80">
         <div className="w-full mx-auto md:px-16 px-6 py-4">
           <nav className="flex items-center justify-between">
-            <a href="/" className="text-2xl font-bold text-primar">
+            <Link href="/" className="text-2xl font-bold text-primar">
               AM
-            </a>
+            </Link>
 
             <button
               onClick={openCommandBar}
