@@ -29,16 +29,19 @@ export default function Header() {
               AM
             </Link>
 
-            <button
-              onClick={openCommandBar}
-              className="flex items-center gap-2 px-4 py-2 text-sm text-foreground bg-background/50 dark:bg-background-700/50 hover:bg-background-300/50 dark:hover:bg-background-600/50 rounded-full border border-border transition-colors duration"
-            >
-              <Command className="w-4 h-4" />
-              <span>Search...</span>
-              <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium text-foreground-400 bg-background-300/50 dark:bg-background-600/50 rounded border border-border">
-                <span className="text-xs">{isMac ? "⌘" : "Ctrl"}</span>K
-              </kbd>
-            </button>
+            <div data-cursor="block">
+              <button
+                onClick={openCommandBar}
+                data-cursor="block"
+                className="flex items-center gap-2 px-4 py-2 text-sm text-foreground bg-background/50 dark:bg-background-700/50 hover:bg-background-300/50 dark:hover:bg-background-600/50 rounded-full border border-border transition-colors duration"
+              >
+                <Command className="w-4 h-4" />
+                <span>Search...</span>
+                <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium text-foreground-400 bg-background-300/50 dark:bg-background-600/50 rounded border border-border">
+                  <span className="text-xs">{isMac ? "⌘" : "Ctrl"}</span>K
+                </kbd>
+              </button>
+            </div>
           </nav>
         </div>
       </header>

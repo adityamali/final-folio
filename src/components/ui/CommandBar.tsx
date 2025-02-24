@@ -15,6 +15,8 @@ import {
   Phone,
   X,
 } from "lucide-react";
+import { Wand2 } from "lucide-react";
+import { triggerConfetti } from "@/lib/animations";
 
 export default function CommandBar() {
   const [open, setOpen] = useState(false);
@@ -86,6 +88,16 @@ export default function CommandBar() {
         action: () => window.open("/path-to-your-resume.pdf"),
       },
     ],
+    fun: [
+      {
+        name: "Trigger Confetti",
+        icon: <Wand2 className="w-4 h-4" />,
+        action: () => {
+          setOpen(false);
+          triggerConfetti();
+        },
+      },
+    ],
   };
 
   return (
@@ -107,69 +119,93 @@ export default function CommandBar() {
               </Dialog.Close>
             </div>
 
-            <Command.List className="mt-4 px-2 pb-2 max-h-[300px] overflow-y-auto">
-              <Command.Group heading="Navigation">
-                {commands.navigation.map((cmd) => (
-                  <Command.Item
-                    key={cmd.name}
-                    onSelect={cmd.action}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
-                      hover:bg-primary-light/50 dark:hover:bg-primary/10
-                      data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
-                      data-[selected=true]:scale-[0.98]
-                      active:scale-95 focus:outline-none"
-                  >
-                    <span className="transition-transform duration-200 group-hover:rotate-12">
-                      {cmd.icon}
-                    </span>
-                    <span className="transition-colors duration-200 group-hover:text-primary">
-                      {cmd.name}
-                    </span>
-                  </Command.Item>
-                ))}
-              </Command.Group>
+            <Command.List className="mt-4 px-2 pb-2 max-h-[300px] overflow-y-auto scroll-smooth overscroll-contain">
+              <div className="px-1 pb-4">
+                <Command.Group heading="Navigation">
+                  {commands.navigation.map((cmd) => (
+                    <Command.Item
+                      key={cmd.name}
+                      onSelect={cmd.action}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
+                        hover:bg-primary-light/50 dark:hover:bg-primary/10
+                        data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
+                        data-[selected=true]:scale-[0.98]
+                        active:scale-95 focus:outline-none"
+                      data-cursor="block"
+                    >
+                      <span className="transition-transform duration-200 group-hover:rotate-12">
+                        {cmd.icon}
+                      </span>
+                      <span className="transition-colors duration-200 group-hover:text-primary">
+                        {cmd.name}
+                      </span>
+                    </Command.Item>
+                  ))}
+                </Command.Group>
 
-              <Command.Group heading="Connect" className="mt-4">
-                {commands.connect.map((cmd) => (
-                  <Command.Item
-                    key={cmd.name}
-                    onSelect={cmd.action}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
-                      hover:bg-primary-light/50 dark:hover:bg-primary/10
-                      data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
-                      data-[selected=true]:scale-[0.98]
-                      active:scale-95 focus:outline-none"
-                  >
-                    <span className="transition-transform duration-200 group-hover:rotate-12">
-                      {cmd.icon}
-                    </span>
-                    <span className="transition-colors duration-200 group-hover:text-primary">
-                      {cmd.name}
-                    </span>
-                  </Command.Item>
-                ))}
-              </Command.Group>
+                <Command.Group heading="Connect" className="mt-6">
+                  {commands.connect.map((cmd) => (
+                    <Command.Item
+                      key={cmd.name}
+                      onSelect={cmd.action}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
+                        hover:bg-primary-light/50 dark:hover:bg-primary/10
+                        data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
+                        data-[selected=true]:scale-[0.98]
+                        active:scale-95 focus:outline-none"
+                    >
+                      <span className="transition-transform duration-200 group-hover:rotate-12">
+                        {cmd.icon}
+                      </span>
+                      <span className="transition-colors duration-200 group-hover:text-primary">
+                        {cmd.name}
+                      </span>
+                    </Command.Item>
+                  ))}
+                </Command.Group>
 
-              <Command.Group heading="Resources" className="mt-4">
-                {commands.resources.map((cmd) => (
-                  <Command.Item
-                    key={cmd.name}
-                    onSelect={cmd.action}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
-                      hover:bg-primary-light/50 dark:hover:bg-primary/10
-                      data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
-                      data-[selected=true]:scale-[0.98]
-                      active:scale-95 focus:outline-none"
-                  >
-                    <span className="transition-transform duration-200 group-hover:rotate-12">
-                      {cmd.icon}
-                    </span>
-                    <span className="transition-colors duration-200 group-hover:text-primary">
-                      {cmd.name}
-                    </span>
-                  </Command.Item>
-                ))}
-              </Command.Group>
+                <Command.Group heading="Resources" className="mt-6">
+                  {commands.resources.map((cmd) => (
+                    <Command.Item
+                      key={cmd.name}
+                      onSelect={cmd.action}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
+                        hover:bg-primary-light/50 dark:hover:bg-primary/10
+                        data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
+                        data-[selected=true]:scale-[0.98]
+                        active:scale-95 focus:outline-none"
+                    >
+                      <span className="transition-transform duration-200 group-hover:rotate-12">
+                        {cmd.icon}
+                      </span>
+                      <span className="transition-colors duration-200 group-hover:text-primary">
+                        {cmd.name}
+                      </span>
+                    </Command.Item>
+                  ))}
+                </Command.Group>
+
+                <Command.Group heading="Fun" className="mt-6">
+                  {commands.fun.map((cmd) => (
+                    <Command.Item
+                      key={cmd.name}
+                      onSelect={cmd.action}
+                      className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
+                        hover:bg-primary-light/50 dark:hover:bg-primary/10
+                        data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
+                        data-[selected=true]:scale-[0.98]
+                        active:scale-95 focus:outline-none"
+                    >
+                      <span className="transition-transform duration-200 group-hover:rotate-12">
+                        {cmd.icon}
+                      </span>
+                      <span className="transition-colors duration-200 group-hover:text-primary">
+                        {cmd.name}
+                      </span>
+                    </Command.Item>
+                  ))}
+                </Command.Group>
+              </div>
             </Command.List>
           </Command>
         </Dialog.Content>

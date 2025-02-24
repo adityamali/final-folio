@@ -24,6 +24,13 @@
   }
 }
 
+*{
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -74,4 +81,70 @@ body {
     opacity: 1;
     transform: translate(-50%, 0);
   }
+}
+@keyframes float {
+  0% {
+    transform: scale(1.5) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.5) translate(-1%, -1%);
+  }
+  100% {
+    transform: scale(1.5) translate(0, 0);
+  }
+}
+
+.animate-float {
+  animation: float 20s ease-in-out infinite;
+}
+.gravity-effect {
+  animation: gravity 3s ease-in-out;
+}
+
+@keyframes gravity {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(100vh); }
+  100% { transform: translateY(0); }
+}
+.party-mode {
+  animation: rainbow-bg 5s linear infinite;
+}
+
+.matrix-effect {
+  animation: matrix 5s ease-in-out;
+  filter: hue-rotate(120deg) brightness(1.2);
+}
+
+.shake-effect {
+  animation: shake 0.5s linear infinite;
+}
+
+.spin-effect {
+  animation: spin 2s ease-in-out;
+}
+
+@keyframes rainbow-bg {
+  0% { background: rgba(255, 0, 0, 0.1); }
+  33% { background: rgba(0, 255, 0, 0.1); }
+  66% { background: rgba(0, 0, 255, 0.1); }
+  100% { background: rgba(255, 0, 0, 0.1); }
+}
+
+@keyframes matrix {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(180deg) brightness(1.5); }
+  100% { filter: hue-rotate(360deg) brightness(1); }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(5px); }
+  50% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

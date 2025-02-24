@@ -2,12 +2,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-
 import { SkillType } from "@/types";
+import { ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Skills() {
   const [skills, setSkills] = useState<SkillType[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchSkills() {
@@ -28,46 +30,111 @@ function Skills() {
       : skills.filter((skill) => skill.category === activeCategory);
 
   return (
-    <div className="flex flex-col gap-8 w-full">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold">Skills</h2>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col gap-12 w-full"
+    >
+      <div className="flex flex-col items-start gap-4">
+        <h2 className="text-4xl font-bold relative group">
+          Skills & Technologies
+          <motion.span
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6 }}
+            className="absolute -bottom-2 left-0 w-1/2 h-1 bg-primary/20 rounded-full origin-left"
+          />
+        </h2>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-foreground/60 max-w-2xl"
+        >
+          A collection of technologies I&apos;ve worked with throughout my
+          journey
+        </motion.p>
       </div>
 
-      {/* Categories */}
-      <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setActiveCategory(category)}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap
-              ${
-                activeCategory === category
-                  ? "bg-primary text-white"
-                  : "bg-background dark:bg-foreground/10 text-foreground hover:bg-primary-light dark:hover:bg-primary-dark"
-              }`}
-          >
-            {category.charAt(0).toUpperCase() + category.slice(1)}
-          </button>
-        ))}
-      </div>
+      <div className="flex flex-col gap-8">
+        <motion.div
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide"
+        >
+          {categories.map((category, index) => (
+            <motion.button
+              key={category}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveCategory(category)}
+              className={`px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300
+                ${
+                  activeCategory === category
+                    ? "bg-primary text-white shadow-lg shadow-primary/25"
+                    : "bg-primary-light hover:bg-primary/10 text-foreground hover:text-primary"
+                }`}
+              data-cursor="block"
+            >
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+              {activeCategory === category && (
+                <motion.span
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                >
+                  <ChevronRight className="inline-block w-4 h-4 ml-2" />
+                </motion.span>
+              )}
+            </motion.button>
+          ))}
+        </motion.div>
 
-      {/* Skills Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {filteredSkills.map((skill) => (
-          <div
-            key={skill.id}
-            className="group relative bg-background-100 dark:bg-background p-4 rounded-xl border border-foreground-200/10 hover:border-primary-500/50 transition-all duration-300"
+        <AnimatePresence mode="wait">
+          <motion.div
+            layout
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
           >
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-primary group-hover:animate-pulse" />
-              <span className="text-sm font-medium text-foreground dark:text-foreground">
-                {skill.name}
-              </span>
-            </div>
-          </div>
-        ))}
+            {filteredSkills.map((skill, index) => (
+              <motion.div
+                key={skill.id}
+                layout
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ delay: index * 0.05 }}
+                whileHover={{ scale: 1.05 }}
+                onMouseEnter={() => setHoveredSkill(skill.id)}
+                onMouseLeave={() => setHoveredSkill(null)}
+                className="group relative p-6 rounded-full border border-border 
+                  bg-background/50 backdrop-blur-sm hover:bg-primary/5
+                  transition-all duration-300 hover:shadow-xl hover:border-primary/50"
+                data-cursor="block"
+              >
+                <div className="flex items-center gap-3">
+                  <motion.span
+                    animate={{
+                      scale: hoveredSkill === skill.id ? [1, 1.5, 1] : 1,
+                    }}
+                    transition={{
+                      repeat: hoveredSkill === skill.id ? Infinity : 0,
+                      duration: 1,
+                    }}
+                    className="w-2 h-2 rounded-full bg-primary"
+                  />
+                  <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                    {skill.name}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

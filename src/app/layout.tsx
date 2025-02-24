@@ -6,6 +6,8 @@ import localFont from "next/font/local";
 
 import CommandBar from "@/components/ui/CommandBar";
 import Header from "@/components/ui/Header";
+import CursorProvider from "@/components/providers/CursorProvider";
+import Footer from "@/components/ui/Footer";
 
 const futura = localFont({
   src: "../../public/fonts/futura.ttf",
@@ -25,9 +27,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={futura.variable}>
       <body>
-        <Header />
-        <main className="pt-20">{children}</main>
-        <CommandBar />
+        <CursorProvider>
+          <Header />
+          <main className="pt-20">{children}</main>
+          <Footer />
+          <CommandBar />
+        </CursorProvider>
       </body>
     </html>
   );

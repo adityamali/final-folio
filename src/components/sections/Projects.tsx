@@ -44,6 +44,7 @@ function Projects() {
         <button
           onClick={() => (window.location.href = "/projects")}
           className="px-6 py-3 rounded-full bg-primary text-white font-medium hover:bg-primary-dark transition-colors duration-300"
+          data-cursor="block"
         >
           See All Projects
         </button>
@@ -52,18 +53,20 @@ function Projects() {
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 w-full">
         <AnimatePresence mode="popLayout">
           {projects.map((project) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{
-                duration: 0.4,
-                ease: "easeInOut",
-              }}
-            >
-              <ProjectCard {...project} />
-            </motion.div>
+            <div data-cursor="block" key={project.id}>
+              <motion.div
+                // key={project.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 0.4,
+                  ease: "easeInOut",
+                }}
+              >
+                <ProjectCard {...project} />
+              </motion.div>
+            </div>
           ))}
         </AnimatePresence>
       </div>

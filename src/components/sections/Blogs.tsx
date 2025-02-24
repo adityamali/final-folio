@@ -53,36 +53,58 @@ function Blogs() {
   }, [windowWidth]);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold">Blog Posts</h2>
-        <button
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col gap-8"
+    >
+      <motion.div
+        initial={{ x: -20, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        className="flex justify-between items-center"
+      >
+        <h2 className="text-3xl font-bold relative">
+          Blog Posts
+          <motion.span
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6 }}
+            className="absolute -bottom-2 left-0 w-1/2 h-1 bg-primary/20 rounded-full origin-left"
+          />
+        </h2>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => (window.location.href = "/blogs")}
-          className="px-6 py-3 rounded-full bg-primar text-white font-medium hover:bg-primary transition-colors duration-300"
+          className="px-6 py-3 rounded-full bg-primary text-white font-medium hover:bg-primary-light transition-all duration-300 hover:shadow-lg"
+          data-cursor="block"
         >
           See All Posts
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
         <AnimatePresence mode="popLayout">
-          {blogs.map((blog) => (
+          {blogs.map((blog, index) => (
             <motion.div
               key={blog.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9 }}
               transition={{
                 duration: 0.4,
-                ease: "easeInOut",
+                delay: index * 0.1,
+                ease: [0.23, 1, 0.32, 1],
               }}
+              whileHover={{ y: -5 }}
+              data-cursor="block"
             >
               <BlogCard {...blog} />
             </motion.div>
           ))}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

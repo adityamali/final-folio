@@ -56,15 +56,20 @@ export default function Contact() {
                   Send me an email at:
                 </p>
                 <div className="flex flex-wrap items-center gap-4">
-                  <a
-                    href={`mailto:${email}`}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.open(`mailto:${email}`, "_blank");
+                    }}
                     className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary text-white rounded-full transition-all duration-300"
+                    data-cursor="block"
                   >
                     <Send className="w-4 h-4" />
                     <span>Send Email</span>
-                  </a>
+                  </button>
                   <button
                     onClick={handleCopyEmail}
+                    data-cursor="block"
                     className="flex items-center gap-2 px-6 py-3 border border-border hover:border-primary/50 rounded-full transition-all duration-300 hover:bg-primary-light"
                   >
                     {copied ? (
@@ -82,12 +87,16 @@ export default function Contact() {
                 <p className="text-foreground-600 dark:text-foreground-400">
                   Call or message me at:
                 </p>
-                <a
-                  href={`tel:${phone}`}
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open(`tel:${phone}`, "_blank");
+                  }}
+                  data-cursor="block"
                   className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:border-primary/50 rounded-full transition-all duration-300 hover:bg-primary-light"
                 >
                   {phone}
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -104,17 +113,20 @@ export default function Contact() {
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {socialLinks.map((link) => (
-                    <a
+                    <button
                       key={link.name}
-                      href={link.url}
-                      target="_blank"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(link.url, "_blank");
+                      }}
                       rel="noopener noreferrer"
                       className={`flex items-center gap-2 px-6 py-3 border border-border 
                         hover:border-primary/50 hover:bg-primary-light rounded-full transition-all duration-300 ${link.color}`}
+                      data-cursor="block"
                     >
                       {link.icon}
                       <span>{link.name}</span>
-                    </a>
+                    </button>
                   ))}
                 </div>
               </div>

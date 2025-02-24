@@ -15,9 +15,13 @@ export default function ProjectCard(project: ProjectType) {
     <div
       onClick={handleClick}
       className="group relative w-full sm:max-w-md overflow-hidden rounded-2xl border border-border bg-background dark:bg-foreground/10 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+      data-cursor="block"
     >
       {/* Image Container */}
-      <div className="relative h-80 w-full overflow-hidden bg-foreground-100/10">
+      <div
+        className="relative h-80 w-full overflow-hidden bg-foreground-100/10"
+        data-cursor="block"
+      >
         <Image
           src={project.image_url}
           alt={project.name}
@@ -25,12 +29,16 @@ export default function ProjectCard(project: ProjectType) {
           width={400}
           height={320}
           unoptimized
+          data-cursor="block"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background-900/90 via-background-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
       </div>
 
       {/* Content Container */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-20 group-hover:translate-y-0 transition-transform duration-500">
+      <div
+        className="absolute bottom-0 left-0 right-0 p-6 translate-y-20 group-hover:translate-y-0 transition-transform duration-500"
+        data-cursor="block"
+      >
         {/* Dark gradient background for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/80 to-transparent" />
 
