@@ -25,7 +25,11 @@ export default function Header() {
       <header className="relative bg-background dark:bg-background dark:bg-foreground/10/80">
         <div className="w-full mx-auto md:px-16 px-6 py-4">
           <nav className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-primar">
+            <Link
+              href="/"
+              className="text-2xl font-bold text-primary rounded-lg px-4"
+              data-cursor="block"
+            >
               AM
             </Link>
 
