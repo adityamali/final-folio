@@ -5,11 +5,38 @@ import { Send, Copy, Check, Github, Linkedin, Twitter } from "lucide-react";
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const email = "hello@adityamali.com";
-  const phone = "+91 7709953054"; // Add your phone number
+  const phone = "+91-7709953054";
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
+  const handleCopyEmail = async () => {
+    try {
+      // Try modern clipboard API first
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(email);
+        setCopied(true);
+      } else {
+        // Fallback for iOS Safari
+        const textArea = document.createElement("textarea");
+        textArea.value = email;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          document.execCommand("copy");
+          setCopied(true);
+        } catch (err) {
+          console.error("Fallback: Oops, unable to copy", err);
+        }
+
+        document.body.removeChild(textArea);
+      }
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -157,7 +184,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-      <p className="text-foreground/60">Let&apos;s talk about your project</p>
     </div>
   );
 }
