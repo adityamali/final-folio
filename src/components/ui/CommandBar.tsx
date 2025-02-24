@@ -85,7 +85,10 @@ export default function CommandBar() {
       {
         name: "Resume",
         icon: <FileText className="w-4 h-4" />,
-        action: () => window.open("/path-to-your-resume.pdf"),
+        action: () =>
+          window.open(
+            "https://bfpgqqmmjfivykmkselu.supabase.co/storage/v1/object/public/Resume//Resume.pdf"
+          ),
       },
     ],
     fun: [
