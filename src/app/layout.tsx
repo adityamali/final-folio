@@ -15,8 +15,42 @@ const futura = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Aditya Mali - Full Stack Developer",
-  description: "Portfolio website of Aditya Mali",
+  title: {
+    default: "Aditya Mali - Full Stack Developer",
+    template: "%s | Aditya Mali",
+  },
+  description:
+    "Full Stack Software Developer. Building innovative solutions and creating impactful digital experiences.",
+  keywords: ["Full Stack Developer", "Aditya Mali"],
+  authors: [{ name: "Aditya Mali" }],
+  creator: "Aditya Mali",
+  publisher: "Aditya Mali",
+  robots: "index, follow",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://adityamali.com",
+    siteName: "Aditya Mali",
+    title: "Aditya Mali - Full Stack Software Developer",
+    description:
+      "Full Stack Software Developer. Building innovative solutions and creating impactful digital experiences.",
+  },
+  icons: {
+    icon: [
+      {
+        url: "/favicon.ico",
+        sizes: "any",
+      },
+      {
+        url: "/favicon.png",
+        type: "image/png",
+      },
+    ],
+    apple: {
+      url: "/icon512.png",
+      type: "image/png",
+    },
+  },
 };
 
 export default function RootLayout({

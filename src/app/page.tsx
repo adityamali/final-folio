@@ -22,21 +22,21 @@ const Page: NextPage = () => {
         </p>
       </section>
 
-      <section className="flex flex-col gap-4 w-full 2lg:w-[75vw] px-20 pb-40">
+      <section className="flex flex-col gap-4 w-full 2lg:w-[75vw] px-4 md:px-20 pb-40">
         <div className="flex flex-col items-center justify-center gap-4 w-full">
           <Projects />
         </div>
       </section>
 
-      <section className="flex flex-col items-center justify-center gap-4 w-full 2lg:w-[50vw] px-20 pb-40">
+      <section className="flex flex-col items-center justify-center gap-4 w-full 2lg:w-[50vw] px-4 md:px-20 pb-40">
         <Skills />
       </section>
 
-      <section className="flex flex-col items-center justify-center gap-4 w-full 2lg:w-[75vw] p-20 bg-gray-100 dark:bg-[#111111]">
+      <section className="flex flex-col items-center justify-center gap-4 w-full 2lg:w-[75vw] px-4 py-16 md:p-20 bg-gray-100 dark:bg-[#111111]">
         <Blogs />
       </section>
 
-      <section className="flex flex-col items-center justify-center gap-4 w-full bg-gray-200 dark:bg-[#1e1e1e]">
+      <section className="flex flex-col items-center justify-center gap-4 w-full bg-gray-200 dark:bg-[#1e1e1e] px-4 py-16 md:p-20">
         <Contact />
       </section>
     </div>

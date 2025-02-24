@@ -5,6 +5,17 @@ import { supabase } from "@/lib/supabase";
 import { ProjectType } from "@/types";
 import ProjectCard from "@/components/ui/ProjectCard";
 
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Explore my portfolio of web development projects, featuring full-stack applications, websites, and technical solutions.",
+  openGraph: {
+    title: "Projects | Aditya Mali",
+    description: "Explore my portfolio of web development projects.",
+  },
+};
+
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<ProjectType[]>([]);
 
