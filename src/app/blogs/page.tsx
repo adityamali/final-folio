@@ -5,18 +5,6 @@ import { supabase } from "@/lib/supabase";
 import { BlogType } from "@/types";
 import BlogCard from "@/components/ui/BlogCard";
 
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Blog Posts",
-  description:
-    "Read my thoughts and insights about web development, programming, and technology.",
-  openGraph: {
-    title: "Blog Posts | Aditya Mali",
-    description: "Insights about web development, programming, and technology.",
-  },
-};
-
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<BlogType[]>([]);
 

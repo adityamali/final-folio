@@ -4,7 +4,8 @@ import { IPadCursorProvider, useIPadCursor } from "ipad-cursor/react";
 import { IpadCursorConfig } from "ipad-cursor";
 
 export default function CursorProvider({ children }: { children: ReactNode }) {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true); // Default to mobile to prevent hydration mismatch
+  useIPadCursor(); // Hook is now called unconditionally
 
   useEffect(() => {
     const checkMobile = () => {
@@ -17,10 +18,6 @@ export default function CursorProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  if (isMobile) {
-    return <>{children}</>;
-  }
-
   const config: IpadCursorConfig = {
     blockPadding: "auto",
     blockStyle: {
@@ -28,7 +25,11 @@ export default function CursorProvider({ children }: { children: ReactNode }) {
     },
     enableAutoTextCursor: true,
   };
-  useIPadCursor();
 
-  return <IPadCursorProvider config={config}>{children}</IPadCursorProvider>;
+  // Render provider only if not mobile, but keep hooks outside conditions
+  return isMobile ? (
+    <>{children}</>
+  ) : (
+    <IPadCursorProvider config={config}>{children}</IPadCursorProvider>
+  );
 }
