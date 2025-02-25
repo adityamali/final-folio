@@ -1,6 +1,14 @@
 "use client";
 import { useState } from "react";
-import { Send, Copy, Check, Github, Linkedin, Twitter } from "lucide-react";
+import {
+  Send,
+  Copy,
+  Phone,
+  Check,
+  Github,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
 import Button from "../ui/Button";
 
 export default function Contact() {
@@ -87,7 +95,10 @@ export default function Contact() {
                   <Button
                     onClick={() => window.open(`mailto:${email}`, "_blank")}
                   >
-                    Send Email
+                    <div className="flex items-center gap-2">
+                      <Send className="w-5 h-5 mr-2" />
+                      Send Email
+                    </div>
                   </Button>
                   <button
                     onClick={handleCopyEmail}
@@ -117,6 +128,7 @@ export default function Contact() {
                   data-cursor="block"
                   className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:border-primary/50 rounded-full transition-all duration-300 hover:bg-primary-light"
                 >
+                  <Phone className="w-5 h-5" />
                   {phone}
                 </button>
               </div>

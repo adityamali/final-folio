@@ -64,7 +64,7 @@ function Skills() {
           className="flex gap-3 overflow-x-auto p-4 scrollbar-hide"
         >
           {categories.map((category, index) => (
-            <Button key={category}>
+            <Button key={index} onClick={() => setActiveCategory(category)}>
               {category.charAt(0).toUpperCase() + category.slice(1)}
               {activeCategory === category && (
                 <motion.span
