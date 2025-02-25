@@ -110,7 +110,7 @@ function Skills() {
                 onMouseEnter={() => setHoveredSkill(skill.id)}
                 onMouseLeave={() => setHoveredSkill(null)}
                 className="group relative p-6 rounded-full border border-border 
-                  bg-background/50 backdrop-blur-sm hover:bg-primary/5
+                  bg-background backdrop-blur-sm hover:bg-primary/5
                   transition-all duration-300 hover:shadow-xl hover:border-primary/50"
                 data-cursor="block"
               >

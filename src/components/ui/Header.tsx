@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <div className="top-0 left-0 right-0 z-50">
-      <header className="relative bg-background dark:bg-background dark:bg-foreground/10/80">
+      <header className="relative dark:bg-background dark:bg-foreground/10/80">
         <div className="w-full mx-auto md:px-16 px-6 py-4">
           <nav className="flex items-center justify-between">
             <Link

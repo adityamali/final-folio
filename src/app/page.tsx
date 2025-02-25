@@ -5,6 +5,13 @@ import Image from "next/image";
 const Page: NextPage = () => {
   return (
     <div className="flex flex-col items-center justify-center">
+      {/* Background Glow Effects */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-[20%] left-[15%] w-[500px] h-[500px] bg-blue-400/30 dark:bg-blue-500/30 rounded-full blur-[128px] animate-pulse-slow" />
+        <div className="absolute bottom-[20%] right-[15%] w-[400px] h-[400px] bg-blue-400/20 dark:bg-blue-500/30 rounded-full blur-[96px] animate-pulse-slower" />
+        <div className="absolute top-[40%] right-[25%] w-[300px] h-[300px] bg-pink-400/20 dark:bg-purple-500/30 rounded-full blur-[64px] animate-float" />
+      </div>
+
       <section className="relative flex flex-col items-center justify-center gap-4 w-full pb-40">
         <Image
           src="/me.jpeg"
