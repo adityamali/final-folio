@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Send, Copy, Check, Github, Linkedin, Twitter } from "lucide-react";
+import Button from "../ui/Button";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
@@ -83,17 +84,11 @@ export default function Contact() {
                   Send me an email at:
                 </p>
                 <div className="flex flex-wrap items-center gap-4">
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.open(`mailto:${email}`, "_blank");
-                    }}
-                    className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary text-white rounded-full transition-all duration-300"
-                    data-cursor="block"
+                  <Button
+                    onClick={() => window.open(`mailto:${email}`, "_blank")}
                   >
-                    <Send className="w-4 h-4" />
-                    <span>Send Email</span>
-                  </button>
+                    Send Email
+                  </Button>
                   <button
                     onClick={handleCopyEmail}
                     data-cursor="block"

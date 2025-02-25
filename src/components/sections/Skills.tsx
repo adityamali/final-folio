@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { SkillType } from "@/types";
 import { ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Button from "../ui/Button";
 
 function Skills() {
   const [skills, setSkills] = useState<SkillType[]>([]);
@@ -60,25 +61,10 @@ function Skills() {
         <motion.div
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide"
+          className="flex gap-3 overflow-x-auto p-4 scrollbar-hide"
         >
           {categories.map((category, index) => (
-            <motion.button
-              key={category}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveCategory(category)}
-              className={`px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300
-                ${
-                  activeCategory === category
-                    ? "bg-primary text-white shadow-lg shadow-primary/25"
-                    : "bg-primary-light hover:bg-primary/10 text-foreground hover:text-primary"
-                }`}
-              data-cursor="block"
-            >
+            <Button key={category}>
               {category.charAt(0).toUpperCase() + category.slice(1)}
               {activeCategory === category && (
                 <motion.span
@@ -89,7 +75,7 @@ function Skills() {
                   <ChevronRight className="inline-block w-4 h-4 ml-2" />
                 </motion.span>
               )}
-            </motion.button>
+            </Button>
           ))}
         </motion.div>
 

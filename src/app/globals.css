@@ -10,6 +10,7 @@
   --primary-light: #e69cff;
   --primary-dark: rgba(191, 0, 255, 0.8);
   --border: rgba(23, 23, 23, 0.1);
+  --bubble-shadow: inset 0px -4px 5px rgba(256, 256, 256, 0.4), -4px 4px 15px rgba(0, 0, 0, 0.3), inset -4px 4px 5px rgba(256, 256, 256, 0.5);
 }
 
 /* Dark mode colors */
@@ -21,6 +22,7 @@
     --primary-light: rgba(191, 0, 255, 0.2);
     --primary-dark: rgba(191, 0, 255, 0.8);
     --border: rgba(237, 237, 237, 0.1);
+    --bubble-shadow: inset 0px -4px 5px rgba(256, 256, 256, 0.2), -4px 4px 15px rgba(0, 0, 0, 0.3), inset -4px 4px 5px rgba(256, 256, 256, 0.3);
   }
 }
 
@@ -31,6 +33,7 @@
     --primary-light: rgba(191, 0, 255, 0.2);
     --primary-dark: rgba(191, 0, 255, 0.8);
     --border: rgba(237, 237, 237, 0.1);
+    --bubble-shadow: inset 0px -4px 5px rgba(256, 256, 256, 0.2), -4px 4px 15px rgba(0, 0, 0, 0.3), inset -4px 4px 5px rgba(256, 256, 256, 0.3);
 }
 
 *{
@@ -49,8 +52,6 @@ body {
 [cmdk-dialog] {
   animation: slideIn 0.1s ease-out;
 }
-
-/* Remove the [cmdk-dialog] styles and replace with: */
 
 @keyframes overlayShow {
   from {

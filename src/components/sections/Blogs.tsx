@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { BlogType } from "@/types";
 import BlogCard from "../ui/BlogCard";
 import { AnimatePresence, motion } from "framer-motion";
+import Button from "../ui/Button";
 
 function Blogs() {
   const [blogs, setBlogs] = useState<BlogType[]>([]);
@@ -72,15 +73,9 @@ function Blogs() {
             className="absolute -bottom-2 left-0 w-1/2 h-1 bg-primary/20 rounded-full origin-left"
           />
         </h2>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => (window.location.href = "/blogs")}
-          className="px-6 py-3 rounded-full bg-primary text-white font-medium hover:bg-primary-light transition-all duration-300 hover:shadow-lg"
-          data-cursor="block"
-        >
-          See All Posts
-        </motion.button>
+        <Button onClick={() => (window.location.href = "/blogs")}>
+          View All Posts
+        </Button>
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">

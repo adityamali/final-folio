@@ -19,6 +19,10 @@ const Page: NextPage = () => {
           width={200}
           height={200}
           className="aspect-square object-cover rounded-full shadow-xl"
+          style={{
+            boxShadow:
+              "inset 0px -4px 5px rgba(256, 256, 256, 0.4), -4px 4px 10px rgba(0, 0, 0, 0.3), inset -4px 4px 5px rgba(256, 256, 256, 0.5)",
+          }}
           data-cursor="block"
         />
         <h1 className="text-3xl mt-8">Aditya Mali</h1>
