@@ -24,6 +24,15 @@
   }
 }
 
+.dark{
+  --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: #bf00ff;
+    --primary-light: rgba(191, 0, 255, 0.2);
+    --primary-dark: rgba(191, 0, 255, 0.8);
+    --border: rgba(237, 237, 237, 0.1);
+}
+
 *{
 ::selection {
   background: var(--foreground);

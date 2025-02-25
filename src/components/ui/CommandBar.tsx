@@ -18,8 +18,12 @@ import {
 import { Wand2 } from "lucide-react";
 import { triggerConfetti } from "@/lib/animations";
 import { Command as CommandIcon } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function CommandBar() {
+  const { theme, toggleTheme } = useTheme();
+
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -99,6 +103,21 @@ export default function CommandBar() {
         action: () => {
           setOpen(false);
           triggerConfetti();
+        },
+      },
+    ],
+    system: [
+      {
+        name: `Toggle ${theme === "dark" ? "Light" : "Dark"} Mode`,
+        icon:
+          theme === "dark" ? (
+            <Sun className="w-4 h-4" />
+          ) : (
+            <Moon className="w-4 h-4" />
+          ),
+        action: () => {
+          toggleTheme();
+          setOpen(false);
         },
       },
     ],
@@ -192,6 +211,26 @@ export default function CommandBar() {
 
                   <Command.Group heading="Fun" className="mt-6">
                     {commands.fun.map((cmd) => (
+                      <Command.Item
+                        key={cmd.name}
+                        onSelect={cmd.action}
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
+                          hover:bg-primary-light/50 dark:hover:bg-primary/10
+                          data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
+                          data-[selected=true]:scale-[0.98]
+                          active:scale-95 focus:outline-none"
+                      >
+                        <span className="transition-transform duration-200 group-hover:rotate-12">
+                          {cmd.icon}
+                        </span>
+                        <span className="transition-colors duration-200 group-hover:text-primary">
+                          {cmd.name}
+                        </span>
+                      </Command.Item>
+                    ))}
+                  </Command.Group>
+                  <Command.Group heading="System" className="mt-6">
+                    {commands.system.map((cmd) => (
                       <Command.Item
                         key={cmd.name}
                         onSelect={cmd.action}

@@ -53,21 +53,25 @@ export const metadata: Metadata = {
   },
 };
 
+import { ThemeProvider } from "@/context/ThemeContext";
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={futura.variable}>
-      <body>
-        <CursorProvider>
-          <Header />
-          <main className="pt-20">{children}</main>
-          <Footer />
-          <CommandBar />
-        </CursorProvider>
-      </body>
+    <html lang="en" className={`${futura.variable}`}>
+      <ThemeProvider>
+        <body>
+          <CursorProvider>
+            <Header />
+            <main className="pt-20">{children}</main>
+            <Footer />
+            <CommandBar />
+          </CursorProvider>
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
