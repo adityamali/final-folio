@@ -1,0 +1,54 @@
+@startuml
+!include <c4/C4_Context>
+!include <c4/C4_Container>
+!include <c4/C4_Component>
+
+System_Boundary(c1, "Final Folio Website") {
+
+  Person(user, "User", "Fills out contact form")
+
+  Container(web_app, "Website Frontend", "React", "Handles user interaction and displays data", "Next.js") {
+    Component(contact_form, "Contact Form", "React", "Allows users to submit enquiries")
+    Component(admin_dashboard, "Admin Dashboard", "React", "Displays submitted enquiries")
+  }
+
+  Container(api, "API Gateway", "Node.js", "Routes requests to backend services", "Express.js") {
+    Component(form_submission_handler, "Form Submission Handler", "Node.js", "Processes form data and stores it in Supabase")
+  }
+
+  ContainerDb(supabase_db, "Supabase Database", "PostgreSQL", "Stores enquiry data")
+
+  Container(email_service, "Email Service", "External API", "Sends confirmation and notification emails", "SendGrid/Resend/etc.")
+
+  Package(Core,"Core/Business Logic"){
+    Component(form_submission, "Form Submission Service", "TypeScript", "Handles form submission logic, validation and data persistence")
+  }
+
+  Package(UI,"User Interface/Presentation"){
+    Component(animations, "UI Animations", "TypeScript", "Provides UI animations")
+  }
+  Package(Data_Access,"Data Access/Persistence"){
+    Component(supabase_client, "Supabase Client", "TypeScript", "Interacts with Supabase database")
+  }
+}
+
+
+Rel(user, contact_form, "Submits enquiry", "HTTP")
+Rel(contact_form, form_submission_handler, "Submits data", "HTTP")
+Rel(form_submission_handler, form_submission, "Uses", "RPC")
+Rel(form_submission, supabase_client, "Uses", "RPC")
+Rel(supabase_client, supabase_db, "Stores data", "Database")
+Rel(form_submission, email_service, "Sends confirmation email", "REST")
+Rel(form_submission, email_service, "Sends notification email", "REST")
+Rel(admin_dashboard, form_submission_handler, "Retrieves enquiries", "HTTP")
+Rel(web_app, animations, "Uses", "Internal API")
+
+
+Note right of supabase_db:  Data persistence using Supabase PostgreSQL
+
+Note right of email_service :  External email service integration (SendGrid, Resend, etc.)
+
+Note right of api :  API Gateway using Express.js
+
+
+@enduml

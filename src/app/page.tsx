@@ -4,12 +4,74 @@ import Image from "next/image";
 
 const Page: NextPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center pt-36">
       {/* Background Glow Effects */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-[20%] left-[15%] w-[500px] h-[500px] bg-blue-400/30 dark:bg-blue-500/30 rounded-full blur-[128px] animate-pulse-slow" />
-        <div className="absolute bottom-[20%] right-[15%] w-[400px] h-[400px] bg-blue-400/20 dark:bg-blue-500/30 rounded-full blur-[96px] animate-pulse-slower" />
-        <div className="absolute top-[40%] right-[25%] w-[300px] h-[300px] bg-pink-400/20 dark:bg-purple-500/30 rounded-full blur-[64px] animate-float" />
+        <style>
+            {`
+              @keyframes revolve1 {
+                0% { transform: rotate(0deg) translateX(35vw) rotate(0deg); }
+                100% { transform: rotate(360deg) translateX(35vw) rotate(-360deg); }
+              }
+              @keyframes revolve2 {
+                0% { transform: rotate(120deg) translateX(25vw) rotate(-120deg); }
+                100% { transform: rotate(480deg) translateX(25vw) rotate(-480deg); }
+              }
+              @keyframes revolve3 {
+                0% { transform: rotate(240deg) translateX(15vw) rotate(-240deg); }
+                100% { transform: rotate(600deg) translateX(15vw) rotate(-600deg); }
+              }
+              @keyframes vibgyor {
+                0% { background: rgba(148,0,211,0.3); }
+                25% { background: rgba(75,0,130,0.3); }
+                50% { background: rgba(0,0,255,0.3); }
+                75% { background: rgba(255,105,180,0.3); }
+                100% { background: rgba(148,0,211,0.3); }
+              }
+            `}
+        </style>
+        <div
+          style={{
+        position: "absolute",
+        top: "40%",
+        left: "40%",
+        width: 300,
+        height: 300,
+        borderRadius: "50%",
+        filter: "blur(128px)",
+        animation: "revolve1 20s linear infinite, vibgyor 8s linear infinite",
+        transformOrigin: "center center",
+        zIndex: -1,
+          }}
+        />
+        <div
+          style={{
+        position: "absolute",
+        top: "40%",
+        left: "50%",
+        width: 220,
+        height: 220,
+        borderRadius: "50%",
+        filter: "blur(96px)",
+        animation: "revolve2 50s linear infinite, vibgyor 10s linear infinite reverse",
+        transformOrigin: "center center",
+        zIndex: -1,
+          }}
+        />
+        <div
+          style={{
+        position: "absolute",
+        top: "40%",
+        left: "20%",
+        width: 140,
+        height: 140,
+        borderRadius: "50%",
+        filter: "blur(64px)",
+        animation: "revolve3 90s linear infinite, vibgyor 12s linear infinite",
+        transformOrigin: "center center",
+        zIndex: -1,
+          }}
+        />
       </div>
 
       <section className="relative flex flex-col items-center justify-center gap-4 w-full pb-40">
@@ -27,10 +89,10 @@ const Page: NextPage = () => {
         />
         <h1 className="text-3xl mt-8">Aditya Mali</h1>
         <p className="text-center w-full sm:w-[25rem] text-foreground/60">
-          I am a Full Stack Developer who loves to build web applications and
-          solve problems. I am a self-taught developer and I love to learn new
-          technologies. Freelancer.
+          I am a Full Stack Developer specializing in building modern web applications for clients and businesses. If you need a website or web app, I am available for freelance projects—let's work together to bring your ideas to life!
         </p>
+
+        
       </section>
 
       <section className="flex flex-col gap-4 w-full 2lg:w-[75vw] px-4 md:px-20 pb-40">

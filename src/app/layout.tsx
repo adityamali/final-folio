@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-// import { Geist, Geist_Mono } from "next/font/google";
+
 import "./globals.css";
 
 import localFont from "next/font/local";
 
 import CommandBar from "@/components/ui/CommandBar";
 import Header from "@/components/ui/Header";
-import CursorProvider from "@/components/providers/CursorProvider";
 import Footer from "@/components/ui/Footer";
 
 const futura = localFont({
@@ -57,21 +56,19 @@ import { ThemeProvider } from "@/context/ThemeContext";
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="en" className={`${futura.variable}`}>
       <ThemeProvider>
         <body>
-          <CursorProvider>
             <Header />
-            <main className="pt-20">{children}</main>
+            <main>{children}</main>
             <Footer />
             <CommandBar />
-          </CursorProvider>
         </body>
       </ThemeProvider>
     </html>
-  );
+  )
 }
