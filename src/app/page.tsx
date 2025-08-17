@@ -89,7 +89,7 @@ const Page: NextPage = () => {
         />
         <h1 className="text-3xl mt-8">Aditya Mali</h1>
         <p className="text-center w-full sm:w-[25rem] text-foreground/60">
-          I am a Full Stack Developer specializing in building modern web applications for clients and businesses. If you need a website or web app, I am available for freelance projects—let's work together to bring your ideas to life!
+          I am a Full Stack Developer specializing in building modern web applications for clients and businesses. If you need a website or web app, I am available for freelance projects—let&#39;s work together to bring your ideas to life!
         </p>
 
         

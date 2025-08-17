@@ -1,54 +1,168 @@
 @startuml
-!include <c4/C4_Context>
-!include <c4/C4_Container>
-!include <c4/C4_Component>
 
-System_Boundary(c1, "Final Folio Website") {
+!pragma layout smetana
 
-  Person(user, "User", "Fills out contact form")
+title Project Structure and Interactions
 
-  Container(web_app, "Website Frontend", "React", "Handles user interaction and displays data", "Next.js") {
-    Component(contact_form, "Contact Form", "React", "Allows users to submit enquiries")
-    Component(admin_dashboard, "Admin Dashboard", "React", "Displays submitted enquiries")
-  }
-
-  Container(api, "API Gateway", "Node.js", "Routes requests to backend services", "Express.js") {
-    Component(form_submission_handler, "Form Submission Handler", "Node.js", "Processes form data and stores it in Supabase")
-  }
-
-  ContainerDb(supabase_db, "Supabase Database", "PostgreSQL", "Stores enquiry data")
-
-  Container(email_service, "Email Service", "External API", "Sends confirmation and notification emails", "SendGrid/Resend/etc.")
-
-  Package(Core,"Core/Business Logic"){
-    Component(form_submission, "Form Submission Service", "TypeScript", "Handles form submission logic, validation and data persistence")
-  }
-
-  Package(UI,"User Interface/Presentation"){
-    Component(animations, "UI Animations", "TypeScript", "Provides UI animations")
-  }
-  Package(Data_Access,"Data Access/Persistence"){
-    Component(supabase_client, "Supabase Client", "TypeScript", "Interacts with Supabase database")
-  }
+skinparam component {
+  BorderColor #5E81AC
+  BackgroundColor #D8DEE9
+  ArrowColor #88C0D0
+  FontColor #2E3440
+}
+skinparam package {
+  BorderColor #B48EAD
+  BackgroundColor #ECEFF4
+  ArrowColor #81A1C1
+  FontColor #2E3440
+}
+skinparam class {
+  BorderColor #A3BE8C
+  BackgroundColor #EBCB8B
+  ArrowColor #BF616A
+  FontColor #2E3440
+}
+skinparam interface {
+  BorderColor #8FBCBB
+  BackgroundColor #A3BE8C
+  ArrowColor #BF616A
+  FontColor #2E3440
+}
+skinparam rectangle {
+  BorderColor #4C566A
+  BackgroundColor #EBCB8B
+  ArrowColor #88C0D0
+  FontColor #2E3440
+}
+skinparam node {
+  BorderColor #8FBCBB
+  BackgroundColor #B48EAD
+  ArrowColor #81A1C1
+  FontColor #ECEFF4
 }
 
 
-Rel(user, contact_form, "Submits enquiry", "HTTP")
-Rel(contact_form, form_submission_handler, "Submits data", "HTTP")
-Rel(form_submission_handler, form_submission, "Uses", "RPC")
-Rel(form_submission, supabase_client, "Uses", "RPC")
-Rel(supabase_client, supabase_db, "Stores data", "Database")
-Rel(form_submission, email_service, "Sends confirmation email", "REST")
-Rel(form_submission, email_service, "Sends notification email", "REST")
-Rel(admin_dashboard, form_submission_handler, "Retrieves enquiries", "HTTP")
-Rel(web_app, animations, "Uses", "Internal API")
+package "Project Root" as root {
 
+    package "src" as src {
+        package "lib" as lib {
+            ' FIX: Changed from file to component to allow nesting of other UML elements
+            component "animations.ts" as animations {
+                rectangle "triggerConfetti()" as triggerConfetti
+                rectangle "triggerPartyMode()" as triggerPartyMode
+                rectangle "triggerMatrix()" as triggerMatrix
+                rectangle "triggerShake()" as triggerShake
+                rectangle "triggerSpinning()" as triggerSpinning
+                rectangle "triggerGravity()" as triggerGravity
+            }
 
-Note right of supabase_db:  Data persistence using Supabase PostgreSQL
+            ' FIX: Changed from file to component to allow nesting of other UML elements
+            component "supabase.ts" as supabaseLib {
+                ' FIX: Attributes must be defined inside the class's curly braces {}
+                class "supabase" as supabaseClient <<Supabase Client>> {
+                    + supabaseUrl: string
+                    + supabaseAnonKey: string
+                }
+                hide supabaseClient methods
+            }
 
-Note right of email_service :  External email service integration (SendGrid, Resend, etc.)
+            ' FIX: Changed from file to component to allow nesting of other UML elements
+            component "formSubmission.ts" as formSubmission {
+                interface "FormSubmissionData" as iFormData {
+                    + name: string
+                    + email: string
+                    + services: string[]
+                    + message?: string
+                    + submitted_at: string
+                }
+                interface "EnquiryRecord" as iEnquiryRecord {
+                    + id: string
+                    + created_at: string
+                    + updated_at: string
+                }
+                interface "SubmissionResult" as iSubmissionResult {
+                    + success: boolean
+                    + data?: unknown
+                    + error?: string
+                }
 
-Note right of api :  API Gateway using Express.js
+                rectangle "submitFormData(formData: FormSubmissionData): Promise<SubmissionResult>" as submitFormData
+                rectangle "getFormSubmissions(): Promise<{ success: boolean; data?: EnquiryRecord[]; error?: string }>" as getFormSubmissions
+                rectangle "sendNotificationEmail(formData: FormSubmissionData)" as sendNotificationEmail
+                rectangle "sendConfirmationEmail(userEmail: string, userName: string)" as sendConfirmationEmail
+            }
+        }
 
+        package "components" as components {
+            package "admin" as adminComponents {
+                component "AdminDashboard.tsx" as AdminDashboard {
+                    rectangle "submissions: EnquiryRecord[]" as submissionsState
+                    rectangle "loading: boolean" as loadingState
+                    rectangle "error: string | null" as errorState
+                    rectangle "loadSubmissions()" as loadSubmissions
+                    rectangle "formatDate(dateString: string): string"
+                    + "render()"
+                }
+            }
+        }
+    }
+}
+
+' External Systems
+node "External System: User's Browser DOM (document.body)" as docBody
+node "External System: canvas-confetti Library" as canvasConfetti
+node "External System: Supabase Database (Enquiry Table)" as SupabaseDB
+node "External System: Email Service API (e.g., /api/send-notification)" as EmailService
+node "External Library: @supabase/supabase-js" as supabaseJsLib
+
+' External Dependencies for lib files
+animations --> canvasConfetti : calls 'confetti()'
+animations --> docBody : modifies 'document.body.classList'
+
+supabaseLib --> supabaseJsLib : imports 'createClient'
+supabaseLib .down.> supabaseClient : initializes client instance
+
+' Relationships within formSubmission.ts
+iEnquiryRecord ..|> iFormData : extends
+
+formSubmission .left.> supabaseLib : imports 'supabase' client
+
+submitFormData ..> iFormData : consumes (param)
+submitFormData .down.> iSubmissionResult : returns (Promise)
+submitFormData .down.> sendNotificationEmail : calls (optional)
+
+getFormSubmissions .down.> iSubmissionResult : returns (Promise)
+getFormSubmissions .down.> iEnquiryRecord : returns data of this type (array)
+
+sendNotificationEmail ..> EmailService : calls (placeholder API)
+sendConfirmationEmail ..> EmailService : calls (placeholder API)
+
+' Interactions with Supabase DB
+submitFormData .right.> supabaseClient : calls '.from().insert().select()'
+getFormSubmissions .right.> supabaseClient : calls '.from().select().order()'
+supabaseClient -right-> SupabaseDB : interacts with 'Enquiry' table
+
+' Interactions with Email Service
+sendNotificationEmail --> EmailService : calls (placeholder API)
+
+' Relationships for AdminDashboard.tsx
+AdminDashboard .up.> formSubmission : imports 'getFormSubmissions', 'EnquiryRecord'
+AdminDashboard .up.> React : uses 'React', 'useState', 'useEffect'
+
+AdminDashboard --> submissionsState : manages state
+AdminDashboard --> loadingState : manages state
+AdminDashboard --> errorState : manages state
+
+AdminDashboard .down.> loadSubmissions : calls on mount (useEffect) and retry
+loadSubmissions .up.> getFormSubmissions : calls to fetch data
+loadSubmissions .right.> submissionsState : updates state with fetched data
+loadSubmissions .right.> loadingState : updates state
+loadSubmissions .right.> errorState : updates state
+
+AdminDashboard ..> iEnquiryRecord : uses for type of submissions in state and rendering
+
+note bottom of AdminDashboard : React component responsible for fetching \nand displaying enquiry data in the UI.
+note top of submitFormData : Handles data validation, persistence to Supabase, \nand optional email notifications.
+note top of supabaseClient : Provides the initialized Supabase client for database interactions.
 
 @enduml

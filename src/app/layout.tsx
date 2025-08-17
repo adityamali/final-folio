@@ -60,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${futura.variable}`}>
+    <html lang="en" className={`${futura.variable} dark`}>
       <ThemeProvider>
         <body>
             <Header />
