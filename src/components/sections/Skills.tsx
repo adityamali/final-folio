@@ -66,13 +66,6 @@ function Skills() {
       : skills.filter((s) => s.category === activeCategory);
   }, [skills, activeCategory]);
 
-  const highlight = useMemo(() => {
-    const label = activeCategory;
-    const count = filtered.length;
-    const sample = filtered.slice(0, 12).map((s) => s.name);
-    return { label, count, sample };
-  }, [activeCategory, filtered]);
-
   const visible = useMemo(() => filtered.slice(0, visibleCount), [filtered, visibleCount]);
   const canLoadMore = filtered.length > visible.length;
 

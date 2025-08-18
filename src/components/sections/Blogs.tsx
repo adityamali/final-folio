@@ -7,13 +7,10 @@ import BlogCard from "../ui/BlogCard";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
-type Filter = "All" | "Internal" | "External";
-
 function Blogs() {
   const [blogs, setBlogs] = useState<BlogType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<Filter>("All");
   const [visibleCount, setVisibleCount] = useState(8);
   const [expanded, setExpanded] = useState(false);
 
@@ -64,27 +61,14 @@ function Blogs() {
     return () => window.removeEventListener("resize", apply);
   }, [expanded]);
 
-  const filters: Filter[] = ["All", "Internal", "External"];
-
-  const filtered = useMemo(() => {
-    switch (filter) {
-      case "Internal":
-        return blogs.filter((b) => b.type === "internal");
-      case "External":
-        return blogs.filter((b) => b.type === "external");
-      default:
-        return blogs;
-    }
-  }, [blogs, filter]);
-
-  const featured = useMemo(() => (filtered.length ? filtered[0] : null), [filtered]);
+  const featured = useMemo(() => (blogs.length ? blogs[0] : null), [blogs]);
 
   const visible = useMemo(() => {
-    const items = filtered.slice(0, visibleCount);
+    const items = blogs.slice(0, visibleCount);
     return featured ? items.filter((b) => b.id !== featured.id) : items;
-  }, [filtered, visibleCount, featured]);
+  }, [blogs, visibleCount, featured]);
 
-  const canLoadMore = filtered.length > (featured ? 1 : 0) + visible.length;
+  const canLoadMore = blogs.length > (featured ? 1 : 0) + visible.length;
 
   const skeletonKeys = useMemo(() => [
     "b1","b2","b3","b4","b5","b6","b7","b8","b9","b10","b11","b12",
@@ -101,7 +85,7 @@ function Blogs() {
     );
   } else if (error) {
     gridContent = <div className="text-sm text-red-500">{error}</div>;
-  } else if (!filtered.length) {
+  } else if (!blogs.length) {
     gridContent = <div className="text-sm text-foreground/60">No posts found.</div>;
   } else {
     gridContent = (
@@ -161,7 +145,7 @@ function Blogs() {
       <AnimatePresence mode="wait">
         {featured && (
           <motion.div
-            key={featured.id + filter}
+            key={featured.id}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
