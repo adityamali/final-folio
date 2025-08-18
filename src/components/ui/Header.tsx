@@ -1,5 +1,5 @@
 "use client";
-import { Command } from "lucide-react";
+// import { Command } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -21,13 +21,13 @@ export default function Header() {
   };
 
   return (
-    <div className="top-0 left-0 right-0 z-50">
+    <div className="fixed top-0 left-0 right-0 z-50">
       <header className="relative">
         <div className="w-full mx-auto md:px-16 px-6 py-4">
           <nav className="flex items-center justify-between">
             <Link
               href="/"
-              className="text-2xl font-bold text-primary rounded-lg px-4"
+              className="text-2xl font-bold text-primary rounded-lg px-4 hover:scale-105 transition-transform"
               data-cursor="block"
             >
               AM
@@ -37,7 +37,7 @@ export default function Header() {
               <button
                 onClick={openCommandBar}
                 data-cursor="block"
-                className="flex items-center gap-32 px-4 py-2 text-sm text-foreground bg-background/50 dark:bg-background-700/50 hover:bg-background-300/50 dark:hover:bg-background-600/50 rounded-full border border-border transition-colors duration"
+                className="flex items-center gap-32 px-4 py-2 text-sm text-foreground bg-background/50 dark:bg-background-700/50 hover:bg-background-300/50 dark:hover:bg-background-600/50 rounded-full border border-border transition-colors duration hover:scale-105"
               >
                 {/* <Command className="w-4 h-4" /> */}
                 <span>Search...</span>

@@ -1,195 +1,128 @@
 "use client";
-import { useState } from "react";
-import {
-  Send,
-  Copy,
-  Phone,
-  Check,
-  Github,
-  Linkedin,
-  Twitter,
-} from "lucide-react";
-import Button from "../ui/Button";
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Send, Copy, Phone, Check } from "lucide-react";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const email = "hello@adityamali.com";
   const phone = "+91-7709953054";
 
-  const handleCopyEmail = async () => {
+  const socialLinks = useMemo(
+    () => [
+      { name: "GitHub", icon: <i className="fab fa-github w-5 h-5" />, url: "https://github.com/adityamali", color: "hover:text-[#333]" },
+      { name: "LinkedIn", icon: <i className="fab fa-linkedin w-5 h-5" />, url: "https://linkedin.com/in/adityamali2003", color: "hover:text-[#0077b5]" },
+      { name: "Twitter", icon: <i className="fab fa-twitter w-5 h-5" />, url: "https://twitter.com/theadityamali", color: "hover:text-[#1DA1F2]" },
+    ],
+    []
+  );
+
+  const handleCopy = async (text: string) => {
     try {
-      // Try modern clipboard API first
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(email);
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
         setCopied(true);
-      } else {
-        // Fallback for iOS Safari
-        const textArea = document.createElement("textarea");
-        textArea.value = email;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
-        try {
-          document.execCommand("copy");
-          setCopied(true);
-        } catch (err) {
-          console.error("Fallback: Oops, unable to copy", err);
-        }
-
-        document.body.removeChild(textArea);
+        setTimeout(() => setCopied(false), 2000);
       }
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
+    } catch {
+      // no-op
     }
-
-    setTimeout(() => setCopied(false), 2000);
   };
 
-  const socialLinks = [
-    {
-      name: "GitHub",
-      icon: <Github className="w-5 h-5" />,
-      url: "https://github.com/adityamali",
-      color: "hover:text-[#333]",
-    },
-    {
-      name: "LinkedIn",
-      icon: <Linkedin className="w-5 h-5" />,
-      url: "https://linkedin.com/in/adityamali2003",
-      color: "hover:text-[#0077b5] ",
-    },
-    {
-      name: "Twitter",
-      icon: <Twitter className="w-5 h-5" />,
-      url: "https://twitter.com/theadityamali",
-      color: "hover:text-[#1DA1F2]",
-    },
-  ];
-
   return (
-    <div className="flex flex-col gap-12 w-full max-w-7xl mx-auto py-16">
-      <div className="flex flex-col gap-4 text-center">
-        <h2 className="text-4xl font-bold">Get in Touch</h2>
-        <p className="text-foreground/60 text-lg max-w-2xl mx-auto">
-          Whether you have a project in mind, want to collaborate, or just want
-          to say hi, I&apos;d love to hear from you!
+    <div className="flex flex-col gap-8 w-full max-w-7xl mx-auto">
+      {/* Header */}
+      <div className="flex flex-col items-center text-center gap-3">
+        <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/60 backdrop-blur px-3 py-1 text-xs text-foreground/70">
+          <span className="inline-block h-2 w-2 rounded-full bg-primary" /> Let’s work together
+        </div>
+        <h2 className="text-3xl md:text-4xl font-extrabold">Get in touch</h2>
+        <p className="text-foreground/60 text-base max-w-2xl">
+          Have a project in mind or a problem to solve? I’m open to freelance and full‑time opportunities.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-12 items-stretch">
-        {/* Left Column - Contact Methods */}
-        <div className="flex flex-col gap-8 p-6 bg-background dark:bg-background dark:bg-foreground/10 rounded-2xl border border-border">
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold">Let&apos;s Talk</h3>
-            <div className="flex flex-col gap-8">
-              {/* Email Section */}
-              <div className="space-y-4">
-                <p className="text-foreground-600 dark:text-foreground-400">
-                  Send me an email at:
-                </p>
-                <div className="flex flex-wrap items-center gap-4">
-                  <Button
-                    onClick={() => window.open(`mailto:${email}`, "_blank")}
-                  >
-                    <div className="flex items-center gap-2">
-                      <Send className="w-5 h-5 mr-2" />
-                      Send Email
-                    </div>
-                  </Button>
-                  <button
-                    onClick={handleCopyEmail}
-                    data-cursor="block"
-                    className="flex items-center gap-2 px-6 py-3 border border-border hover:border-primary/50 rounded-full transition-all duration-300 hover:bg-primary-light"
-                  >
-                    {copied ? (
-                      <Check className="w-4 h-4 text-green-500" />
-                    ) : (
-                      <Copy className="w-4 h-4 " />
-                    )}
-                    <span>{copied ? "Copied!" : "Copy Email"}</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Phone Section */}
-              <div className="space-y-4">
-                <p className="text-foreground-600 dark:text-foreground-400">
-                  Call or message me at:
-                </p>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(`tel:${phone}`, "_blank");
-                  }}
-                  data-cursor="block"
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-border hover:border-primary/50 rounded-full transition-all duration-300 hover:bg-primary-light"
-                >
-                  <Phone className="w-5 h-5" />
-                  {phone}
-                </button>
-              </div>
-            </div>
+      <div className="grid md:grid-cols-5 gap-6 items-stretch">
+        {/* Primary CTA card */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="md:col-span-2 rounded-2xl border border-border bg-background/60 backdrop-blur p-6 flex flex-col justify-between"
+        >
+          <div>
+            <h3 className="text-xl font-semibold">Start a conversation</h3>
+            <p className="text-foreground/60 mt-1">Tell me a bit about your goals and timeline.</p>
           </div>
-        </div>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href={`mailto:${email}`}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-primary text-white px-5 py-3 text-sm hover:brightness-110 transition"
+            >
+              <Send className="w-4 h-4" /> Email me
+            </a>
+            <button
+              type="button"
+              onClick={() => handleCopy(email)}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-border px-5 py-3 text-sm hover:border-primary/60 hover:bg-primary/5 transition"
+            >
+              {copied ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />} Copy email
+            </button>
+          </div>
+        </motion.div>
 
-        {/* Right Column - Social & Additional Info */}
-        <div className="flex flex-col gap-8 p-6 bg-background dark:bg-background dark:bg-foreground/10 rounded-2xl border border-border">
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold">Connect With Me</h3>
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <p className="text-foreground-600 dark:text-foreground-400">
-                  Find me on social media:
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {socialLinks.map((link) => (
-                    <button
-                      key={link.name}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.open(link.url, "_blank");
-                      }}
-                      rel="noopener noreferrer"
-                      className={`flex items-center gap-2 px-6 py-3 border border-border 
-                        hover:border-primary/50 hover:bg-primary-light rounded-full transition-all duration-300 ${link.color}`}
-                      data-cursor="block"
-                    >
-                      {link.icon}
-                      <span>{link.name}</span>
-                    </button>
-                  ))}
-                </div>
+        {/* Details card */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          className="md:col-span-3 rounded-2xl border border-border bg-background/60 backdrop-blur p-6"
+        >
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <div className="text-xs text-foreground/60">Phone</div>
+                <a
+                  href={`tel:${phone}`}
+                  className="mt-1 inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:border-primary/60 hover:bg-primary/5 transition"
+                >
+                  <Phone className="w-4 h-4" /> {phone}
+                </a>
               </div>
-
-              {/* Additional Info */}
-              <div className="space-y-4">
-                <h4 className="font-medium">Available for:</h4>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-foreground-600 dark:text-foreground-400">
-                  <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Freelance Projects
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Full-time Opportunities
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Technical Consulting
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    Collaborations
-                  </li>
+              <div>
+                <div className="text-xs text-foreground/60">Availability</div>
+                <ul className="mt-1 grid grid-cols-1 gap-2 text-sm text-foreground/70">
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary" /> Freelance projects</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary" /> Full‑time roles</li>
+                  <li className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-primary" /> Technical consulting</li>
                 </ul>
               </div>
             </div>
+            <div className="space-y-4">
+              <div>
+                <div className="text-xs text-foreground/60">Social</div>
+                <div className="mt-1 grid grid-cols-2 gap-3">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:scale-[1.02] transition ${link.color}`}
+                    >
+                      {link.icon}
+                      <span>{link.name}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="text-xs text-foreground/60">Response time</div>
+                <div className="mt-1 text-sm text-foreground/70">Typically within 24–48 hours.</div>
+              </div>
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

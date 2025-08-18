@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 import CommandBar from "@/components/ui/CommandBar";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
+import DoodleBackground from "@/components/ui/DoodleBackground";
 
 const futura = localFont({
   src: "../../public/fonts/futura.ttf",
@@ -63,12 +64,13 @@ export default function RootLayout({
     <html lang="en" className={`${futura.variable} dark`}>
       <ThemeProvider>
         <body>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-            <CommandBar />
+          <DoodleBackground />
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <CommandBar />
         </body>
       </ThemeProvider>
     </html>
-  )
+  );
 }

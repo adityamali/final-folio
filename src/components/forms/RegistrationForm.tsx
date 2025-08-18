@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import FormProvider from '../providers/FormProvider';
+import { FormProvider } from '../providers/FormProvider';
 import FormBuilder from '../ui/FormBuilder';
 import { submitFormData, type FormSubmissionData } from '../../lib/formSubmission';
 
@@ -63,7 +63,7 @@ const RegisterationForm: React.FC = () => {
         name: String(values.name),
         email: String(values.email),
         services: Array.isArray(values.services) ? values.services : [String(values.services)],
-        message: values.message ? String(values.message) : undefined,
+        message: values.message ? String(values.message) : '', // Avoid null
         submitted_at: new Date().toISOString(),
       };
 
@@ -82,7 +82,7 @@ const RegisterationForm: React.FC = () => {
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitStatus('error');
-      
+
       // Show user-friendly error message
       const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
       alert(`Failed to submit form: ${errorMessage}`);
@@ -106,7 +106,7 @@ const RegisterationForm: React.FC = () => {
 
         {/* Success message */}
         {submitStatus === 'success' && (
-          <div className="absolute inset-0 bg-green-50 dark:bg-green-900/20 z-40 flex items-center justify-center">
+          <div className="absolute inset-0 bg-green-50 dark:bg-black-900/20 z-50 flex items-center justify-center">
             <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg text-center max-w-md">
               <div className="text-6xl mb-4">✅</div>
               <h3 className="text-2xl font-semibold mb-2 text-green-600 dark:text-green-400">

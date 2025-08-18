@@ -4,7 +4,7 @@ import { BlogType } from "@/types";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-export default function BlogCard(blog: BlogType) {
+export default function BlogCard(blog: Readonly<BlogType>) {
   const handleClick = () => {
     if (blog.type === "external" && blog.url) {
       window.open(blog.url, "_blank");
@@ -25,9 +25,10 @@ export default function BlogCard(blog: BlogType) {
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      <div
+      <button
+        type="button"
         onClick={handleClick}
-        className="relative w-full overflow-hidden rounded-2xl border border-border  bg-background-100 dark:bg-background-800 cursor-pointer"
+        className="relative w-full overflow-hidden rounded-2xl border border-border bg-background/60 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
       >
         {/* Image Container */}
         <div className="relative h-64 w-full overflow-hidden bg-foreground-100/10">
@@ -39,7 +40,7 @@ export default function BlogCard(blog: BlogType) {
             height={256}
             unoptimized
           />
-        </div>
+  </div>
 
         {/* Content Container */}
         <div className="p-6">
@@ -72,7 +73,7 @@ export default function BlogCard(blog: BlogType) {
             <ExternalLink className="w-4 h-4 ml-1" />
           </div>
         </div>
-      </div>
+      </button>
     </motion.div>
   );
 }

@@ -1,5 +1,10 @@
 import RegistrationForm from '../../components/forms/RegistrationForm';
+import { motion } from 'framer-motion';
 
 export default function FormDemo() {
-  return <RegistrationForm />;
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+      <RegistrationForm />
+    </motion.div>
+  );
 }
