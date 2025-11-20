@@ -8,8 +8,8 @@ export const metadata: Metadata = {
     description: 'Thoughts, tutorials, and insights on web development and design.',
 };
 
-// Revalidate every hour
-export const revalidate = 3600;
+// Revalidate immediately for now
+export const revalidate = 0;
 
 async function getPosts() {
     const { data, error } = await supabase

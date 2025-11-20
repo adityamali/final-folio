@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import {
     Bold, Italic, Heading, Link as LinkIcon, Image as ImageIcon,
-    Code, List, Quote, Save, ArrowLeft, Settings, Eye, Edit2
+    Code, List, Quote, Save, ArrowLeft, Settings, Eye, Edit2, Upload, Loader2
 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -13,9 +13,11 @@ import { cn } from '@/lib/utils';
 export default function ComposePage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const [showSettings, setShowSettings] = useState(true);
     const [previewMode, setPreviewMode] = useState(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -24,7 +26,7 @@ export default function ComposePage() {
         content: '',
         tags: '',
         cover_image: '',
-        published: false
+        published: true // Default to true so posts show up immediately
     });
 
     const generateSlug = (title: string) => {
@@ -39,7 +41,7 @@ export default function ComposePage() {
         setFormData(prev => ({
             ...prev,
             title,
-            slug: prev.slug || generateSlug(title) // Only auto-gen if empty or untouched (simplified)
+            slug: prev.slug || generateSlug(title)
         }));
     };
 
@@ -56,11 +58,63 @@ export default function ComposePage() {
 
         setFormData(prev => ({ ...prev, content: newText }));
 
-        // Restore focus and selection
         setTimeout(() => {
             textarea.focus();
             textarea.setSelectionRange(start + prefix.length, end + prefix.length);
         }, 0);
+    };
+
+    const handleImageUpload = async (file: File): Promise<string | null> => {
+        try {
+            setUploading(true);
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('blog-images')
+                .upload(filePath, file);
+
+            if (uploadError) {
+                throw uploadError;
+            }
+
+            const { data } = supabase.storage
+                .from('blog-images')
+                .getPublicUrl(filePath);
+
+            return data.publicUrl;
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            alert('Failed to upload image');
+            return null;
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    const handleCoverImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files || e.target.files.length === 0) return;
+        const file = e.target.files[0];
+        const url = await handleImageUpload(file);
+        if (url) {
+            setFormData(prev => ({ ...prev, cover_image: url }));
+        }
+    };
+
+    const handleEditorImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files || e.target.files.length === 0) return;
+        const file = e.target.files[0];
+        const url = await handleImageUpload(file);
+        if (url) {
+            insertMarkdown(`![${file.name}](${url})`);
+        }
+        // Reset input
+        e.target.value = '';
+    };
+
+    const triggerImageUpload = () => {
+        fileInputRef.current?.click();
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -91,6 +145,15 @@ export default function ComposePage() {
 
     return (
         <div className="flex h-screen w-full bg-background text-foreground overflow-hidden">
+            {/* Hidden file input for editor images */}
+            <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleEditorImageUpload}
+            />
+
             {/* Main Editor Area */}
             <div className="flex-1 flex flex-col h-full relative transition-all duration-300">
                 {/* Top Bar */}
@@ -127,7 +190,7 @@ export default function ComposePage() {
                             disabled={loading}
                             className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 ml-2"
                         >
-                            <Save size={16} />
+                            {loading ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
                             {loading ? 'Saving...' : 'Save'}
                         </button>
                     </div>
@@ -154,13 +217,13 @@ export default function ComposePage() {
                         ) : (
                             <div className="relative group">
                                 {/* Floating Toolbar */}
-                                <div className="sticky top-0 mb-4 flex items-center gap-1 p-1 rounded-lg border border-border bg-card/80 backdrop-blur-sm w-fit shadow-sm">
+                                <div className="sticky top-0 mb-4 flex items-center gap-1 p-1 rounded-lg border border-border bg-card/80 backdrop-blur-sm w-fit shadow-sm z-20">
                                     <ToolbarButton icon={<Bold size={16} />} onClick={() => insertMarkdown('**', '**')} tooltip="Bold" />
                                     <ToolbarButton icon={<Italic size={16} />} onClick={() => insertMarkdown('_', '_')} tooltip="Italic" />
                                     <ToolbarButton icon={<Heading size={16} />} onClick={() => insertMarkdown('## ')} tooltip="Heading" />
                                     <div className="w-[1px] h-4 bg-border mx-1" />
                                     <ToolbarButton icon={<LinkIcon size={16} />} onClick={() => insertMarkdown('[', '](url)')} tooltip="Link" />
-                                    <ToolbarButton icon={<ImageIcon size={16} />} onClick={() => insertMarkdown('![alt](', ')')} tooltip="Image" />
+                                    <ToolbarButton icon={<ImageIcon size={16} />} onClick={triggerImageUpload} tooltip="Upload Image" />
                                     <ToolbarButton icon={<Code size={16} />} onClick={() => insertMarkdown('```\n', '\n```')} tooltip="Code Block" />
                                     <ToolbarButton icon={<Quote size={16} />} onClick={() => insertMarkdown('> ')} tooltip="Quote" />
                                     <ToolbarButton icon={<List size={16} />} onClick={() => insertMarkdown('- ')} tooltip="List" />
@@ -220,14 +283,31 @@ export default function ComposePage() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Cover Image URL</label>
-                            <input
-                                type="text"
-                                value={formData.cover_image}
-                                onChange={e => setFormData({ ...formData, cover_image: e.target.value })}
-                                className="w-full p-2 rounded-md bg-background border border-border focus:border-primary outline-none text-sm"
-                                placeholder="https://..."
-                            />
+                            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Cover Image</label>
+                            <div className="flex gap-2">
+                                <input
+                                    type="text"
+                                    value={formData.cover_image}
+                                    onChange={e => setFormData({ ...formData, cover_image: e.target.value })}
+                                    className="flex-1 p-2 rounded-md bg-background border border-border focus:border-primary outline-none text-sm"
+                                    placeholder="https://..."
+                                />
+                                <label className="p-2 bg-muted rounded-md cursor-pointer hover:bg-muted/80 transition-colors">
+                                    {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
+                                    <input
+                                        type="file"
+                                        className="hidden"
+                                        accept="image/*"
+                                        onChange={handleCoverImageUpload}
+                                        disabled={uploading}
+                                    />
+                                </label>
+                            </div>
+                            {formData.cover_image && (
+                                <div className="relative aspect-video w-full overflow-hidden rounded-md border border-border mt-2">
+                                    <img src={formData.cover_image} alt="Cover" className="w-full h-full object-cover" />
+                                </div>
+                            )}
                         </div>
 
                         <div className="pt-4 border-t border-border">
