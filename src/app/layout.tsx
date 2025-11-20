@@ -5,7 +5,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 
 import CommandBar from "@/components/ui/CommandBar";
-import Header from "@/components/ui/Header";
+import { Sidebar } from "@/components/layout/Sidebar";
 import Footer from "@/components/ui/Footer";
 import DoodleBackground from "@/components/ui/DoodleBackground";
 
@@ -64,10 +64,12 @@ export default function RootLayout({
     <html lang="en" className={`${futura.variable} dark`}>
       <ThemeProvider>
         <body>
-          <DoodleBackground />
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          {/* <DoodleBackground /> Removed for cleaner theme */}
+          <Sidebar />
+          <div className="md:pl-[280px] min-h-screen flex flex-col transition-all duration-300">
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
           <CommandBar />
         </body>
       </ThemeProvider>

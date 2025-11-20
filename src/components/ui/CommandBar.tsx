@@ -28,8 +28,15 @@ export default function CommandBar() {
       }
     };
 
+    const openCommandBar = () => setOpen(true);
+
     document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
+    window.addEventListener("open-command-bar", openCommandBar);
+
+    return () => {
+      document.removeEventListener("keydown", down);
+      window.removeEventListener("open-command-bar", openCommandBar);
+    };
   }, []);
 
   const commands = {

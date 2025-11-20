@@ -16,6 +16,11 @@ export default {
         'primary-light': 'var(--primary-light)',
         'primary-dark': 'var(--primary-dark)',
         border: 'var(--border)',
+        sidebar: 'var(--sidebar-bg)',
+        'sidebar-foreground': 'var(--sidebar-fg)',
+      },
+      width: {
+        sidebar: '280px',
       },
       keyframes: {
         'glow-pulse': {

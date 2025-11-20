@@ -102,3 +102,43 @@ COMMENT ON COLUMN "Enquiry".message IS 'Optional message/project description';
 COMMENT ON COLUMN "Enquiry".submitted_at IS 'When the enquiry was submitted (user timezone)';
 COMMENT ON COLUMN "Enquiry".created_at IS 'When the record was created in the database';
 COMMENT ON COLUMN "Enquiry".updated_at IS 'When the record was last updated';
+
+-- BLOG POSTS TABLE
+CREATE TABLE IF NOT EXISTS "posts" (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  title TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
+  content TEXT NOT NULL,
+  excerpt TEXT,
+  published BOOLEAN DEFAULT FALSE,
+  tags TEXT[] DEFAULT '{}',
+  cover_image TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- RLS for posts
+ALTER TABLE "posts" ENABLE ROW LEVEL SECURITY;
+
+-- Allow public read access to published posts
+CREATE POLICY "Allow public read access" ON "posts"
+  FOR SELECT
+  USING (published = true);
+
+-- Allow authenticated (or anon for now if simple admin) insert/update
+-- For a personal portfolio, we might want to restrict this. 
+-- Assuming the user will use the Supabase dashboard or a protected route.
+-- For now, allowing all operations for simplicity in development, 
+-- BUT STRONGLY RECOMMEND locking this down in production.
+CREATE POLICY "Allow full access for anon" ON "posts"
+  FOR ALL
+  USING (true)
+  WITH CHECK (true);
+
+-- Trigger for updated_at on posts
+DROP TRIGGER IF EXISTS update_posts_updated_at ON "posts";
+CREATE TRIGGER update_posts_updated_at
+  BEFORE UPDATE ON "posts"
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+

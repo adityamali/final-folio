@@ -15,7 +15,7 @@ const AdminDashboard: React.FC = () => {
     try {
       setLoading(true);
       const result = await getFormSubmissions();
-      
+
       if (result.success && result.data) {
         setSubmissions(result.data as EnquiryRecord[]);
         setError(null);
@@ -83,9 +83,9 @@ const AdminDashboard: React.FC = () => {
           </div>
         ) : (
           <div className="grid gap-6">
-            {submissions.map((enquiry) => (
+            {submissions.map((enquiry, index) => (
               <div
-                key={enquiry.id}
+                key={`${enquiry.id}-${index}`}
                 className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700"
               >
                 <div className="flex justify-between items-start mb-4">
@@ -101,9 +101,9 @@ const AdminDashboard: React.FC = () => {
                 <div className="mb-4">
                   <h4 className="font-medium mb-2">Services Requested:</h4>
                   <div className="flex flex-wrap gap-2">
-                    {enquiry.services.map((service) => (
+                    {enquiry.services.map((service, index) => (
                       <span
-                        key={service}
+                        key={`${service}-${index}`}
                         className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
                       >
                         {service}
