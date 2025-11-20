@@ -4,7 +4,6 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { ProjectType } from "@/types";
 import ProjectCard from "../ui/ProjectCard";
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 function Projects() {

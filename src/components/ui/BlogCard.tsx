@@ -1,6 +1,7 @@
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { BlogType } from "@/types";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function BlogCard(blog: Readonly<BlogType>) {
   const isExternal = blog.type === "external";
@@ -21,10 +22,11 @@ export default function BlogCard(blog: Readonly<BlogType>) {
       {/* Thumbnail */}
       <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-muted">
         {blog.image_url ? (
-          <img
+          <Image
             src={blog.image_url}
             alt={blog.title}
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-muted text-muted-foreground">

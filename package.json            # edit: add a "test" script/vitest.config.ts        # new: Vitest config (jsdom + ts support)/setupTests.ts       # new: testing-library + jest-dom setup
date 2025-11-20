@@ -1,0 +1,31 @@
+{
+  "name": "your-project-name",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^latest",
+    "jsdom": "^latest",
+    "@testing-library/react": "^latest",
+    "@testing-library/jest-dom": "^latest",
+    "typescript": "^latest"
+  }
+} 
+
+import { defineConfig } from 'vitest/config';
+import { jsdom } from 'vitest-environment-jsdom';
+
+export default defineConfig({
+  test: {
+    environment: jsdom,
+    globals: true
+  }
+});
+
+import '@testing-library/jest-dom';
+
+test('renders hello world', () => {
+  const { getByText } = render(<Hello />);
+  expect(getByText(/hello world/i)).toBeInTheDocument();
+});

@@ -60,7 +60,7 @@ export function Hero() {
                             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-80 group-hover:opacity-100 transition-opacity rounded-lg" />
                             <div className="relative flex h-full w-full items-center justify-center rounded-lg bg-background px-6 py-3 transition-colors group-hover:bg-background/90">
                                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 font-semibold whitespace-nowrap">
-                                    Let's Build Stuff Together
+                                    Let&apos;s Build Stuff Together
                                 </span>
                             </div>
                         </Link>

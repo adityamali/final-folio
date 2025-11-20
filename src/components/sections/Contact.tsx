@@ -1,7 +1,6 @@
 "use client";
-import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { Send, Copy, Phone, Check, Github, Linkedin, Twitter, ExternalLink } from "lucide-react";
+import React, { useState, useMemo } from "react";
+import { Github, Linkedin, Twitter, ExternalLink, Send, Check, Copy, Phone } from "lucide-react";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);

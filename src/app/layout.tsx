@@ -7,7 +7,6 @@ import localFont from "next/font/local";
 import CommandBar from "@/components/ui/CommandBar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import Footer from "@/components/ui/Footer";
-import DoodleBackground from "@/components/ui/DoodleBackground";
 
 const futura = localFont({
   src: "../../public/fonts/futura.ttf",
