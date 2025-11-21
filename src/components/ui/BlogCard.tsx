@@ -46,13 +46,12 @@ export default function BlogCard(blog: Readonly<BlogType>) {
       <div className="flex flex-col gap-1 pr-4">
         <h3 className="font-semibold leading-tight line-clamp-2 group-hover:text-primary transition-colors">
           {blog.title}
+          <span>
+          {isExternal && <ExternalLink size={12} className="ml-1" />}
+          </span>
         </h3>
 
         <div className="flex flex-col text-sm text-muted-foreground">
-          <div className="flex items-center gap-1">
-            <span>Aditya Mali</span>
-            {isExternal && <ExternalLink size={12} className="ml-1" />}
-          </div>
           <div className="flex items-center gap-1 text-xs">
             <time dateTime={blog.date}>{formattedDate}</time>
             <span>•</span>

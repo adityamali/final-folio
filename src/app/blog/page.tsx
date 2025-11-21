@@ -23,6 +23,7 @@ async function getPosts() {
         return [];
     }
 
+    console.log('Fetched posts:', data);
     return data as BlogPost[];
 }
 

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "Full Stack Software Developer. Building innovative solutions and creating impactful digital experiences.",
   keywords: ["Full Stack Developer", "Aditya Mali"],
-  authors: [{ name: "Aditya Mali" }],
+  authors: [{ name: "Aditya Mali", url: "https://adityamali.com" }],
   creator: "Aditya Mali",
   publisher: "Aditya Mali",
   robots: "index, follow",
