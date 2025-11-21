@@ -1,10 +1,3 @@
-import { defineConfig } from 'vitest/config'
-
-export default defineConfig({
-  test: {
-    environment: 'jsdom',
-    globals: true,
-    setupFiles: 'setupTests.ts',
-    include: ['src/**/*.{test,spec}.{ts,tsx}']
-  }
-})
+// Vitest config placeholder for environments where vitest isn't available during build
+// The real config lives in `vitest.config.cjs` for compatibility with Next's type checker.
+export default {}

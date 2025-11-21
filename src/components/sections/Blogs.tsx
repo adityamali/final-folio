@@ -1,10 +1,8 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { BlogType } from "@/types";
 import BlogCard from "../ui/BlogCard";
-import { ArrowRight } from "lucide-react";
 
 function Blogs() {
   const [blogs, setBlogs] = useState<BlogType[]>([]);

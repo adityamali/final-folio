@@ -43,6 +43,7 @@ export default async function BlogPage() {
                 {posts.length === 0 ? (
                     <div className="text-center py-20 border border-dashed border-border rounded-xl">
                         <p className="text-muted-foreground">No posts found yet. Check back soon!</p>
+                        <Link href="/" className="text-primary mt-4 inline-block">Go back home</Link>
                     </div>
                 ) : (
                     posts.map((post) => (

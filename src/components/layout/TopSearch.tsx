@@ -1,23 +1,13 @@
 'use client'
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Search } from "lucide-react";
 
 
-type Props = {}
-
-export default function TopSearch({}: Props) {
-    const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
+export default function TopSearch() {
   
     const triggerSearch = () => {
       window.dispatchEvent(new Event("open-command-bar"));
-      setIsOpen(false);
     };
-  
-    useEffect(() => {
-      setIsOpen(false);
-    }, [pathname]);
+
     return (
     <div>
 
