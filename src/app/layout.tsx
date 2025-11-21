@@ -53,6 +53,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/context/ThemeContext";
+import TopSearch from "@/components/layout/TopSearch";
 
 export default function RootLayout({
   children,
@@ -64,6 +65,7 @@ export default function RootLayout({
       <ThemeProvider>
         <body>
           {/* <DoodleBackground /> Removed for cleaner theme */}
+          <TopSearch />
           <Sidebar />
           <div className="md:pl-[280px] min-h-screen flex flex-col transition-all duration-300">
             <main className="flex-1">{children}</main>

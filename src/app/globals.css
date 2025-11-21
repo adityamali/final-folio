@@ -1,6 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Monospace font stack and utilities */
+:root {
+  --mono-font: 'Google Sans Code', SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+/* Apply monospace to relevant elements and helper class */
+code, pre, kbd, samp, .mono {
+  font-family: var(--mono-font);
+  font-size: 0.95em;
+  font-variant-ligatures: contextual common-ligatures discretionary-ligatures;
+  font-feature-settings: "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Preserve formatting but wrap long lines in blocks */
+pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
 
 /* Light mode colors */
 /* Light mode colors - keeping for reference but mainly using dark */

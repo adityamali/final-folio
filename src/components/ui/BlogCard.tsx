@@ -20,7 +20,7 @@ export default function BlogCard(blog: Readonly<BlogType>) {
       className="group flex flex-col gap-3 rounded-xl transition-all"
     >
       {/* Thumbnail */}
-      <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-muted">
+      <div className="relative aspect-video w-full overflow-hidden rounded-3xl bg-muted">
         {blog.image_url ? (
           <Image
             src={blog.image_url}

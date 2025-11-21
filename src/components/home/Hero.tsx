@@ -7,14 +7,8 @@ import Link from "next/link";
 export function Hero() {
     return (
         <section className="relative w-full min-h-[85vh] flex items-center justify-center px-6 md:px-12 py-24 overflow-hidden">
-            {/* Background Gradients */}
-            {/* <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-500/5 blur-[120px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-500/5 blur-[120px]" />
-                <div className="absolute top-[40%] right-[20%] w-[30%] h-[30%] rounded-full bg-pink-500/5 blur-[100px]" />
-            </div> */}
 
-            <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+            <div className="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative">
                 {/* Left: Content */}
                 <motion.div
                     className="flex flex-col items-start gap-6"
@@ -97,8 +91,8 @@ export function Hero() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                 >
                     <div className="relative w-64 h-64 md:w-80 md:h-80">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 rounded-2xl rotate-6 opacity-20 blur-2xl"></div>
-                        <div className="relative h-full w-full rounded-2xl overflow-hidden border-2 border-border shadow-2xl bg-background">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 rounded-3xl rotate-6 opacity-20 blur-2xl"></div>
+                        <div className="relative h-full w-full rounded-3xl overflow-hidden border-2 border-border shadow-2xl bg-background">
                             <Image
                                 src="/me.jpeg"
                                 alt="Aditya Mali"

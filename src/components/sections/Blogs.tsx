@@ -60,7 +60,7 @@ function Blogs() {
 
   return (
     <div className="flex flex-col gap-8 w-full">
-      <div className="flex items-end justify-between border-b border-border pb-4">
+      {/* <div className="flex items-end justify-between border-b border-border pb-4">
         <h2 className="text-2xl font-bold">Writing</h2>
         <Link
           href="/blog"
@@ -68,7 +68,7 @@ function Blogs() {
         >
           Read all <ArrowRight size={14} />
         </Link>
-      </div>
+      </div> */}
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
