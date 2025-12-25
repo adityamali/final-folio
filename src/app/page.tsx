@@ -18,12 +18,12 @@ const Page: NextPage = () => {
       <section className="w-full px-4 md:px-12 lg:px-20 py-12 md:py-20 border-b-2 md:border-b-4 border-charcoal">
         <div className="mx-auto max-w-7xl overflow-hidden">
           <div className="flex items-end justify-between border-b-2 md:border-b-4 border-charcoal pb-3 md:pb-4 mb-6 md:mb-8">
-            <h2 className="font-display text-2xl md:text-4xl uppercase text-charcoal drop-shadow-md">Developer Toolbox</h2>
+            <h2 className="font-display text-2xl md:text-4xl uppercase text-charcoal drop-shadow-md">Software Café</h2>
             <Link
               href="/cafe"
               className="font-display uppercase text-sm md:text-lg text-teal hover:text-orange flex items-center gap-1 md:gap-2 transition-colors"
             >
-              <span className="hidden sm:inline">View All Tools</span>
+              <span className="hidden sm:inline">View All Projects</span>
               <span className="sm:hidden">View All</span>
               <ArrowRight size={16} strokeWidth={2.5} className="md:w-5 md:h-5" />
             </Link>

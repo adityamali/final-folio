@@ -40,7 +40,7 @@ export default function AppDetailPage() {
             onClick={() => router.push('/cafe')}
             className="px-6 py-3 bg-orange text-cream font-display uppercase border-2 border-charcoal hover:shadow-retro transition-all"
           >
-            Return to Toolbox
+            Return to Café
           </button>
         </div>
       </div>
@@ -60,7 +60,7 @@ export default function AppDetailPage() {
           className="flex items-center gap-2 text-charcoal hover:text-orange transition-colors mb-8 group px-4 py-2 border-2 border-charcoal hover:shadow-retro"
         >
           <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" strokeWidth={2.5} />
-          <span className="font-display uppercase">Back to Toolbox</span>
+          <span className="font-display uppercase">Back to Café</span>
         </motion.button>
 
         {/* Hero Section */}
