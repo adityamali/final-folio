@@ -2,56 +2,48 @@
 
 function Subscribe() {
   return (
-    <div>
-        <div className="mx-auto max-w-7xl px-8 py-8 bg-primary-light rounded-3xl">
-          <div className="flexflex-col">
-            <h1 className="text-white text-xl font-bold pb-3">
-              Subscribe to{" "}
-              <span className="mono bg-primary-light py-2 pl-1 pr-2 rounded-md">
-                .paged
-              </span>
-            </h1>
-            <div className="flex">
-              <p className="text-muted-foreground max-w-lg text-sm">
-                Stay updated with the latest articles, tutorials, and insights
-                from my blog. Subscribe to receive notifications directly to
-                your inbox.
-              </p>
-              <form
-                action="https://buttondown.email/api/emails/embed-subscribe/noted"
-                method="post"
-                target="popupwindow"
-                onSubmit={() =>
-                  window.open("https://buttondown.email/noted", "popupwindow")
-                }
-                className="ml-8 bg-background rounded-full w-full sm:max-w-lg"
-              >
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Your email address"
-                    required
-                    className="w-full px-4 py-3 rounded-full bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-0 focus:bg-black"
-                  />
-                  <button
-                    type="submit"
-                    className="group relative inline-flex items-center justify-center rounded-full p-[1px] transition-all"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-80 group-hover:opacity-100 transition-opacity rounded-full" />
-                    <div className="relative flex h-full w-full items-center justify-center rounded-full bg-background px-6 py-3 transition-colors group-hover:bg-background/90">
-                      <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 font-semibold text-sm whitespace-nowrap">
-                        Subscribe
-                      </span>
-                    </div>
-                  </button>
-                </div>
-              </form>
-            </div>
+    <div className="w-full">
+      <div className="mx-auto px-8 md:px-12 py-12 md:py-16 bg-muted rounded-2xl border border-border">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start lg:items-center">
+          <div className="flex-1 space-y-3">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+              Subscribe to <span className="font-mono text-foreground/80">.paged</span>
+            </h2>
+            <p className="text-muted-foreground leading-relaxed max-w-xl">
+              Stay updated with the latest articles, tutorials, and insights.
+              Get notifications delivered directly to your inbox.
+            </p>
           </div>
+          
+          <form
+            action="https://buttondown.email/api/emails/embed-subscribe/noted"
+            method="post"
+            target="popupwindow"
+            onSubmit={() =>
+              window.open("https://buttondown.email/noted", "popupwindow")
+            }
+            className="flex-1 w-full lg:max-w-md"
+          >
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+                className="flex-1 px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-muted transition-all"
+              />
+              <button
+                type="submit"
+                className="px-6 py-3 rounded-lg bg-foreground text-background font-semibold hover:bg-foreground/90 transition-all hover:scale-105 active:scale-95 whitespace-nowrap"
+              >
+                Subscribe
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-  )
-};
+  );
+}
 
 export default Subscribe;

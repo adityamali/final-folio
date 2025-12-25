@@ -12,11 +12,11 @@ export default function ProjectCard(project: Readonly<ProjectType>) {
   };
 
   return (
-    <div className="group flex flex-col gap-4">
+    <div className="group flex flex-col overflow-hidden rounded-xl border border-border bg-background transition-all hover:shadow-lg hover:border-border/80 hover:-translate-y-1">
       <button
         type="button"
         onClick={handleClick}
-        className="relative aspect-video w-full overflow-hidden rounded-xl border border-border/50 bg-muted/20 transition-all hover:border-primary/50 hover:shadow-lg"
+        className="relative aspect-[16/10] w-full overflow-hidden bg-muted"
       >
         <Image
           src={project.image_url}
@@ -27,39 +27,45 @@ export default function ProjectCard(project: Readonly<ProjectType>) {
           unoptimized
         />
 
-        {/* Hover Overlay with Actions */}
-        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
-          {project.live_url && (
-            <div className="flex items-center gap-2 text-white font-medium px-4 py-2 rounded-full bg-white/10 backdrop-blur hover:bg-white/20 transition-colors">
-              <ExternalLink size={16} />
-              <span>Visit</span>
-            </div>
-          )}
-          {project.github_url && (
-            <div className="flex items-center gap-2 text-white font-medium px-4 py-2 rounded-full bg-white/10 backdrop-blur hover:bg-white/20 transition-colors">
-              <Share2 size={16} />
-              <span>Code</span>
-            </div>
-          )}
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-8">
+          <div className="flex items-center gap-3">
+            {project.live_url && (
+              <div className="flex items-center gap-2 text-foreground font-semibold px-5 py-2.5 rounded-lg bg-foreground/10 backdrop-blur-sm border border-border hover:bg-foreground/20 transition-colors">
+                <ExternalLink size={16} />
+                <span>View Live</span>
+              </div>
+            )}
+            {project.github_url && (
+              <a
+                href={project.github_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-2 text-foreground font-semibold px-5 py-2.5 rounded-lg bg-foreground/10 backdrop-blur-sm border border-border hover:bg-foreground/20 transition-colors"
+              >
+                <Share2 size={16} />
+                <span>Code</span>
+              </a>
+            )}
+          </div>
         </div>
       </button>
 
-      <div className="flex flex-col gap-2">
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="text-lg font-semibold leading-tight group-hover:text-primary transition-colors">
-            {project.name}
-          </h3>
-        </div>
+      <div className="flex flex-col gap-3 p-5">
+        <h3 className="text-xl font-semibold leading-tight text-foreground">
+          {project.name}
+        </h3>
 
-        <p className="text-sm text-muted-foreground line-clamp-2">
+        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mt-1">
-          {project.tags.slice(0, 3).map((tag) => (
+        <div className="flex flex-wrap gap-2 mt-2">
+          {project.tags.slice(0, 4).map((tag) => (
             <span
               key={tag}
-              className="px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground text-[10px] font-medium"
+              className="px-3 py-1 rounded-md bg-muted text-foreground text-xs font-medium border border-border"
             >
               {tag}
             </span>

@@ -57,25 +57,21 @@ function Blogs() {
   const canLoadMore = blogs.length > visible.length;
 
   return (
-    <div className="flex flex-col gap-8 w-full">
-      {/* <div className="flex items-end justify-between border-b border-border pb-4">
-        <h2 className="text-2xl font-bold">Writing</h2>
-        <Link
-          href="/blog"
-          className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
-        >
-          Read all <ArrowRight size={14} />
-        </Link>
-      </div> */}
-
+    <div className="flex flex-col gap-10 w-full">
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map((k) => (
-            <div key={k} className="h-40 rounded-xl bg-muted/30 animate-pulse" />
+          {[1, 2, 3, 4, 5, 6].map((k) => (
+            <div key={k} className="h-64 rounded-xl bg-muted animate-pulse" />
           ))}
         </div>
       ) : error ? (
-        <div className="text-sm text-destructive">{error}</div>
+        <div className="text-sm text-red-500 bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border border-red-200 dark:border-red-900">
+          {error}
+        </div>
+      ) : visible.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No blog posts yet. Check back soon!</p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {visible.map((blog) => (
@@ -85,12 +81,12 @@ function Blogs() {
       )}
 
       {!loading && !error && canLoadMore && (
-        <div className="flex justify-center pt-4">
+        <div className="flex justify-center pt-6">
           <button
             onClick={() => setVisibleCount((c) => c + 6)}
-            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-foreground bg-background border border-border rounded-lg hover:bg-muted transition-all hover:scale-105 active:scale-95"
           >
-            Load more posts
+            Load More Posts
           </button>
         </div>
       )}

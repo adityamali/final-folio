@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
-
 import "./globals.css";
-
-import localFont from "next/font/local";
-
+import { Inter, JetBrains_Mono } from "next/font/google";
 import CommandBar from "@/components/ui/CommandBar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import Footer from "@/components/ui/Footer";
 
-const futura = localFont({
-  src: "../../public/fonts/futura.ttf",
-  variable: "--font-futura",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -61,13 +67,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${futura.variable} dark`}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`}>
       <ThemeProvider>
-        <body>
-          {/* <DoodleBackground /> Removed for cleaner theme */}
+        <body className="antialiased">
           <TopSearch />
           <Sidebar />
-          <div className="md:pl-[280px] min-h-screen flex flex-col transition-all duration-300">
+          <div className="md:pl-[280px] min-h-screen flex flex-col">
             <main className="flex-1">{children}</main>
             <Footer />
           </div>

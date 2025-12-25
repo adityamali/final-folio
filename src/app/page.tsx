@@ -4,15 +4,26 @@ import { NextPage } from "next";
 import Subscribe from "@/components/forms/Subscribe";
 
 const Page: NextPage = () => {
-
   return (
     <div className="flex flex-col w-full">
       <Hero />
-      <section className="w-full px-6 md:px-12 py-6">
-        <Subscribe />
+      
+      {/* Newsletter Section */}
+      <section className="w-full px-6 md:px-12 lg:px-16 py-16 bg-muted/30">
+        <div className="mx-auto max-w-3xl">
+          <Subscribe />
+        </div>
       </section>
-      <section className="w-full px-6 md:px-12 py-24">
-        <div className="mx-auto max-w-7xl">
+
+      {/* Blog Section */}
+      <section className="w-full px-6 md:px-12 lg:px-16 py-20">
+        <div className="mx-auto max-w-7xl space-y-12">
+          <div className="space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Latest Writing</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Thoughts on software development, design, and building products that matter.
+            </p>
+          </div>
           <Blogs />
         </div>
       </section>
