@@ -1,116 +1,125 @@
 'use client'
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 
 export function Hero() {
     return (
-        <section className="relative w-full min-h-[90vh] flex items-center justify-center px-6 md:px-12 lg:px-16 py-20 overflow-hidden">
-            {/* Subtle background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-muted/30 via-background to-background pointer-events-none" />
+        <section className="relative w-full min-h-[70vh] md:min-h-[90vh] flex flex-col justify-center px-2 md:px-12 lg:px-20 py-12 md:py-20 overflow-hidden bg-cream text-charcoal">
             
-            <div className="max-w-6xl w-full mx-auto relative">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                    {/* Left: Content */}
-                    <motion.div
-                        className="flex flex-col items-start space-y-8"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            {/* Decorative "Fold" lines or poster creases could go here */}
+            
+            <div className="w-full mx-auto relative z-10 overflow-hidden">
+                
+                {/* Top Billing / Presents */}
+                <motion.div 
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="text-center mb-4 md:mb-8"
+                >
+                    <p className="font-display uppercase tracking-[0.2em] md:tracking-[0.3em] text-xs md:text-base text-charcoal/60">
+                        Portfolio & Case Studies
+                    </p>
+                </motion.div>
+
+                {/* Main Title - Movie Title Style */}
+                <div className="relative text-center">
+                    <motion.h1 
+                        className="font-display text-[clamp(2rem,10vw,6rem)] md:text-[12vw] leading-[0.8] uppercase text-orange drop-shadow-[4px_4px_0px_rgba(45,45,45,1)] md:drop-shadow-[8px_8px_0px_rgba(45,45,45,1)] break-words"
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        {/* Status Badge */}
-                        <motion.div
-                            className="inline-flex items-center gap-2.5 rounded-full bg-muted px-4 py-2 text-sm font-medium text-foreground border border-border"
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.2, duration: 0.5 }}
-                        >
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                            </span>
-                            <span className="text-muted-foreground">Available for new projects</span>
-                        </motion.div>
-
-                        {/* Heading */}
-                        <div className="space-y-4">
-                            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                                <span className="block text-foreground">Hi, I'm</span>
-                                <span className="block mt-2 bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent">
-                                    Aditya Mali
-                                </span>
-                            </h1>
-                            <p className="text-xl md:text-2xl text-muted-foreground font-medium">
-                                Full Stack Developer & UI/UX Enthusiast
-                            </p>
-                        </div>
-
-                        {/* Description */}
-                        <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
-                            I craft accessible, performant, and pixel-perfect web experiences. 
-                            Passionate about building tools that make a difference and contributing to open source.
+                        Aditya<br/>Mali
+                    </motion.h1>
+                    
+                    {/* Floating Badge */}
+                    <motion.div 
+                        className="absolute -top-2 right-0 sm:top-0 sm:right-[10%] md:right-[20%] rotate-12 bg-teal text-cream p-2 md:p-6 rounded-full border-2 md:border-4 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro z-20"
+                        initial={{ scale: 0, rotate: 0 }}
+                        animate={{ scale: 1, rotate: 12 }}
+                        transition={{ delay: 0.5, type: "spring" }}
+                    >
+                        <p className="font-accent text-[10px] md:text-2xl leading-none text-center whitespace-nowrap">
+                            Open to<br/>Work!
                         </p>
-
-                        {/* CTAs */}
-                        <div className="flex flex-wrap gap-4 pt-2">
-                            <Link
-                                href="/contact"
-                                className="group inline-flex items-center justify-center rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-all hover:bg-foreground/90 hover:scale-105 active:scale-95"
-                            >
-                                Get in Touch
-                                <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </Link>
-                            <Link
-                                href="/projects"
-                                className="inline-flex items-center justify-center rounded-lg border border-border bg-background px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-muted hover:scale-105 active:scale-95"
-                            >
-                                View Work
-                            </Link>
-                        </div>
-
-                        {/* Stats */}
-                        <div className="grid grid-cols-3 gap-8 pt-8 border-t border-border w-full max-w-lg">
-                            <div className="space-y-1">
-                                <div className="text-3xl font-bold text-foreground">20+</div>
-                                <div className="text-sm text-muted-foreground">Projects</div>
-                            </div>
-                            <div className="space-y-1">
-                                <div className="text-3xl font-bold text-foreground">3+</div>
-                                <div className="text-sm text-muted-foreground">Years Exp.</div>
-                            </div>
-                            <div className="space-y-1">
-                                <div className="text-3xl font-bold text-foreground">15+</div>
-                                <div className="text-sm text-muted-foreground">Articles</div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* Right: Image */}
-                    <motion.div
-                        className="relative flex justify-center lg:justify-end"
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        <div className="relative w-72 h-72 md:w-96 md:h-96">
-                            {/* Subtle glow effect */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-foreground/5 via-foreground/10 to-foreground/5 rounded-3xl blur-3xl opacity-50"></div>
-                            
-                            {/* Image container */}
-                            <div className="relative h-full w-full rounded-2xl overflow-hidden border border-border/50 shadow-2xl bg-muted">
-                                <Image
-                                    src="/me.jpeg"
-                                    alt="Aditya Mali"
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                />
-                            </div>
-                        </div>
                     </motion.div>
                 </div>
+
+                {/* Subtitle / Tagline */}
+                <motion.div 
+                    className="mt-8 md:mt-12 text-center max-w-4xl mx-auto px-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                >
+                    <h2 className="font-display text-xl sm:text-2xl md:text-5xl uppercase text-charcoal leading-tight break-words">
+                        Building <span className="text-teal underline decoration-2 md:decoration-4 decoration-mustard underline-offset-2 md:underline-offset-4 break-words">Digital Products</span> That Scale
+                    </h2>
+                </motion.div>
+
+                {/* Billing Block - Credits Style */}
+                <motion.div 
+                    className="mt-8 md:mt-16 border-t-2 md:border-t-4 border-b-2 md:border-b-4 border-charcoal py-4 md:py-8 px-2 md:px-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                >
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center font-display uppercase tracking-widest text-[10px] md:text-sm text-charcoal/80">
+                        <div>
+                            <span className="block text-[8px] md:text-[10px] text-charcoal/50 mb-1">Role</span>
+                            <span className="hidden sm:inline">Frontend & Backend</span>
+                            <span className="sm:hidden">Full Stack</span>
+                        </div>
+                        <div>
+                            <span className="block text-[8px] md:text-[10px] text-charcoal/50 mb-1">Based In</span>
+                            The Internet
+                        </div>
+                        <div>
+                            <span className="block text-[8px] md:text-[10px] text-charcoal/50 mb-1">Tech</span>
+                            React • Node • Next
+                        </div>
+                        <div>
+                            <span className="block text-[8px] md:text-[10px] text-charcoal/50 mb-1">Experience</span>
+                            3+ Years
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* CTAs */}
+                <motion.div 
+                    className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-6 px-2 md:px-4 w-full"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                >
+                    <Link
+                        href="/contact"
+                        className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-charcoal text-cream font-display uppercase text-sm md:text-xl tracking-wider border-2 border-transparent hover:bg-orange hover:text-charcoal hover:border-charcoal hover:shadow-retro transition-all text-center whitespace-nowrap"
+                    >
+                        Let&apos;s Collaborate
+                    </Link>
+                    <Link
+                        href="/cafe"
+                        className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-transparent text-charcoal font-display uppercase text-sm md:text-xl tracking-wider border-2 md:border-4 border-charcoal hover:bg-teal hover:text-cream hover:shadow-retro transition-all text-center whitespace-nowrap"
+                    >
+                        View Portfolio
+                    </Link>
+                </motion.div>
+
+                {/* Review Quote */}
+                <motion.div 
+                    className="mt-8 md:mt-16 text-center px-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                >
+                    <p className="font-accent text-base md:text-2xl text-mustard rotate-[-2deg] break-words">
+                        &ldquo;Clean Code. Fast Delivery. Real Results.&rdquo;
+                    </p>
+                    {/* <p className="font-mono text-xs uppercase mt-2 text-charcoal/60">- Senior Tech Lead, Fortune 500</p> */}
+                </motion.div>
+
             </div>
         </section>
     );

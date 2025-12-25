@@ -57,11 +57,11 @@ function Blogs() {
   const canLoadMore = blogs.length > visible.length;
 
   return (
-    <div className="flex flex-col gap-10 w-full">
+    <div className="flex flex-col gap-8 md:gap-10 w-full">
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {[1, 2, 3, 4, 5, 6].map((k) => (
-            <div key={k} className="h-64 rounded-xl bg-muted animate-pulse" />
+            <div key={k} className="h-48 md:h-64 rounded-lg border-2 md:border-4 border-charcoal/20 bg-muted/40 animate-pulse" />
           ))}
         </div>
       ) : error ? (
@@ -73,7 +73,7 @@ function Blogs() {
           <p className="text-muted-foreground">No blog posts yet. Check back soon!</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {visible.map((blog) => (
             <BlogCard key={blog.id} {...blog} />
           ))}
@@ -84,7 +84,7 @@ function Blogs() {
         <div className="flex justify-center pt-6">
           <button
             onClick={() => setVisibleCount((c) => c + 6)}
-            className="inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-foreground bg-background border border-border rounded-lg hover:bg-muted transition-all hover:scale-105 active:scale-95"
+            className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-charcoal border-2 border-charcoal hover:bg-teal hover:text-cream transition-all"
           >
             Load More Posts
           </button>

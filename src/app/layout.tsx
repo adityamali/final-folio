@@ -1,22 +1,29 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Anton, DM_Sans, Permanent_Marker } from "next/font/google";
 import CommandBar from "@/components/ui/CommandBar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import Footer from "@/components/ui/Footer";
+import { ThemeProvider } from "@/context/ThemeContext";
 
-const inter = Inter({
+const anton = Anton({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-display",
+  weight: "400",
   display: "swap",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-body",
   display: "swap",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+});
+
+const permanentMarker = Permanent_Marker({
+  subsets: ["latin"],
+  variable: "--font-accent",
+  weight: "400",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -31,6 +38,12 @@ export const metadata: Metadata = {
   creator: "Aditya Mali",
   publisher: "Aditya Mali",
   robots: "index, follow",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -58,27 +71,28 @@ export const metadata: Metadata = {
   },
 };
 
-import { ThemeProvider } from "@/context/ThemeContext";
-import TopSearch from "@/components/layout/TopSearch";
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} dark`}>
-      <ThemeProvider>
-        <body className="antialiased">
-          <TopSearch />
-          <Sidebar />
-          <div className="md:pl-[280px] min-h-screen flex flex-col">
-            <main className="flex-1">{children}</main>
-            <Footer />
+    <html lang="en" className={`${anton.variable} ${dmSans.variable} ${permanentMarker.variable}`}>
+      <body className="antialiased bg-cream text-charcoal selection:bg-orange selection:text-cream overflow-hidden">
+        <ThemeProvider>
+          <div className="flex h-[calc(100vh-1rem)] md:h-[calc(100vh-2rem)] border-4 md:border-8 border-charcoal m-2 md:m-4 relative shadow-[4px_4px_0px_0px_#2D2D2D] md:shadow-retro-lg text-charcoal bg-cream">
+            <Sidebar />
+            <div className="flex-1 flex flex-col relative z-10 min-w-0">
+              {/* <TopSearch /> */}
+              <main className="flex-1 p-2 md:p-8 lg:p-12 overflow-y-auto overflow-x-hidden w-full">
+                {children}
+                <Footer />
+              </main>
+            </div>
           </div>
           <CommandBar />
-        </body>
-      </ThemeProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

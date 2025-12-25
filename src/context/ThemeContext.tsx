@@ -1,19 +1,15 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo } from "react";
+import { createContext, useContext, useMemo } from "react";
 
 type Theme = "light" | "dark";
 
 const ThemeContext = createContext({
-  theme: "dark" as Theme,
-  toggleTheme: () => {}, // No-op since dark mode is enforced
+  theme: "light" as Theme,
+  toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }: Readonly<{ children: React.ReactNode }>) {
-  useEffect(() => {
-    document.documentElement.classList.add("dark");
-  }, []);
-
-  const value = useMemo(() => ({ theme: "dark" as Theme, toggleTheme: () => {} }), []);
+  const value = useMemo(() => ({ theme: "light" as Theme, toggleTheme: () => {} }), []);
 
   return (
     <ThemeContext.Provider value={value}>

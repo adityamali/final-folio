@@ -5,6 +5,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { getSoftwareById } from '@/lib/softwareData';
 import AnimatedBackground from '@/components/cafe/AnimatedBackground';
 import { ArrowLeft, Download, ExternalLink, Github } from 'lucide-react';
+import { useState } from 'react';
+import Image from 'next/image';
 
 const platforms = {
   web: '🌐',
@@ -19,17 +21,26 @@ export default function AppDetailPage() {
   const params = useParams();
   const router = useRouter();
   const app = getSoftwareById(params.slug as string);
+  const [selectedImage, setSelectedImage] = useState(0);
+
+  // Generate placeholder screenshots for demo
+  const screenshots = [
+    { id: 1, title: 'Main Interface', url: `https://placehold.co/1200x800/${app?.color?.replace('#', '')}/2D2D2D?text=${app?.name}+Dashboard` },
+    { id: 2, title: 'Feature View', url: `https://placehold.co/1200x800/${app?.color?.replace('#', '')}/2D2D2D?text=${app?.name}+Features` },
+    { id: 3, title: 'Settings Panel', url: `https://placehold.co/1200x800/${app?.color?.replace('#', '')}/2D2D2D?text=${app?.name}+Settings` },
+    { id: 4, title: 'Mobile View', url: `https://placehold.co/1200x800/${app?.color?.replace('#', '')}/2D2D2D?text=${app?.name}+Mobile` },
+  ];
 
   if (!app) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-cream">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">App not found</h1>
+          <h1 className="font-display text-5xl uppercase text-charcoal mb-4">Tool Not Found</h1>
           <button
             onClick={() => router.push('/cafe')}
-            className="text-blue-500 hover:underline"
+            className="px-6 py-3 bg-orange text-cream font-display uppercase border-2 border-charcoal hover:shadow-retro transition-all"
           >
-            Return to Café
+            Return to Toolbox
           </button>
         </div>
       </div>
@@ -37,7 +48,7 @@ export default function AppDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)]">
+    <div className="min-h-screen bg-cream text-charcoal">
       <AnimatedBackground />
 
       <div className="max-w-6xl mx-auto px-6 py-12">
@@ -46,10 +57,10 @@ export default function AppDetailPage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           onClick={() => router.push('/cafe')}
-          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-8 group"
+          className="flex items-center gap-2 text-charcoal hover:text-orange transition-colors mb-8 group px-4 py-2 border-2 border-charcoal hover:shadow-retro"
         >
-          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-          Back to Café
+          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" strokeWidth={2.5} />
+          <span className="font-display uppercase">Back to Toolbox</span>
         </motion.button>
 
         {/* Hero Section */}
@@ -72,31 +83,31 @@ export default function AppDetailPage() {
 
             {/* Info */}
             <div className="flex-1">
-              <h1 className="text-5xl md:text-6xl font-bold mb-4">{app.name}</h1>
-              <p className="text-2xl text-zinc-400 mb-6">{app.tagline}</p>
-              <p className="text-lg text-zinc-300 leading-relaxed mb-8">
+              <h1 className="font-display text-5xl md:text-6xl uppercase text-orange drop-shadow-md mb-4">{app.name}</h1>
+              <p className="font-accent text-2xl text-teal mb-6 -rotate-1">{app.tagline}</p>
+              <p className="text-lg font-medium text-charcoal/80 leading-relaxed mb-8 border-l-4 border-mustard pl-4">
                 {app.description}
               </p>
 
               {/* Meta Info */}
-              <div className="flex flex-wrap gap-6 text-sm text-zinc-400 mb-8">
+              <div className="flex flex-wrap gap-6 text-sm mb-8 border-4 border-charcoal p-6 shadow-retro bg-cream">
                 <div>
-                  <span className="text-zinc-500">Version</span>
-                  <p className="text-white font-medium">{app.version}</p>
+                  <span className="font-mono uppercase text-xs text-charcoal/50">Version</span>
+                  <p className="font-display uppercase text-charcoal text-lg">{app.version}</p>
                 </div>
                 <div>
-                  <span className="text-zinc-500">Release Date</span>
-                  <p className="text-white font-medium">
+                  <span className="font-mono uppercase text-xs text-charcoal/50">Release Date</span>
+                  <p className="font-display uppercase text-charcoal text-lg">
                     {new Date(app.releaseDate).toLocaleDateString('en-US', {
-                      month: 'long',
+                      month: 'short',
                       day: 'numeric',
                       year: 'numeric',
                     })}
                   </p>
                 </div>
                 <div>
-                  <span className="text-zinc-500">Category</span>
-                  <p className="text-white font-medium capitalize">{app.category}</p>
+                  <span className="font-mono uppercase text-xs text-charcoal/50">Category</span>
+                  <p className="font-display uppercase text-charcoal text-lg">{app.category}</p>
                 </div>
               </div>
 
@@ -107,11 +118,11 @@ export default function AppDetailPage() {
                     href={app.downloadUrl}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 rounded-xl font-medium text-white flex items-center gap-2 shadow-lg"
+                    className="px-8 py-4 font-display uppercase text-cream flex items-center gap-2 border-2 border-charcoal shadow-retro hover:shadow-[6px_6px_0px_0px_#2D2D2D] transition-all"
                     style={{ backgroundColor: app.color }}
                   >
-                    <Download className="w-5 h-5" />
-                    {app.price === 0 ? 'Download Free' : `Buy for $${app.price}`}
+                    <Download className="w-5 h-5" strokeWidth={2.5} />
+                    {app.price === 0 ? 'Download Free' : `Buy $${app.price}`}
                   </motion.a>
                 )}
 
@@ -120,13 +131,10 @@ export default function AppDetailPage() {
                     href={app.demoUrl}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 rounded-xl font-medium border-2 flex items-center gap-2"
-                    style={{
-                      borderColor: app.color,
-                      color: app.color,
-                    }}
+                    className="px-8 py-4 font-display uppercase border-4 border-charcoal flex items-center gap-2 bg-cream hover:bg-teal hover:text-cream shadow-retro transition-all"
+                    style={{ color: app.color }}
                   >
-                    <ExternalLink className="w-5 h-5" />
+                    <ExternalLink className="w-5 h-5" strokeWidth={2.5} />
                     Try Demo
                   </motion.a>
                 )}
@@ -136,9 +144,9 @@ export default function AppDetailPage() {
                     href={app.githubUrl}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 rounded-xl font-medium border-2 border-white/20 text-zinc-300 hover:border-white/40 hover:text-white flex items-center gap-2"
+                    className="px-8 py-4 font-display uppercase border-4 border-charcoal text-charcoal hover:bg-charcoal hover:text-cream flex items-center gap-2 bg-cream shadow-retro transition-all"
                   >
-                    <Github className="w-5 h-5" />
+                    <Github className="w-5 h-5" strokeWidth={2.5} />
                     View Source
                   </motion.a>
                 )}
@@ -154,16 +162,71 @@ export default function AppDetailPage() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-16"
         >
-          <h2 className="text-2xl font-bold mb-4">Available On</h2>
+          <h2 className="font-display text-3xl uppercase text-charcoal mb-6 border-b-4 border-charcoal pb-2">Available On</h2>
           <div className="flex flex-wrap gap-4">
             {app.platforms.map((platform) => (
               <div
                 key={platform}
-                className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3"
+                className="px-6 py-3 bg-teal text-cream border-2 border-charcoal flex items-center gap-3 shadow-[2px_2px_0px_0px_#2D2D2D]"
               >
                 <span className="text-3xl">{platforms[platform]}</span>
-                <span className="capitalize font-medium">{platform}</span>
+                <span className="font-display uppercase">{platform}</span>
               </div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Screenshots Gallery */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.35 }}
+          className="mb-16"
+        >
+          <h2 className="font-display text-3xl uppercase text-charcoal mb-6 border-b-4 border-charcoal pb-2">Gallery</h2>
+          
+          {/* Main Image */}
+          <motion.div 
+            className="relative aspect-video mb-4 border-4 border-charcoal shadow-retro overflow-hidden bg-charcoal/10"
+            key={selectedImage}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Image
+              src={screenshots[selectedImage].url}
+              alt={screenshots[selectedImage].title}
+              fill
+              className="object-cover"
+              unoptimized
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-charcoal/80 backdrop-blur-sm p-4 border-t-2 border-cream">
+              <p className="font-display uppercase text-cream">{screenshots[selectedImage].title}</p>
+            </div>
+          </motion.div>
+
+          {/* Thumbnail Navigation */}
+          <div className="grid grid-cols-4 gap-4">
+            {screenshots.map((screenshot, index) => (
+              <motion.button
+                key={screenshot.id}
+                onClick={() => setSelectedImage(index)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`relative aspect-video border-4 transition-all ${
+                  selectedImage === index 
+                    ? 'border-orange shadow-retro' 
+                    : 'border-charcoal hover:border-teal'
+                }`}
+              >
+                <Image
+                  src={screenshot.url}
+                  alt={screenshot.title}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </motion.button>
             ))}
           </div>
         </motion.section>
@@ -175,7 +238,7 @@ export default function AppDetailPage() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-2xl font-bold mb-6">Features</h2>
+          <h2 className="font-display text-3xl uppercase text-charcoal mb-6 border-b-4 border-charcoal pb-2">Key Features</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {app.features.map((feature, index) => (
               <motion.div
@@ -183,12 +246,12 @@ export default function AppDetailPage() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 + index * 0.05 }}
-                className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/10"
+                className="flex items-start gap-3 p-4 bg-cream border-2 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D]"
               >
-                <span style={{ color: app.color }} className="text-xl mt-0.5">
+                <span style={{ color: app.color }} className="text-xl mt-0.5 font-bold">
                   ✓
                 </span>
-                <span className="text-zinc-300">{feature}</span>
+                <span className="font-medium text-charcoal">{feature}</span>
               </motion.div>
             ))}
           </div>
@@ -200,12 +263,12 @@ export default function AppDetailPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <h2 className="text-2xl font-bold mb-4">Tags</h2>
+          <h2 className="font-display text-3xl uppercase text-charcoal mb-6 border-b-4 border-charcoal pb-2">Tags</h2>
           <div className="flex flex-wrap gap-3">
             {app.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-300"
+                className="px-4 py-2 bg-mustard text-charcoal border-2 border-charcoal font-bold uppercase text-sm shadow-[2px_2px_0px_0px_#2D2D2D]"
               >
                 {tag}
               </span>
@@ -218,25 +281,20 @@ export default function AppDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-16 p-8 rounded-3xl bg-white/5 border border-white/10"
+          className="mt-16 p-8 bg-orange border-4 border-charcoal shadow-retro"
         >
-          <h2 className="text-2xl font-bold mb-4">Documentation</h2>
-          <p className="text-zinc-400 mb-6">
-            Get started with {app.name} in minutes. Check out our comprehensive documentation,
-            tutorials, and API reference.
+          <h2 className="font-display text-3xl uppercase text-charcoal mb-4">Documentation</h2>
+          <p className="font-medium text-charcoal/80 mb-6">
+            Get started with {app.name} quickly. Access comprehensive guides, API references, and integration examples.
           </p>
           <motion.a
             href="#"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium"
-            style={{
-              backgroundColor: `${app.color}20`,
-              color: app.color,
-            }}
+            className="inline-flex items-center gap-2 px-6 py-3 font-display uppercase bg-charcoal text-cream border-2 border-charcoal hover:bg-teal transition-colors shadow-[2px_2px_0px_0px_#2D2D2D]"
           >
             View Documentation
-            <ExternalLink className="w-4 h-4" />
+            <ExternalLink className="w-4 h-4" strokeWidth={2.5} />
           </motion.a>
         </motion.section>
       </div>

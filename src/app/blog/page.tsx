@@ -32,10 +32,10 @@ export default async function BlogPage() {
 
     return (
         <div className="max-w-4xl mx-auto px-6 py-20">
-            <header className="mb-16">
-                <h1 className="text-4xl font-bold mb-4">Blog</h1>
-                <p className="text-xl text-muted-foreground">
-                    Thoughts, tutorials, and insights on web development.
+            <header className="mb-16 border-b-4 border-charcoal pb-8">
+                <h1 className="font-display text-6xl uppercase text-charcoal drop-shadow-md mb-4">Technical Writing</h1>
+                <p className="font-medium text-xl text-charcoal/70">
+                    In-depth articles on software engineering, design patterns, and best practices.
                 </p>
             </header>
 

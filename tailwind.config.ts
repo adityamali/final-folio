@@ -10,8 +10,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        mono: ["var(--font-mono)"],
+        display: ["var(--font-display)"],
+        body: ["var(--font-body)"],
+        accent: ["var(--font-accent)"],
       },
       colors: {
         background: "var(--background)",
@@ -22,62 +23,37 @@ export default {
         },
         primary: {
           DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
+          foreground: "var(--color-cream)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--color-cream)",
         },
         accent: {
           DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
+          foreground: "var(--color-charcoal)",
         },
         border: "var(--border)",
-        input: "var(--input)",
-        ring: "var(--ring)",
         sidebar: {
           DEFAULT: "var(--sidebar-bg)",
+          foreground: "var(--sidebar-fg)",
           border: "var(--sidebar-border)",
         },
+        // Mid-Century Palette
+        cream: "var(--color-cream)",
+        charcoal: "var(--color-charcoal)",
+        mustard: "var(--color-mustard)",
+        orange: "var(--color-orange)",
+        teal: "var(--color-teal)",
+        olive: "var(--color-olive)",
+        brick: "var(--color-brick)",
       },
-      borderRadius: {
-        lg: "var(--radius-lg)",
-        md: "var(--radius-md)",
-        sm: "var(--radius-sm)",
+      boxShadow: {
+        retro: "4px 4px 0px 0px currentColor",
+        "retro-lg": "8px 8px 0px 0px currentColor",
       },
-      spacing: {
-        sidebar: "280px",
-      },
-      maxWidth: {
-        "8xl": "90rem",
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: "65ch",
-            color: "var(--foreground)",
-          },
-        },
-      },
-      keyframes: {
-        "fade-in": {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "slide-in": {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(0)" },
-        },
-        shimmer: {
-          "0%": { backgroundPosition: "-1000px 0" },
-          "100%": { backgroundPosition: "1000px 0" },
-        },
-      },
-      animation: {
-        "fade-in": "fade-in 0.5s ease-out",
-        "fade-up": "fade-up 0.5s ease-out",
-        "slide-in": "slide-in 0.3s ease-out",
-        shimmer: "shimmer 2s infinite linear",
+      borderWidth: {
+        3: "3px",
       },
     },
   },

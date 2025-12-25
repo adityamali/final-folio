@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
     Bold, Italic, Heading, Link as LinkIcon, Image as ImageIcon,
     Code, List, Quote, Save, ArrowLeft, Settings, Eye, Edit2, Upload, Loader2
@@ -305,7 +306,7 @@ export default function ComposePage() {
                             </div>
                             {formData.cover_image && (
                                 <div className="relative aspect-video w-full overflow-hidden rounded-md border border-border mt-2">
-                                    <img src={formData.cover_image} alt="Cover" className="w-full h-full object-cover" />
+                                    <Image src={formData.cover_image} alt="Cover" fill className="object-cover" />
                                 </div>
                             )}
                         </div>

@@ -20,8 +20,8 @@ export default function FeaturedHeroCard({ app, index, size = 'large' }: Feature
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: index * 0.1 }}
-        className={`relative overflow-hidden rounded-3xl ${
-          isLarge ? 'h-[400px] md:h-[500px]' : 'h-[400px]'
+        className={`relative overflow-hidden border-2 md:border-4 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro hover:shadow-[4px_4px_0px_0px_${app.color}] md:hover:shadow-[8px_8px_0px_0px_${app.color}] transition-all ${
+          isLarge ? 'h-[320px] md:h-[500px]' : 'h-[260px] md:h-[400px]'
         }`}
         style={{
           background: `linear-gradient(135deg, ${app.color}40, ${app.color}20)`,
@@ -66,58 +66,58 @@ export default function FeaturedHeroCard({ app, index, size = 'large' }: Feature
         </div>
 
         {/* Content */}
-        <div className="relative h-full flex flex-col justify-between p-6 md:p-8">
+        <div className="relative h-full flex flex-col justify-between p-4 md:p-8 gap-4">
           {/* Top - App Icon Badge */}
           <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3 bg-black/20 backdrop-blur-md rounded-full px-4 py-2">
+            <div className="flex items-center gap-2 bg-charcoal/80 backdrop-blur-md border-2 border-cream px-3 py-2 shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro">
               <div className="flex -space-x-2">
-                <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-lg border-2 border-white/50">
+                <div className="w-8 h-8 flex items-center justify-center text-lg border-2 border-cream bg-cream text-charcoal font-display">
                   {app.icon}
                 </div>
               </div>
-              <span className="text-white/90 text-sm font-medium">12k+ Playing</span>
+              <span className="text-cream text-xs md:text-sm font-bold uppercase tracking-wider">12k+ Active Users</span>
             </div>
           </div>
 
           {/* Bottom - App Info */}
           <div className="space-y-4">
             {/* Stats */}
-            <div className="flex items-center gap-4 text-white/90">
-              <div className="flex items-center gap-1.5 bg-black/20 backdrop-blur-md rounded-full px-3 py-1.5">
-                <Star className="w-4 h-4 fill-white" />
-                <span className="text-sm font-medium">4.9</span>
+            <div className="flex flex-wrap items-center gap-2 md:gap-4 text-cream">
+              <div className="flex items-center gap-1.5 bg-teal border-2 border-charcoal px-3 py-1 shadow-[2px_2px_0px_0px_#2D2D2D]">
+                <Star className="w-4 h-4 fill-cream" />
+                <span className="text-sm font-bold">4.9</span>
               </div>
-              <div className="flex items-center gap-1.5 bg-black/20 backdrop-blur-md rounded-full px-3 py-1.5">
+              <div className="flex items-center gap-1.5 bg-orange border-2 border-charcoal px-3 py-1 shadow-[2px_2px_0px_0px_#2D2D2D]">
                 <Download className="w-4 h-4" />
-                <span className="text-sm font-medium">
+                <span className="text-sm font-bold">
                   {app.price === 0 ? 'Free' : `$${app.price}`}
                 </span>
               </div>
             </div>
 
             {/* Title */}
-            <h3 className={`font-bold text-white ${isLarge ? 'text-3xl md:text-5xl' : 'text-2xl md:text-4xl'}`}>
+            <h3 className={`font-display uppercase text-charcoal drop-shadow-md ${isLarge ? 'text-2xl md:text-5xl' : 'text-xl md:text-4xl'}`}>
               {app.name}
             </h3>
 
             {/* App Badge & Description */}
-            <div className="flex items-start gap-3">
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+            <div className="flex flex-col sm:flex-row items-start gap-3 bg-cream/90 border-2 border-charcoal p-3 shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro">
+              <div className="w-10 h-10 md:w-12 md:h-12 border-2 border-charcoal flex items-center justify-center text-xl md:text-2xl flex-shrink-0"
                 style={{ backgroundColor: `${app.color}40` }}>
                 {app.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-white font-semibold text-base md:text-lg mb-1">
+                <p className="text-charcoal font-display uppercase text-sm md:text-lg mb-1">
                   {app.name}
                 </p>
-                <p className="text-white/80 text-sm line-clamp-1">
+                <p className="text-charcoal/70 font-medium text-xs md:text-sm line-clamp-2">
                   {app.tagline}
                 </p>
               </div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-6 py-2 bg-white/90 hover:bg-white text-gray-900 rounded-full font-semibold text-sm backdrop-blur-sm transition-colors flex-shrink-0"
+                className="px-6 py-2 bg-charcoal hover:bg-orange text-cream border-2 border-charcoal font-display uppercase text-sm backdrop-blur-sm transition-colors flex-shrink-0"
               >
                 Get
               </motion.button>

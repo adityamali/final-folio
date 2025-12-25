@@ -30,9 +30,9 @@ export default function AppCard({ app, index, featured = false }: AppCardProps) 
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-50px' }}
-        whileHover={{ y: -8, scale: 1.02 }}
-        className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br cursor-pointer transition-all duration-500 hover:shadow-2xl ${
-          featured ? 'md:col-span-2 md:row-span-2 h-[400px] md:h-[500px]' : 'h-[280px]'
+        whileHover={{ y: -6, scale: 1.02 }}
+        className={`group relative overflow-hidden rounded-2xl md:rounded-3xl border-2 md:border-4 border-charcoal bg-gradient-to-br cursor-pointer transition-all duration-500 hover:shadow-[4px_4px_0px_0px_#2D2D2D] ${
+          featured ? 'h-[320px] md:h-[500px]' : 'h-[220px] md:h-[280px]'
         }`}
         style={{
           background: `linear-gradient(135deg, ${app.color}15, ${app.color}05)`,
@@ -47,13 +47,13 @@ export default function AppCard({ app, index, featured = false }: AppCardProps) 
         />
 
         {/* Content */}
-        <div className="relative h-full p-6 md:p-8 flex flex-col justify-between">
+        <div className="relative h-full p-4 md:p-8 flex flex-col justify-between">
           {/* Top Section */}
           <div className="space-y-3">
             {/* Icon */}
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
-              className={`${featured ? 'text-7xl md:text-8xl' : 'text-6xl'}`}
+              className={`${featured ? 'text-6xl md:text-8xl' : 'text-5xl md:text-6xl'}`}
             >
               {app.icon}
             </motion.div>
@@ -74,20 +74,14 @@ export default function AppCard({ app, index, featured = false }: AppCardProps) 
 
           {/* Bottom Section */}
           <div className="space-y-2">
-            <h3 className={`font-bold text-white ${featured ? 'text-3xl md:text-4xl' : 'text-2xl'}`}>
+            <h3 className={`font-display uppercase text-white drop-shadow-md ${featured ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'}`}>
               {app.name}
             </h3>
-            <p className="text-zinc-400 text-sm md:text-base line-clamp-2">
+            <p className="text-zinc-200 text-xs md:text-base line-clamp-2">
               {app.tagline}
             </p>
           </div>
         </div>
-
-        {/* Accent border on hover */}
-        <div
-          className="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-current transition-all duration-500"
-          style={{ color: `${app.color}40` }}
-        />
       </motion.article>
     </Link>
   );

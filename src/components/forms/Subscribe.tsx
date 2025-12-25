@@ -3,15 +3,13 @@
 function Subscribe() {
   return (
     <div className="w-full">
-      <div className="mx-auto px-8 md:px-12 py-12 md:py-16 bg-muted rounded-2xl border border-border">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start lg:items-center">
-          <div className="flex-1 space-y-3">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-              Subscribe to <span className="font-mono text-foreground/80">.paged</span>
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+          <div className="flex-1 space-y-3 text-left">
+            <h2 className="font-display text-3xl uppercase text-charcoal">
+              Join the Fan Club
             </h2>
-            <p className="text-muted-foreground leading-relaxed max-w-xl">
-              Stay updated with the latest articles, tutorials, and insights.
-              Get notifications delivered directly to your inbox.
+            <p className="font-medium text-charcoal/70 leading-relaxed">
+              Get exclusive behind-the-scenes access and premiere notifications.
             </p>
           </div>
           
@@ -24,24 +22,23 @@ function Subscribe() {
             }
             className="flex-1 w-full lg:max-w-md"
           >
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-4">
               <input
                 type="email"
                 name="email"
-                placeholder="you@example.com"
+                placeholder="YOUR@EMAIL.COM"
                 required
-                className="flex-1 px-4 py-3 rounded-lg bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-muted transition-all"
+                className="flex-1 px-4 py-3 bg-cream border-2 border-charcoal text-charcoal placeholder:text-charcoal/40 font-mono focus:outline-none focus:shadow-retro transition-all uppercase"
               />
               <button
                 type="submit"
-                className="px-6 py-3 rounded-lg bg-foreground text-background font-semibold hover:bg-foreground/90 transition-all hover:scale-105 active:scale-95 whitespace-nowrap"
+                className="px-6 py-3 bg-orange text-cream font-display uppercase tracking-wider border-2 border-charcoal hover:shadow-retro hover:-translate-y-1 transition-all whitespace-nowrap"
               >
                 Subscribe
               </button>
             </div>
           </form>
         </div>
-      </div>
     </div>
   );
 }

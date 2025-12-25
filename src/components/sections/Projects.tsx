@@ -38,27 +38,28 @@ function Projects() {
   const canLoadMore = projects.length > visible.length;
 
   return (
-    <div className="flex flex-col gap-8 w-full">
-      <div className="flex items-end justify-between border-b border-border pb-4">
-        <h2 className="text-2xl font-bold">Projects</h2>
+    <div className="flex flex-col gap-6 md:gap-8 w-full">
+      <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between border-b-2 md:border-b-4 border-charcoal pb-3 md:pb-4">
+        <h2 className="font-display text-3xl md:text-4xl uppercase text-charcoal drop-shadow-md">Featured Work</h2>
         <Link
-          href="/projects"
-          className="text-sm text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"
+          href="/cafe"
+          className="font-display uppercase text-sm md:text-lg text-teal hover:text-orange flex items-center gap-1 md:gap-2 transition-colors"
         >
-          View all <ArrowRight size={14} />
+          View Portfolio
+          <ArrowRight size={16} strokeWidth={2.5} className="md:w-5 md:h-5" />
         </Link>
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {[1, 2, 3].map((k) => (
-            <div key={k} className="aspect-video rounded-xl bg-muted/30 animate-pulse" />
+            <div key={k} className="aspect-[4/3] rounded-lg bg-muted/30 border-2 md:border-4 border-charcoal/20 animate-pulse" />
           ))}
         </div>
       ) : error ? (
         <div className="text-sm text-destructive">{error}</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {visible.map((project) => (
             <ProjectCard key={project.id} {...project} />
           ))}
@@ -69,7 +70,7 @@ function Projects() {
         <div className="flex justify-center pt-4">
           <button
             onClick={() => setVisibleCount((c) => c + 6)}
-            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+            className="text-sm font-semibold text-charcoal border-b-2 border-dashed border-charcoal/50 hover:text-orange"
           >
             Load more projects
           </button>

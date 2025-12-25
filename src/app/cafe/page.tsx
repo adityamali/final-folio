@@ -1,15 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { softwareData } from '@/lib/softwareData';
 import FeaturedHeroCard from '@/components/cafe/FeaturedHeroCard';
 import AppRow from '@/components/cafe/AppRow';
 
-const categories = ['all', 'productivity', 'design', 'developer', 'ai', 'utility'] as const;
-
 export default function CafePage() {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const selectedCategory: string = 'all';
 
   const filteredSoftware = selectedCategory === 'all' 
     ? softwareData 
@@ -21,18 +18,19 @@ export default function CafePage() {
   const designApps = softwareData.filter(app => app.category === 'design');
 
   return (
-    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pb-20">
+    <div className="min-h-screen bg-cream text-charcoal pb-20">
       {/* Top Navigation Tabs */}
-    <div className="pt-24 pb-8 px-6 max-w-7xl mx-auto">
+    <div className="pt-8 pb-8 px-6 max-w-7xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        className="border-b-4 border-charcoal pb-8"
       >
-        <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight">
+        <h1 className="font-display text-5xl md:text-7xl uppercase text-orange drop-shadow-md tracking-tight mb-4">
         Software Café
         </h1>
-        <p className="text-xl md:text-2xl text-[var(--foreground)]/60 max-w-2xl">
+        <p className="font-accent text-2xl md:text-3xl text-teal -rotate-1 max-w-2xl">
         Brewed with passion, served with pixel-perfect precision.
         </p>
       </motion.div>
@@ -75,7 +73,7 @@ export default function CafePage() {
               All {selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Apps
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredSoftware.map((app, index) => (
+              {filteredSoftware.map((app) => (
                 <div key={app.id} className="w-full">
                   <AppRow title="" apps={[app]} />
                 </div>

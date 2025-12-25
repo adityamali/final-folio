@@ -54,7 +54,7 @@ export default function CommandBar() {
       {
         name: "See All Projects",
         icon: <Briefcase className="w-4 h-4" />,
-        action: () => (window.location.href = "/projects"),
+        action: () => (window.location.href = "/cafe"),
       },
     ],
     connect: [
@@ -113,103 +113,107 @@ export default function CommandBar() {
     <>
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-background/80 backdrop-blur-sm animate-overlay-show transition-all duration-200" />
-          <Dialog.Content className="fixed top-[20%] left-1/2 -translate-x-1/2 w-full max-w-2xl p-2 bg-background dark:bg-foreground/10 rounded-xl border border-border shadow-2xl animate-content-show transition-all duration-200 hover:border-primary/20">
+          <Dialog.Overlay className="fixed inset-0 bg-charcoal/80 backdrop-blur-sm animate-overlay-show transition-all duration-200 z-50" />
+          <Dialog.Content className="fixed top-[20%] left-1/2 -translate-x-1/2 w-full max-w-2xl p-0 bg-cream rounded-none border-4 border-charcoal shadow-retro animate-content-show transition-all duration-200 z-50">
             <Dialog.Title className="sr-only">Command Menu</Dialog.Title>
 
             <Command className="w-full" loop>
-              <div className="flex items-center gap-4 px-3 border-b border-border pb-4 group">
-                <Search className="w-5 h-5 text-foreground/60 group-focus-within:text-primary transition-colors duration-200" />
+              <div className="flex items-center gap-4 px-4 py-4 border-b-4 border-charcoal group">
+                <Search className="w-5 h-5 text-charcoal/60 group-focus-within:text-orange transition-colors duration-200" strokeWidth={2.5} />
                 <Command.Input
                   placeholder="Type a command or search..."
-                  className="w-full bg-transparent outline-none placeholder:text-foreground/60 transition-all duration-200 focus:placeholder:text-primary/60"
+                  className="w-full bg-transparent outline-none placeholder:text-charcoal/60 text-charcoal font-medium transition-all duration-200 focus:placeholder:text-orange/60"
                 />
-                <Dialog.Close className="p-1.5 hover:bg-primary-light rounded-full transition-all duration-200 hover:scale-105 active:scale-95">
-                  <X className="w-4 h-4" />
+                <Dialog.Close className="p-1.5 hover:bg-orange hover:text-cream border-2 border-transparent hover:border-charcoal transition-all duration-200 hover:scale-105 active:scale-95">
+                  <X className="w-4 h-4" strokeWidth={2.5} />
                 </Dialog.Close>
               </div>
 
-              <Command.List className="mt-4 px-2 pb-2 max-h-[300px] overflow-y-auto scroll-smooth overscroll-contain">
-                <div className="px-1 pb-4">
-                  <Command.Group heading="Navigation">
+              <Command.List className="mt-0 px-4 py-4 max-h-[400px] overflow-y-auto scroll-smooth overscroll-contain">
+                <div className="space-y-6">
+                  <Command.Group>
+                    <div className="font-display text-xs uppercase tracking-wider text-charcoal/60 mb-2 px-2">Navigation</div>
                     {commands.navigation.map((cmd) => (
                       <Command.Item
                         key={cmd.name}
                         onSelect={cmd.action}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
-                          hover:bg-primary-light/50 dark:hover:bg-primary/10
-                          data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
-                          data-[selected=true]:scale-[0.98]
-                          active:scale-95 focus:outline-none"
+                        className="flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200 border-2 border-transparent mb-1
+                          hover:bg-teal hover:text-cream hover:border-charcoal
+                          data-[selected=true]:bg-orange data-[selected=true]:text-cream data-[selected=true]:border-charcoal
+                          data-[selected=true]:shadow-[2px_2px_0px_0px_#2D2D2D]
+                          active:scale-95 focus:outline-none font-medium"
                         data-cursor="block"
                       >
-                        <span className="transition-transform duration-200 group-hover:rotate-12">
+                        <span className="transition-transform duration-200">
                           {cmd.icon}
                         </span>
-                        <span className="transition-colors duration-200 group-hover:text-primary">
+                        <span className="transition-colors duration-200">
                           {cmd.name}
                         </span>
                       </Command.Item>
                     ))}
                   </Command.Group>
 
-                  <Command.Group heading="Connect" className="mt-6">
+                  <Command.Group>
+                    <div className="font-display text-xs uppercase tracking-wider text-charcoal/60 mb-2 px-2">Connect</div>
                     {commands.connect.map((cmd) => (
                       <Command.Item
                         key={cmd.name}
                         onSelect={cmd.action}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
-                          hover:bg-primary-light/50 dark:hover:bg-primary/10
-                          data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
-                          data-[selected=true]:scale-[0.98]
-                          active:scale-95 focus:outline-none"
+                        className="flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200 border-2 border-transparent mb-1
+                          hover:bg-teal hover:text-cream hover:border-charcoal
+                          data-[selected=true]:bg-orange data-[selected=true]:text-cream data-[selected=true]:border-charcoal
+                          data-[selected=true]:shadow-[2px_2px_0px_0px_#2D2D2D]
+                          active:scale-95 focus:outline-none font-medium"
                       >
-                        <span className="transition-transform duration-200 group-hover:rotate-12">
+                        <span className="transition-transform duration-200">
                           {cmd.icon}
                         </span>
-                        <span className="transition-colors duration-200 group-hover:text-primary">
+                        <span className="transition-colors duration-200">
                           {cmd.name}
                         </span>
                       </Command.Item>
                     ))}
                   </Command.Group>
 
-                  <Command.Group heading="Resources" className="mt-6">
+                  <Command.Group>
+                    <div className="font-display text-xs uppercase tracking-wider text-charcoal/60 mb-2 px-2">Resources</div>
                     {commands.resources.map((cmd) => (
                       <Command.Item
                         key={cmd.name}
                         onSelect={cmd.action}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
-                          hover:bg-primary-light/50 dark:hover:bg-primary/10
-                          data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
-                          data-[selected=true]:scale-[0.98]
-                          active:scale-95 focus:outline-none"
+                        className="flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200 border-2 border-transparent mb-1
+                          hover:bg-teal hover:text-cream hover:border-charcoal
+                          data-[selected=true]:bg-orange data-[selected=true]:text-cream data-[selected=true]:border-charcoal
+                          data-[selected=true]:shadow-[2px_2px_0px_0px_#2D2D2D]
+                          active:scale-95 focus:outline-none font-medium"
                       >
-                        <span className="transition-transform duration-200 group-hover:rotate-12">
+                        <span className="transition-transform duration-200">
                           {cmd.icon}
                         </span>
-                        <span className="transition-colors duration-200 group-hover:text-primary">
+                        <span className="transition-colors duration-200">
                           {cmd.name}
                         </span>
                       </Command.Item>
                     ))}
                   </Command.Group>
 
-                  <Command.Group heading="Fun" className="mt-6">
+                  <Command.Group>
+                    <div className="font-display text-xs uppercase tracking-wider text-charcoal/60 mb-2 px-2">Fun</div>
                     {commands.fun.map((cmd) => (
                       <Command.Item
                         key={cmd.name}
                         onSelect={cmd.action}
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200
-                          hover:bg-primary-light/50 dark:hover:bg-primary/10
-                          data-[selected=true]:bg-primary-light dark:data-[selected=true]:bg-primary/20
-                          data-[selected=true]:scale-[0.98]
-                          active:scale-95 focus:outline-none"
+                        className="flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-all duration-200 border-2 border-transparent mb-1
+                          hover:bg-teal hover:text-cream hover:border-charcoal
+                          data-[selected=true]:bg-orange data-[selected=true]:text-cream data-[selected=true]:border-charcoal
+                          data-[selected=true]:shadow-[2px_2px_0px_0px_#2D2D2D]
+                          active:scale-95 focus:outline-none font-medium"
                       >
-                        <span className="transition-transform duration-200 group-hover:rotate-12">
+                        <span className="transition-transform duration-200">
                           {cmd.icon}
                         </span>
-                        <span className="transition-colors duration-200 group-hover:text-primary">
+                        <span className="transition-colors duration-200">
                           {cmd.name}
                         </span>
                       </Command.Item>
@@ -225,11 +229,11 @@ export default function CommandBar() {
       {/* Mobile Command Button */}
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 p-4 bg-primary text-white rounded-full shadow-lg md:hidden hover:scale-110 active:scale-95 transition-all duration-200"
+        className="fixed bottom-6 right-6 p-4 bg-orange text-cream border-2 border-charcoal shadow-retro md:hidden hover:scale-110 active:scale-95 transition-all duration-200 z-40"
         data-cursor="block"
         aria-label="Open Command Menu"
       >
-        <CommandIcon className="w-5 h-5" />
+        <CommandIcon className="w-5 h-5" strokeWidth={2.5} />
       </button>
     </>
   );
