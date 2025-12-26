@@ -6,10 +6,10 @@ function Subscribe() {
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
           <div className="flex-1 space-y-3 text-left">
             <h2 className="font-display text-3xl uppercase text-charcoal">
-              Join the Fan Club
+              Join the Club
             </h2>
-            <p className="font-medium text-charcoal/70 leading-relaxed">
-              Get exclusive behind-the-scenes access and premiere notifications.
+            <p className="font-medium text-charcoal leading-relaxed">
+             Stay updated with email newsletter and notifications.
             </p>
           </div>
           

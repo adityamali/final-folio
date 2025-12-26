@@ -5,7 +5,21 @@ import Link from "next/link";
 export function Hero() {
     return (
         <section className="relative w-full min-h-[70vh] md:min-h-[90vh] flex flex-col justify-center px-2 md:px-12 lg:px-20 py-12 md:py-20 overflow-hidden bg-cream text-charcoal">
-            
+            {/* CTA Button - Top Right */}
+            <motion.div
+                className="absolute top-0 right-0 md:right-12 z-30"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+            >
+                <Link
+                    href="/contact"
+                    className="px-6 md:px-8 py-3 md:py-4 bg-charcoal text-cream font-display uppercase text-sm md:text-base tracking-wider border-2 border-transparent hover:bg-orange hover:text-charcoal hover:border-charcoal hover:shadow-retro transition-all inline-block"
+                >
+                    Let&apos;s Collaborate
+                </Link>
+            </motion.div>
+
             {/* Decorative "Fold" lines or poster creases could go here */}
             
             <div className="w-full mx-auto relative z-10 overflow-hidden">
@@ -84,27 +98,6 @@ export function Hero() {
                             3+ Years
                         </div>
                     </div>
-                </motion.div>
-
-                {/* CTAs */}
-                <motion.div 
-                    className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-6 px-2 md:px-4 w-full"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                >
-                    <Link
-                        href="/contact"
-                        className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-charcoal text-cream font-display uppercase text-sm md:text-xl tracking-wider border-2 border-transparent hover:bg-orange hover:text-charcoal hover:border-charcoal hover:shadow-retro transition-all text-center whitespace-nowrap"
-                    >
-                        Let&apos;s Collaborate
-                    </Link>
-                    <Link
-                        href="/cafe"
-                        className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-transparent text-charcoal font-display uppercase text-sm md:text-xl tracking-wider border-2 md:border-4 border-charcoal hover:bg-teal hover:text-cream hover:shadow-retro transition-all text-center whitespace-nowrap"
-                    >
-                        View Portfolio
-                    </Link>
                 </motion.div>
 
                 {/* Review Quote */}

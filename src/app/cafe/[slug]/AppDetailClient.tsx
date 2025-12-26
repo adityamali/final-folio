@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useParams, useRouter } from 'next/navigation';
-import { getSoftwareById } from '@/lib/software';
+import { useRouter } from 'next/navigation';
+import AnimatedBackground from '@/components/cafe/AnimatedBackground';
 import { ArrowLeft, Download, ExternalLink, Github } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { Software } from '@/types/software';
 
@@ -17,91 +17,53 @@ const platforms = {
   android: '🤖',
 };
 
-export default function AppDetailPage() {
-  const params = useParams();
+export default function AppDetailClient({ app }: { app: Software }) {
   const router = useRouter();
-  const [app, setApp] = useState<Software | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Fetch app data on mount
-  useEffect(() => {
-    async function fetchApp() {
-      setIsLoading(true);
-      console.log('Slug:', params.slug); // Debug: Check slug value
-      const data = await getSoftwareById(params.slug as string);
-      console.log('Fetched data:', data); // Debug: Check returned data
-      setApp(data);
-      setIsLoading(false);
-    }
-    fetchApp();
-  }, [params.slug]);
-
   const [selectedImage, setSelectedImage] = useState(0);
-  const screenshots = app?.images.map((url, index) => ({
-    id: index,
-    url,
-    title: `${app?.name} Screenshot ${index + 1}`,
-  })) || [];
 
-  // Show loading state while fetching
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-cream">
-        <div className="text-center">
-          <h1 className="font-display text-5xl uppercase text-charcoal mb-4">Loading...</h1>
-        </div>
-      </div>
-    );
-  }
-
-  // Show not found only after loading completes
-  if (!app) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-cream">
-        <div className="text-center">
-          <h1 className="font-display text-5xl uppercase text-charcoal mb-4">Tool Not Found</h1>
-          <button
-            onClick={() => router.push('/cafe')}
-            className="px-6 py-3 bg-orange text-cream font-display uppercase border-2 border-charcoal hover:shadow-retro transition-all"
-          >
-            Return to Café
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // Generate placeholder screenshots for demo
+  const screenshots = [
+    { id: 1, title: 'Main Interface', url: `https://placehold.co/1200x800/${app?.color?.replace('#', '')}/2D2D2D?text=${app?.name}+Dashboard` },
+    { id: 2, title: 'Feature View', url: `https://placehold.co/1200x800/${app?.color?.replace('#', '')}/2D2D2D?text=${app?.name}+Features` },
+    { id: 3, title: 'Settings Panel', url: `https://placehold.co/1200x800/${app?.color?.replace('#', '')}/2D2D2D?text=${app?.name}+Settings` },
+    { id: 4, title: 'Mobile View', url: `https://placehold.co/1200x800/${app?.color?.replace('#', '')}/2D2D2D?text=${app?.name}+Mobile` },
+  ];
 
   return (
-    <div className="min-h-screen bg-cream text-charcoal">
-
-      <div className="max-w-6xl mx-auto px-6 py-12">
+    <div className="min-h-screen bg-cream text-charcoal pb-20">
+      <AnimatedBackground />
+      
+      <div className="max-w-6xl mx-auto px-6 py-12 relative z-10">
         {/* Back Button */}
         <motion.button
+          onClick={() => router.push('/cafe')}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          onClick={() => router.push('/cafe')}
-          className="flex items-center gap-2 text-charcoal hover:text-orange transition-colors mb-8 group px-4 py-2 border-2 border-charcoal hover:shadow-retro"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="mb-8 px-6 py-3 font-display uppercase border-4 border-charcoal flex items-center gap-2 bg-cream hover:bg-teal hover:text-cream shadow-retro transition-all"
         >
-          <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" strokeWidth={2.5} />
-          <span className="font-display uppercase">Back to Café</span>
+          <ArrowLeft className="w-5 h-5" strokeWidth={2.5} />
+          Back to Café
         </motion.button>
 
         {/* Hero Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-16 p-8 border-4 border-charcoal shadow-retro bg-cream"
         >
           <div className="flex flex-col md:flex-row gap-8 items-start">
             {/* Icon */}
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-8xl md:text-9xl"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
+              className="text-8xl border-4 border-charcoal p-6 bg-cream shadow-retro shrink-0"
+              style={{ backgroundColor: `${app.color}20` }}
             >
-              <Image src={app.icon} alt={`${app.name} Icon`} width={150} height={150} />
+              {app.icon}
             </motion.div>
 
             {/* Info */}
@@ -192,7 +154,7 @@ export default function AppDetailPage() {
                 key={platform}
                 className="px-6 py-3 bg-teal text-cream border-2 border-charcoal flex items-center gap-3 shadow-[2px_2px_0px_0px_#2D2D2D]"
               >
-                <span className="text-3xl">{platforms[platform]}</span>
+                <span className="text-3xl">{platforms[platform as keyof typeof platforms]}</span>
                 <span className="font-display uppercase">{platform}</span>
               </div>
             ))}
