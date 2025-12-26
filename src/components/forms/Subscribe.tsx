@@ -4,14 +4,14 @@ function Subscribe() {
   return (
     <div className="w-full">
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-          <div className="flex-1 space-y-3 text-left">
+          {/* <div className="flex-1 space-y-3 text-left">
             <h2 className="font-display text-3xl uppercase text-charcoal">
               Join the Fan Club
             </h2>
-            <p className="font-medium text-charcoal/70 leading-relaxed">
+            <p className="font-medium text-charcoal leading-relaxed">
               Get exclusive behind-the-scenes access and premiere notifications.
             </p>
-          </div>
+          </div> */}
           
           <form
             action="https://buttondown.email/api/emails/embed-subscribe/noted"

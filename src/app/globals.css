@@ -37,7 +37,7 @@
   --sidebar-border: var(--color-charcoal);
 }
 
-/* Dark Mode - Inverted Poster */
+/* Dark Mode - Inverted Poster
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #1a1a1a;
@@ -60,7 +60,7 @@
   --sidebar-bg: #000000;
   --sidebar-fg: #FDFBF7;
   --sidebar-border: #333333;
-}
+} */
 
 /* Grain Texture Overlay */
 body::before {

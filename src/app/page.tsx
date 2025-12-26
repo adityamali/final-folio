@@ -3,17 +3,18 @@ import { Hero } from "@/components/home/Hero";
 import { NextPage } from "next";
 import Subscribe from "@/components/forms/Subscribe";
 import Link from "next/link";
-import { softwareData } from '@/lib/softwareData';
 import AppStoreCard from '@/components/cafe/AppStoreCard';
 import { ArrowRight } from 'lucide-react';
+import { getFeaturedSoftware } from "@/lib/actions/software";
+
+// Fetch featured tools for Software Café
+const featuredSoftware = await getFeaturedSoftware();
 
 const Page: NextPage = () => {
-  const featuredTools = softwareData.filter(app => app.featured).slice(0, 6);
-
   return (
     <div className="flex flex-col w-full bg-cream text-charcoal">
       <Hero />
-      
+
       {/* Developer Toolbox Section */}
       <section className="w-full px-4 md:px-12 lg:px-20 py-12 md:py-20 border-b-2 md:border-b-4 border-charcoal">
         <div className="mx-auto max-w-7xl overflow-hidden">
@@ -28,8 +29,8 @@ const Page: NextPage = () => {
               <ArrowRight size={16} strokeWidth={2.5} className="md:w-5 md:h-5" />
             </Link>
           </div>
-          <div className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-4 md:px-0 md:-mx-4">
-            {featuredTools.map((app, index) => (
+          <div className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-4 md:px-0 snap-x snap-mandatory">
+            {featuredSoftware.map((app, index) => (
               <AppStoreCard key={app.id} app={app} index={index} />
             ))}
           </div>

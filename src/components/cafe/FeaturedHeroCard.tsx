@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Software } from '@/types/software';
 import Link from 'next/link';
 import { Star, Download } from 'lucide-react';
+import Image from 'next/image';
 
 interface FeaturedHeroCardProps {
   app: Software;
@@ -72,7 +73,14 @@ export default function FeaturedHeroCard({ app, index, size = 'large' }: Feature
             <div className="flex items-center gap-2 bg-charcoal/80 backdrop-blur-md border-2 border-cream px-3 py-2 shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro">
               <div className="flex -space-x-2">
                 <div className="w-8 h-8 flex items-center justify-center text-lg border-2 border-cream bg-cream text-charcoal font-display">
-                  {app.icon}
+                  {/* {app.icon} */}
+                  <Image
+                    src={app.icon}
+                    alt={`${app.name} icon`}
+                    width={32}
+                    height={32}
+                    className="w-8 h-8"
+                  />
                 </div>
               </div>
               <span className="text-cream text-xs md:text-sm font-bold uppercase tracking-wider">12k+ Active Users</span>
@@ -104,7 +112,13 @@ export default function FeaturedHeroCard({ app, index, size = 'large' }: Feature
             <div className="flex flex-col sm:flex-row items-start gap-3 bg-cream/90 border-2 border-charcoal p-3 shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro">
               <div className="w-10 h-10 md:w-12 md:h-12 border-2 border-charcoal flex items-center justify-center text-xl md:text-2xl flex-shrink-0"
                 style={{ backgroundColor: `${app.color}40` }}>
-                {app.icon}
+                <Image
+                  src={app.icon}
+                  alt={`${app.name} icon`}
+                  width={48}
+                  height={48}
+                  className="w-10 h-10 md:w-12 md:h-12"
+                />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-charcoal font-display uppercase text-sm md:text-lg mb-1">

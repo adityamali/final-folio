@@ -58,6 +58,27 @@ export function Hero() {
                     </h2>
                 </motion.div>
 
+                {/* CTAs */}
+                <motion.div 
+                    className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-6 px-2 md:px-4 w-full"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                >
+                    <Link
+                        href="/contact"
+                        className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-charcoal text-cream font-display uppercase text-sm md:text-xl tracking-wider border-2 border-transparent hover:bg-orange hover:text-charcoal hover:border-charcoal hover:shadow-retro transition-all text-center whitespace-nowrap"
+                    >
+                        Let&apos;s Collaborate
+                    </Link>
+                    <Link
+                        href="/cafe"
+                        className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-transparent text-charcoal font-display uppercase text-sm md:text-xl tracking-wider border-2 md:border-4 border-charcoal hover:bg-teal hover:text-cream hover:shadow-retro transition-all text-center whitespace-nowrap"
+                    >
+                        View Portfolio
+                    </Link>
+                </motion.div>
+
                 {/* Billing Block - Credits Style */}
                 <motion.div 
                     className="mt-8 md:mt-16 border-t-2 md:border-t-4 border-b-2 md:border-b-4 border-charcoal py-4 md:py-8 px-2 md:px-4"
@@ -84,27 +105,6 @@ export function Hero() {
                             3+ Years
                         </div>
                     </div>
-                </motion.div>
-
-                {/* CTAs */}
-                <motion.div 
-                    className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-6 px-2 md:px-4 w-full"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8 }}
-                >
-                    <Link
-                        href="/contact"
-                        className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-charcoal text-cream font-display uppercase text-sm md:text-xl tracking-wider border-2 border-transparent hover:bg-orange hover:text-charcoal hover:border-charcoal hover:shadow-retro transition-all text-center whitespace-nowrap"
-                    >
-                        Let&apos;s Collaborate
-                    </Link>
-                    <Link
-                        href="/cafe"
-                        className="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-transparent text-charcoal font-display uppercase text-sm md:text-xl tracking-wider border-2 md:border-4 border-charcoal hover:bg-teal hover:text-cream hover:shadow-retro transition-all text-center whitespace-nowrap"
-                    >
-                        View Portfolio
-                    </Link>
                 </motion.div>
 
                 {/* Review Quote */}

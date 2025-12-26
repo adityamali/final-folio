@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Software } from '@/types/software';
 import Link from 'next/link';
 import { Star, Download } from 'lucide-react';
+import Image from 'next/image';
 
 interface AppStoreCardProps {
   app: Software;
@@ -26,25 +27,23 @@ export default function AppStoreCard({ app, index }: AppStoreCardProps) {
         <div 
           className="relative h-[140px] md:h-[180px] overflow-hidden mb-3 bg-gradient-to-br border-2 md:border-4 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro group-hover:shadow-[4px_4px_0px_0px_#E05228] md:group-hover:shadow-[6px_6px_0px_0px_#E05228] transition-all"
           style={{
-            background: `linear-gradient(135deg, ${app.color}60, ${app.color}30)`,
+            // background: `linear-gradient(135deg, ${app.color}60, ${app.color}30)`,
           }}
         >
           {/* Image Placeholder with decorative elements */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                rotate: [0, 5, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="text-6xl md:text-8xl opacity-40"
+            <div
+              className="text-6xl md:text-8xl"
             >
-              {app.icon}
-            </motion.div>
+              {/* {app.icon} */}
+              <Image
+                src={app.icon}
+                alt={`${app.name} icon`}
+                width={80}
+                height={80}
+                className="w-20 h-20 md:w-24 md:h-24"
+              />
+            </div>
           </div>
           
           {/* Rating Badge */}

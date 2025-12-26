@@ -23,7 +23,7 @@ export function Sidebar() {
 
     const navItems = [
         { name: 'Home', href: '/', icon: Home },
-        { name: 'Blog', href: '/blog', icon: BookOpen },
+        { name: 'Insights', href: '/blog', icon: BookOpen },
         { name: 'Software Café', href: '/cafe', icon: Coffee },
         { name: 'About', href: '/about', icon: User },
     ];

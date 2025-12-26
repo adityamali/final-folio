@@ -1,11 +1,13 @@
 import { supabase } from '@/lib/supabase';
 import { BlogPost } from '@/types/blog';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Metadata } from 'next';
+import { motion } from 'framer-motion';
 
 export const metadata: Metadata = {
-    title: 'Blog | Aditya Mali',
-    description: 'Thoughts, tutorials, and insights on web development and design.',
+    title: 'Insights | Aditya Mali',
+    description: 'Personal reflections, lessons learned, and insights from my journey as a creator and developer.',
 };
 
 // Revalidate immediately for now
@@ -32,12 +34,16 @@ export default async function BlogPage() {
 
     return (
         <div className="max-w-4xl mx-auto px-6 py-20">
-            <header className="mb-16 border-b-4 border-charcoal pb-8">
-                <h1 className="font-display text-6xl uppercase text-charcoal drop-shadow-md mb-4">Technical Writing</h1>
-                <p className="font-medium text-xl text-charcoal/70">
-                    In-depth articles on software engineering, design patterns, and best practices.
-                </p>
-            </header>
+            <div className="pt-8 pb-8 px-6 max-w-7xl mx-auto">
+      <div className="border-b-4 border-charcoal pb-8">
+        <h1 className="font-display text-5xl md:text-7xl uppercase text-orange drop-shadow-md tracking-tight mb-4">
+        Insights
+        </h1>
+        <p className="font-accent text-2xl md:text-3xl text-teal -rotate-1 max-w-2xl">
+        Tech deep dives, projects, case studies, and insights from my life.
+        </p>
+      </div>
+    </div>
 
             <div className="grid gap-10">
                 {posts.length === 0 ? (
@@ -47,44 +53,57 @@ export default async function BlogPage() {
                     </div>
                 ) : (
                     posts.map((post) => (
-                        <article key={post.id} className="group relative flex flex-col gap-3">
-                            <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                                <time dateTime={post.created_at}>
-                                    {new Date(post.created_at).toLocaleDateString('en-US', {
-                                        month: 'long',
-                                        day: 'numeric',
-                                        year: 'numeric',
-                                    })}
-                                </time>
-                                {post.tags && post.tags.length > 0 && (
-                                    <>
-                                        <span>•</span>
-                                        <div className="flex gap-2">
-                                            {post.tags.map(tag => (
-                                                <span key={tag} className="bg-primary/10 text-primary px-2 py-0.5 rounded-full text-xs">
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-
-                            <h2 className="text-2xl font-bold group-hover:text-primary transition-colors">
-                                <Link href={`/blog/${post.slug}`}>
-                                    <span className="absolute inset-0" />
-                                    {post.title}
-                                </Link>
-                            </h2>
-
-                            {post.excerpt && (
-                                <p className="text-muted-foreground leading-relaxed">
-                                    {post.excerpt}
-                                </p>
+                        <article key={post.id} className="group relative flex flex-row gap-3 overflow-hidden transition-all">
+                            {post.cover_image && (
+                                <div className="relative w-full h-64 overflow-hidden">
+                                    <Image
+                                        src={post.cover_image}
+                                        alt={post.title}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                                    />
+                                </div>
                             )}
+                            
+                            <div className="p-6 flex flex-col gap-3">
+                                <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                                    <time dateTime={post.created_at}>
+                                        {new Date(post.created_at).toLocaleDateString('en-US', {
+                                            month: 'long',
+                                            day: 'numeric',
+                                            year: 'numeric',
+                                        })}
+                                    </time>
+                                    {post.tags && post.tags.length > 0 && (
+                                        <>
+                                            <span>•</span>
+                                            <div className="flex gap-2">
+                                                {post.tags.map(tag => (
+                                                    <span key={tag} className="bg-primary/10 text-primary px-2 py-0.5 rounded-full text-xs">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
 
-                            <div className="text-sm font-medium text-primary mt-2 group-hover:translate-x-1 transition-transform inline-flex items-center">
-                                Read more →
+                                <h2 className="text-2xl font-bold group-hover:text-primary transition-colors">
+                                    <Link href={`/blog/${post.slug}`}>
+                                        <span className="absolute inset-0" />
+                                        {post.title}
+                                    </Link>
+                                </h2>
+
+                                {post.excerpt && (
+                                    <p className="text-muted-foreground leading-relaxed">
+                                        {post.excerpt}
+                                    </p>
+                                )}
+
+                                <div className="text-sm font-medium text-primary mt-2 group-hover:translate-x-1 transition-transform inline-flex items-center">
+                                    Read more →
+                                </div>
                             </div>
                         </article>
                     ))

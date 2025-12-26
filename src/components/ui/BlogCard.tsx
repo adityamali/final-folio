@@ -17,7 +17,7 @@ export default function BlogCard(blog: Readonly<BlogType>) {
     <Link
       href={href || "#"}
       target={isExternal ? "_blank" : undefined}
-      className="group flex flex-col overflow-hidden bg-cream border-2 md:border-4 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro transition-all hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-[4px_4px_0px_0px_#E6A32E] md:hover:shadow-[8px_8px_0px_0px_#E6A32E]"
+      className="group flex flex-col overflow-hidden bg-cream border-2 md:border-4 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro transition-all hover:-translate-y-1 md:hover:-translate-y-2 hover:shadow-[4px_4px_0px_0px_#2A6F76] md:hover:shadow-[8px_8px_0px_0px_#2A6F76]"
     >
       {/* Thumbnail */}
       <div className="relative aspect-[16/10] w-full overflow-hidden border-b-2 md:border-b-4 border-charcoal bg-charcoal/10">
@@ -50,7 +50,7 @@ export default function BlogCard(blog: Readonly<BlogType>) {
           <span>{Math.ceil(blog.description.length / 200)} min read</span>
         </div>
 
-        <h3 className="font-display text-xl md:text-2xl uppercase leading-tight text-charcoal group-hover:text-mustard transition-colors line-clamp-2">
+        <h3 className="font-display text-xl md:text-2xl uppercase leading-tight text-charcoal group-hover:text-secondary transition-colors line-clamp-2">
           {blog.title}
         </h3>
 
