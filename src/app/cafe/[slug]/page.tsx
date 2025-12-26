@@ -299,7 +299,7 @@ export default function AppDetailPage() {
           </div>
         </motion.section>
 
-        {/* Documentation Section */}
+        {/* Documentation Section
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -319,7 +319,7 @@ export default function AppDetailPage() {
             View Documentation
             <ExternalLink className="w-4 h-4" strokeWidth={2.5} />
           </motion.a>
-        </motion.section>
+        </motion.section> */}
       </div>
     </div>
   );

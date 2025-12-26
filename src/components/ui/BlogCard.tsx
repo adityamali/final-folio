@@ -26,7 +26,7 @@ export default function BlogCard(blog: Readonly<BlogType>) {
             src={blog.image_url}
             alt={blog.title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105 grayscale group-hover:grayscale-0"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-mustard/20 text-charcoal">
@@ -50,7 +50,7 @@ export default function BlogCard(blog: Readonly<BlogType>) {
           <span>{Math.ceil(blog.description.length / 200)} min read</span>
         </div>
 
-        <h3 className="font-display text-xl md:text-2xl uppercase leading-tight text-charcoal group-hover:text-mustard transition-colors line-clamp-2">
+        <h3 className="font-display text-xl md:text-2xl uppercase leading-tight text-charcoal transition-colors line-clamp-2">
           {blog.title}
         </h3>
 

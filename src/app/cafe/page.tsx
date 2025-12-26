@@ -15,8 +15,11 @@ export default async function CafePage() {
 
   const featuredApps = softwareData.filter(app => app.featured);
   const developerApps = softwareData.filter(app => app.category === 'developer');
+  const utilityApps = softwareData.filter(app => app.category === 'utility');
   const productivityApps = softwareData.filter(app => app.category === 'productivity');
   const designApps = softwareData.filter(app => app.category === 'design');
+  const aiApps = softwareData.filter(app => app.category === 'ai');
+  const otherApps = softwareData.filter(app => app.category === 'other');
 
   return (
     <div className="min-h-screen bg-cream text-charcoal pb-20">
@@ -54,6 +57,11 @@ export default async function CafePage() {
           <AppRow title="Developer Tools" apps={developerApps} />
         )}
 
+        {/* Utility Apps Row */}
+        {utilityApps.length > 0 && (
+          <AppRow title="Utility Tools" apps={utilityApps} />
+        )}
+
         {/* Productivity Apps Row */}
         {productivityApps.length > 0 && (
           <AppRow title="Productivity & Workflow" apps={productivityApps} />
@@ -62,6 +70,16 @@ export default async function CafePage() {
         {/* Design Apps Row */}
         {designApps.length > 0 && (
           <AppRow title="Design & Creative" apps={designApps} />
+        )}
+
+        {/* AI Apps Row */}
+        {aiApps.length > 0 && (
+          <AppRow title="AI Powered Tools" apps={aiApps} />
+        )}
+
+        {/* Other Apps Row */}
+        {otherApps.length > 0 && (
+          <AppRow title="Other Applications" apps={otherApps} />
         )}
 
         {/* All Apps Section */}

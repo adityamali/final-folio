@@ -5,6 +5,7 @@ import { Software } from "@/types/software";
 import Link from "next/link";
 import Image from "next/image";
 import { Star, Download } from "lucide-react";
+import { a } from "framer-motion/client";
 
 interface AppStoreCardProps {
   app: Software;
@@ -12,7 +13,6 @@ interface AppStoreCardProps {
 }
 
 export default function AppStoreCard({ app, index }: AppStoreCardProps) {
-  const fileSize = app.platforms.length * 150 + app.name.length * 50;
 
   return (
     <motion.div
@@ -59,7 +59,7 @@ export default function AppStoreCard({ app, index }: AppStoreCardProps) {
           <div className="flex items-center justify-between pt-2 border-t-2 border-charcoal/10">
             <div className="flex items-center gap-1.5 text-charcoal/60">
               <Download className="w-3.5 h-3.5" strokeWidth={2.5} />
-              <span className="text-xs font-bold uppercase">{fileSize}MB</span>
+              <span className="text-xs font-bold uppercase">{app.download_size}</span>
             </div>
             <motion.button
               whileHover={{ scale: 1.05 }}

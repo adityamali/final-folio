@@ -17,4 +17,5 @@ export interface Software {
   tags: string[];
   color: string; // Accent color for the card
   featured?: boolean;
+  download_size?: string;
 }
