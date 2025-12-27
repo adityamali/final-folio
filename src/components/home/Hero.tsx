@@ -4,10 +4,10 @@ import Link from "next/link";
 
 export function Hero() {
     return (
-        <section className="relative w-full min-h-[70vh] md:min-h-[90vh] flex flex-col justify-center px-2 md:px-12 lg:px-20 py-12 md:py-20 overflow-hidden bg-cream text-charcoal">
+        <section className="relative w-full min-h-screen md:min-h-[90vh] flex flex-col justify-center px-2 md:px-12 lg:px-20 py-12 md:py-20 overflow-hidden bg-cream text-charcoal">
             {/* CTA Button - Top Right */}
             <motion.div
-                className="absolute top-0 right-0 md:right-12 z-30"
+                className="absolute top-0 right-0 z-30"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
@@ -39,7 +39,7 @@ export function Hero() {
                 {/* Main Title - Movie Title Style */}
                 <div className="relative text-center">
                     <motion.h1 
-                        className="font-display text-[clamp(2rem,10vw,6rem)] md:text-[12vw] leading-[0.8] uppercase text-orange drop-shadow-[4px_4px_0px_rgba(45,45,45,1)] md:drop-shadow-[8px_8px_0px_rgba(45,45,45,1)] break-words"
+                        className="font-display text-8xl sm:text-[16vw] md:text-[12vw] leading-[0.8] uppercase text-orange drop-shadow-[4px_4px_0px_rgba(45,45,45,1)] md:drop-shadow-[8px_8px_0px_rgba(45,45,45,1)] break-words"
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -49,12 +49,12 @@ export function Hero() {
                     
                     {/* Floating Badge */}
                     <motion.div 
-                        className="absolute -top-2 right-0 sm:top-0 sm:right-[10%] md:right-[20%] rotate-12 bg-teal text-cream p-2 md:p-6 rounded-full border-2 md:border-4 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro z-20"
+                        className="absolute -top-2 right-[10%] sm:top-0 sm:right-[10%] md:right-[10%] -rotate-12 bg-teal text-cream p-2 md:p-6 rounded-full border-2 md:border-4 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro z-20"
                         initial={{ scale: 0, rotate: 0 }}
                         animate={{ scale: 1, rotate: 12 }}
                         transition={{ delay: 0.5, type: "spring" }}
                     >
-                        <p className="font-accent text-[10px] md:text-2xl leading-none text-center whitespace-nowrap">
+                        <p className="font-accent text-[clamp(10px,2vw,32px)] leading-none text-center whitespace-nowrap">
                             Open to<br/>Work!
                         </p>
                     </motion.div>
@@ -82,7 +82,7 @@ export function Hero() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center font-display uppercase tracking-widest text-[10px] md:text-sm text-charcoal/80">
                         <div>
                             <span className="block text-[8px] md:text-[10px] text-charcoal/50 mb-1">Role</span>
-                            <span className="hidden sm:inline">Frontend & Backend</span>
+                            <span className="hidden sm:inline">Developer & Designer</span>
                             <span className="sm:hidden">Full Stack</span>
                         </div>
                         <div>
@@ -90,8 +90,8 @@ export function Hero() {
                             The Internet
                         </div>
                         <div>
-                            <span className="block text-[8px] md:text-[10px] text-charcoal/50 mb-1">Tech</span>
-                            React • Node • Next
+                            <span className="block text-[8px] md:text-[10px] text-charcoal/50 mb-1">Status</span>
+                            Available Now
                         </div>
                         <div>
                             <span className="block text-[8px] md:text-[10px] text-charcoal/50 mb-1">Experience</span>

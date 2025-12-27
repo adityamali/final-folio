@@ -4,6 +4,10 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
+import remarkGfm from 'remark-gfm';
 
 // Revalidate every hour
 export const revalidate = 3600;
@@ -90,12 +94,12 @@ export default async function BlogPostPage({ params }: Props) {
             </header>
 
             <div className="prose prose-invert prose-lg max-w-none">
-                {/* 
-          In a real app, you'd use a markdown renderer here. 
-          For now, assuming content is plain text or HTML. 
-          If markdown, use react-markdown or similar.
-        */}
-                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                >
+                    {post.content}
+                </ReactMarkdown>
             </div>
         </article>
     );
