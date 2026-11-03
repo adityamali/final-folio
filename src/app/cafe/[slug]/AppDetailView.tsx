@@ -312,3 +312,4 @@ export default function AppDetailView({ app, initialSlug }: AppDetailViewProps) 
     </div>
   );
 }
+

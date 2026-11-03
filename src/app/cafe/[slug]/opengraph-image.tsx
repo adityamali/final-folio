@@ -1,10 +1,8 @@
 import { ImageResponse } from 'next/og';
 import { getSoftwareById } from '@/lib/software';
-import fs from 'fs';
-import path from 'path';
 
 export const runtime = 'nodejs';
-export const alt = 'Software Café App Card';
+export const alt = 'Software Preview';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -16,17 +14,6 @@ export default async function Image({ params }: Props) {
   const { slug } = await params;
   const app = await getSoftwareById(slug);
 
-  // Load local Futura font for retro brutalist typography
-  let fontData: Buffer | null = null;
-  try {
-    const fontPath = path.join(process.cwd(), 'public/fonts/futura.ttf');
-    if (fs.existsSync(fontPath)) {
-      fontData = fs.readFileSync(fontPath);
-    }
-  } catch (err) {
-    console.warn('Could not load Futura font for OG image:', err);
-  }
-
   if (!app) {
     return new ImageResponse(
       (
@@ -35,46 +22,29 @@ export default async function Image({ params }: Props) {
             width: '100%',
             height: '100%',
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#FDFBF7',
-            border: '14px solid #2D2D2D',
-            fontFamily: fontData ? 'Futura, sans-serif' : 'sans-serif',
+            backgroundColor: '#090A0F',
+            color: '#FFFFFF',
+            fontFamily: 'sans-serif',
           }}
         >
           <div
             style={{
-              backgroundColor: '#E05228',
-              color: '#FFFFFF',
-              border: '3px solid #2D2D2D',
-              padding: '10px 24px',
-              fontSize: 24,
-              fontWeight: 900,
-              boxShadow: '4px 4px 0px #2D2D2D',
-              marginBottom: 20,
+              display: 'flex',
+              padding: '48px 64px',
+              backgroundColor: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: 32,
+              fontSize: 48,
+              fontWeight: 700,
             }}
           >
-            SOFTWARE CAFÉ
-          </div>
-          <div style={{ fontSize: 48, fontWeight: 900, color: '#2D2D2D' }}>
-            Tool Not Found
+            Software Not Found
           </div>
         </div>
       ),
-      {
-        ...size,
-        fonts: fontData
-          ? [
-              {
-                name: 'Futura',
-                data: fontData,
-                style: 'normal',
-                weight: 700,
-              },
-            ]
-          : undefined,
-      }
+      size
     );
   }
 
@@ -96,8 +66,7 @@ export default async function Image({ params }: Props) {
     }
   }
 
-  const primaryPlatform = (app.platforms && app.platforms[0] ? app.platforms[0].toUpperCase() : 'APP');
-  const priceLabel = app.price === 0 ? 'FREE' : `$${app.price}`;
+  const accentColor = app.color && app.color.startsWith('#') ? app.color : '#8B5CF6';
 
   return new ImageResponse(
     (
@@ -106,235 +75,140 @@ export default async function Image({ params }: Props) {
           width: '100%',
           height: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          backgroundColor: '#FDFBF7',
-          border: '14px solid #2D2D2D',
-          padding: '48px',
-          fontFamily: fontData ? 'Futura, sans-serif' : 'sans-serif',
-          boxSizing: 'border-box',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#090A0F',
+          position: 'relative',
+          overflow: 'hidden',
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         }}
       >
-        {/* Top Header Bar */}
+        {/* Soft Ambient Light Glowing from Accent Color */}
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
+            position: 'absolute',
+            top: -150,
+            left: 180,
+            width: 700,
+            height: 700,
+            borderRadius: 350,
+            background: `radial-gradient(circle, ${accentColor}33 0%, rgba(9, 10, 15, 0) 70%)`,
           }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              backgroundColor: '#E05228',
-              color: '#FFFFFF',
-              border: '3px solid #2D2D2D',
-              padding: '8px 20px',
-              fontSize: 18,
-              fontWeight: 900,
-              letterSpacing: 2,
-              boxShadow: '4px 4px 0px #2D2D2D',
-            }}
-          >
-            SOFTWARE CAFÉ
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              fontSize: 18,
-              fontWeight: 700,
-              color: '#2D2D2D',
-              letterSpacing: 1,
-            }}
-          >
-            ADITYAMALI.COM • PORTFOLIO
-          </div>
-        </div>
+        />
 
-        {/* Center Hero Card */}
+        {/* Secondary Soft Ambient Glow in Lower Right */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -180,
+            right: 140,
+            width: 650,
+            height: 650,
+            borderRadius: 325,
+            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.22) 0%, rgba(9, 10, 15, 0) 70%)',
+          }}
+        />
+
+        {/* Rounded Glassmorphic Card */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            backgroundColor: '#FFFFFF',
-            border: '4px solid #2D2D2D',
-            boxShadow: '12px 12px 0px #2D2D2D',
-            padding: '36px',
-            gap: '32px',
+            padding: '60px 68px',
+            backgroundColor: 'rgba(255, 255, 255, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.14)',
+            borderRadius: 40,
+            boxShadow: '0 32px 64px -16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+            maxWidth: 1040,
+            width: '86%',
+            gap: 48,
           }}
         >
-          {/* App Icon Frame */}
+          {/* Rounded Glass Icon Frame */}
           <div
             style={{
               display: 'flex',
-              width: 140,
-              height: 140,
-              backgroundColor: '#FDFBF7',
-              border: '4px solid #2D2D2D',
-              borderRadius: 24,
+              width: 156,
+              height: 156,
+              borderRadius: 36,
+              backgroundColor: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid rgba(255, 255, 255, 0.18)',
               alignItems: 'center',
               justifyContent: 'center',
-              flexShrink: 0,
+              boxShadow: '0 24px 48px -12px rgba(0, 0, 0, 0.5)',
               overflow: 'hidden',
+              flexShrink: 0,
             }}
           >
             {iconBase64 ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={iconBase64}
-                width={120}
-                height={120}
+                width={132}
+                height={132}
                 alt={app.name}
-                style={{ objectFit: 'contain' }}
+                style={{ objectFit: 'contain', borderRadius: 28 }}
               />
             ) : (
-              <span style={{ fontSize: 72 }}>
+              <span style={{ fontSize: 76 }}>
                 {app.icon && !app.icon.startsWith('http') ? app.icon : '⚡'}
               </span>
             )}
           </div>
 
-          {/* Details Column */}
+          {/* Minimal App Title & Tagline Only */}
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
+              justifyContent: 'center',
               flex: 1,
-              gap: 8,
             }}
           >
             <div
               style={{
-                display: 'flex',
-                fontSize: 48,
-                fontWeight: 900,
-                color: '#2D2D2D',
-                letterSpacing: '-1px',
-                textTransform: 'uppercase',
+                fontSize: 66,
+                fontWeight: 800,
+                color: '#FFFFFF',
+                letterSpacing: '-1.5px',
+                lineHeight: 1.1,
+                marginBottom: 16,
               }}
             >
               {app.name}
             </div>
             <div
               style={{
-                display: 'flex',
-                fontSize: 22,
-                fontWeight: 700,
-                color: '#008080',
+                fontSize: 26,
+                fontWeight: 400,
+                color: 'rgba(255, 255, 255, 0.72)',
+                lineHeight: 1.4,
               }}
             >
               {app.tagline}
             </div>
-
-            {/* Badges Row */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: 12,
-                marginTop: 12,
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  backgroundColor: '#F4C430',
-                  color: '#2D2D2D',
-                  border: '2px solid #2D2D2D',
-                  padding: '6px 14px',
-                  fontWeight: 900,
-                  fontSize: 14,
-                  boxShadow: '3px 3px 0px #2D2D2D',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {app.category}
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  backgroundColor: '#008080',
-                  color: '#FDFBF7',
-                  border: '2px solid #2D2D2D',
-                  padding: '6px 14px',
-                  fontWeight: 900,
-                  fontSize: 14,
-                  boxShadow: '3px 3px 0px #2D2D2D',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {priceLabel}
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  backgroundColor: '#E05228',
-                  color: '#FDFBF7',
-                  border: '2px solid #2D2D2D',
-                  padding: '6px 14px',
-                  fontWeight: 900,
-                  fontSize: 14,
-                  boxShadow: '3px 3px 0px #2D2D2D',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {primaryPlatform}
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  backgroundColor: '#FDFBF7',
-                  color: '#2D2D2D',
-                  border: '2px solid #2D2D2D',
-                  padding: '6px 14px',
-                  fontWeight: 900,
-                  fontSize: 14,
-                  boxShadow: '3px 3px 0px #2D2D2D',
-                }}
-              >
-                v{app.version}
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Minimal Discreet Footer Branding */}
         <div
           style={{
+            position: 'absolute',
+            bottom: 34,
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            color: '#2D2D2D',
-            fontSize: 17,
-            fontWeight: 700,
+            fontSize: 16,
+            fontWeight: 500,
+            color: 'rgba(255, 255, 255, 0.35)',
+            letterSpacing: '0.5px',
           }}
         >
-          <div style={{ display: 'flex' }}>
-            ☕ Brewed with passion, served with pixel-perfect precision.
-          </div>
-          <div style={{ display: 'flex' }}>
-            adityamali.com/cafe/{app.slug || app.name.toLowerCase()}
-          </div>
+          adityamali.com / cafe
         </div>
       </div>
     ),
-    {
-      ...size,
-      fonts: fontData
-        ? [
-            {
-              name: 'Futura',
-              data: fontData,
-              style: 'normal',
-              weight: 700,
-            },
-          ]
-        : undefined,
-    }
+    size
   );
 }
