@@ -1,0 +1,46 @@
+# Kill9: Native macOS Developer Port Killer Utility
+
+Kill9 is a free, open-source macOS menu bar utility built in Swift and AppKit. It solves the common developer problem of hung development server ports (such as port 3000, 8080, 5173, 8000, 4200, 80) and `EADDRINUSE: address already in use` errors without requiring users to memorize terminal commands.
+
+## Key Features
+
+- **No Idle Polling:** Zero CPU overhead. Only inspects TCP socket tables when the menu bar item is clicked.
+- **Smart Project Discovery:** Reads surrounding directory information to display the project name and package.json name next to the port number.
+- **Two-Step Safe Process Termination:** Sends a graceful `SIGTERM` first, followed by `SIGKILL` (kill -9) only if the process refuses to exit within a timeout.
+- **Configurable Port Filters:** Whitelist or blacklist specific port ranges.
+- **Native macOS Performance:** Written in Swift 5.9+, runs natively on Apple Silicon (M1/M2/M3/M4) and Intel Macs on macOS 14 Sonoma and macOS 15 Sequoia.
+
+## Comparison: Kill9 vs Terminal Commands
+
+| Feature | Kill9 (GUI) | Terminal (`lsof + kill`) |
+| :--- | :--- | :--- |
+| **Command required** | None (1-click from menu bar) | `lsof -ti :3000 \| xargs kill -9` |
+| **Project Name Resolution** | Automatically shows project name | Shows only raw binary (e.g. `node`) |
+| **Safety** | Graceful SIGTERM with SIGKILL fallback | Immediate forceful SIGKILL |
+| **Multiple Ports** | Visual list with one-click kill | Multiple manual commands required |
+| **Speed** | Instant | Requires opening terminal, typing command |
+
+## How to Kill a Port on macOS
+
+### Method 1: Using Kill9 (Fastest & Safest)
+Download Kill9 from https://adityamali.com/cafe/kill9. Launch the app to access the menu bar icon. Whenever a port is blocked, click the menu bar item, find the port, and click "Kill".
+
+### Method 2: Using the macOS Terminal
+1. Find the Process ID (PID) holding the port:
+   `lsof -i :3000`
+2. Terminate the process:
+   `kill -9 <PID>`
+3. One-line command:
+   `lsof -ti :3000 | xargs kill -9`
+
+## Common Errors Solved
+- `Error: listen EADDRINUSE: address already in use :::3000`
+- `Port 5173 is in use, trying another one...`
+- `Address already in use - bind(2) for "127.0.0.1" port 8080`
+- `Failed to bind to 0.0.0.0:8000`
+
+## Author & Project Information
+- Creator: Aditya Mali (https://adityamali.com)
+- Official Page: https://adityamali.com/cafe/kill9
+- Source Code: https://github.com/theadityamali/kill9
+- License: Open Source (MIT)

@@ -26,13 +26,13 @@ export default async function Image({ params }: Props) {
             justifyContent: 'center',
             backgroundColor: '#090A0F',
             color: '#FFFFFF',
-            fontFamily: 'sans-serif',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
           }}
         >
           <div
             style={{
               display: 'flex',
-              padding: '48px 64px',
+              padding: '40px 60px',
               backgroundColor: 'rgba(255, 255, 255, 0.04)',
               border: '1px solid rgba(255, 255, 255, 0.12)',
               borderRadius: 32,
@@ -62,7 +62,7 @@ export default async function Image({ params }: Props) {
         iconBase64 = `data:${mimeType};base64,${Buffer.from(arrayBuf).toString('base64')}`;
       }
     } catch {
-      // Graceful fallback to emoji or initial if fetch times out
+      // Graceful fallback to emoji if fetch times out
     }
   }
 
