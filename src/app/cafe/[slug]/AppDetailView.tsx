@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Download, ExternalLink, Github, Coffee, Terminal, ShieldCheck, Zap, Copy, Check, HelpCircle } from 'lucide-react';
+import { ArrowLeft, Download, ExternalLink, Github, Coffee } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Software } from '@/types/software';
@@ -24,17 +24,6 @@ interface AppDetailViewProps {
 export default function AppDetailView({ app, initialSlug }: AppDetailViewProps) {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [copied, setCopied] = useState<string | null>(null);
-
-  const handleCopy = (cmd: string) => {
-    if (typeof navigator !== 'undefined') {
-      navigator.clipboard.writeText(cmd);
-      setCopied(cmd);
-      setTimeout(() => setCopied(null), 2000);
-    }
-  };
-
-  const isKill9 = app.slug === 'kill9' || app.name.toLowerCase().includes('kill9');
 
   // If visited via UUID, update address bar to clean slug without reloading
   useEffect(() => {
@@ -321,176 +310,7 @@ export default function AppDetailView({ app, initialSlug }: AppDetailViewProps) 
           </div>
         </motion.section>
 
-        {/* Specialized SEO / AEO / GEO Section for Kill9 */}
-        {isKill9 && (
-          <>
-            {/* Guide & Terminal Comparison */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.55 }}
-              className="mb-16 border-4 border-charcoal bg-cream p-6 md:p-8 shadow-retro"
-              id="how-to-kill-server-port"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <Terminal className="w-8 h-8 text-orange" strokeWidth={2.5} />
-                <h2 className="font-display text-3xl md:text-4xl uppercase text-charcoal">
-                  How to Kill a Running Server Port on macOS
-                </h2>
-              </div>
-              <p className="text-charcoal/80 text-lg mb-6 leading-relaxed">
-                Ever encountered <code className="bg-charcoal text-cream px-2 py-0.5 font-mono text-sm">Error: listen EADDRINUSE: address already in use :::3000</code>? 
-                This happens when a previous development server (Next.js, Vite, Node, Rails) crashed or failed to release its socket. Here is how Kill9 compares to traditional terminal commands:
-              </p>
-
-              {/* Comparison Grid */}
-              <div className="grid md:grid-cols-2 gap-6 mb-8">
-                {/* Method 1: Kill9 GUI */}
-                <div className="border-2 border-charcoal bg-[#FDFBF7] p-6 shadow-[4px_4px_0px_0px_#2D2D2D]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Zap className="w-5 h-5 text-orange" />
-                    <h3 className="font-display text-xl uppercase text-charcoal">Method 1: Kill9 (Fastest & Safest)</h3>
-                  </div>
-                  <ul className="space-y-2 text-sm text-charcoal/80 mb-4">
-                    <li className="flex items-start gap-2">
-                      <span className="text-teal font-bold">✓</span>
-                      <span><strong>One Click:</strong> Click the menu bar icon and hit Kill on the blocked port.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-teal font-bold">✓</span>
-                      <span><strong>Identifies Project:</strong> Shows the exact directory & package.json name.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-teal font-bold">✓</span>
-                      <span><strong>Graceful SIGTERM:</strong> Lets your database clean up before falling back to SIGKILL.</span>
-                    </li>
-                  </ul>
-                  <div className="bg-charcoal text-cream p-3 font-mono text-xs border border-charcoal flex items-center justify-between">
-                    <span>Zero terminal commands needed</span>
-                    <span className="text-teal font-bold uppercase">100% Native</span>
-                  </div>
-                </div>
-
-                {/* Method 2: Terminal Commands */}
-                <div className="border-2 border-charcoal bg-[#FDFBF7] p-6 shadow-[4px_4px_0px_0px_#2D2D2D]">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Terminal className="w-5 h-5 text-charcoal" />
-                    <h3 className="font-display text-xl uppercase text-charcoal">Method 2: Terminal Commands</h3>
-                  </div>
-                  <p className="text-xs text-charcoal/70 mb-3">
-                    If you prefer CLI, use these commands to find and kill processes on port 3000:
-                  </p>
-                  
-                  {/* Copyable Command 1 */}
-                  <div className="mb-3">
-                    <div className="flex items-center justify-between text-xs font-mono text-charcoal/60 mb-1">
-                      <span>One-liner kill command:</span>
-                      <button
-                        onClick={() => handleCopy('lsof -ti :3000 | xargs kill -9')}
-                        className="flex items-center gap-1 text-orange hover:underline font-bold"
-                      >
-                        {copied === 'lsof -ti :3000 | xargs kill -9' ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-teal" />
-                            <span>Copied!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5" />
-                            <span>Copy</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                    <pre className="bg-charcoal text-cream p-3 text-xs font-mono overflow-x-auto border border-charcoal">
-                      lsof -ti :3000 | xargs kill -9
-                    </pre>
-                  </div>
-
-                  {/* Copyable Command 2 */}
-                  <div>
-                    <div className="flex items-center justify-between text-xs font-mono text-charcoal/60 mb-1">
-                      <span>Inspect process ID (PID):</span>
-                      <button
-                        onClick={() => handleCopy('lsof -i :3000')}
-                        className="flex items-center gap-1 text-orange hover:underline font-bold"
-                      >
-                        {copied === 'lsof -i :3000' ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-teal" />
-                            <span>Copied!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5" />
-                            <span>Copy</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                    <pre className="bg-charcoal text-cream p-3 text-xs font-mono overflow-x-auto border border-charcoal">
-                      lsof -i :3000
-                    </pre>
-                  </div>
-                </div>
-              </div>
-            </motion.section>
-
-            {/* FAQ Accordion Section for Answer Engines */}
-            <motion.section
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="mb-16"
-              id="faq"
-            >
-              <div className="flex items-center gap-3 mb-6 border-b-4 border-charcoal pb-2">
-                <HelpCircle className="w-7 h-7 text-teal" strokeWidth={2.5} />
-                <h2 className="font-display text-3xl uppercase text-charcoal">Frequently Asked Questions</h2>
-              </div>
-
-              <div className="space-y-4">
-                <div className="border-2 border-charcoal bg-cream p-6 shadow-[2px_2px_0px_0px_#2D2D2D]">
-                  <h3 className="font-display text-xl uppercase text-charcoal mb-2">
-                    Why do ports like 3000 or 8080 get stuck on macOS?
-                  </h3>
-                  <p className="text-charcoal/80 text-sm leading-relaxed">
-                    When you terminate a local dev server (like Next.js or Vite) using Ctrl+C or when an IDE crashes, the parent process may terminate while child worker threads or orphaned sockets remain alive in the background, holding onto the TCP socket.
-                  </p>
-                </div>
-
-                <div className="border-2 border-charcoal bg-cream p-6 shadow-[2px_2px_0px_0px_#2D2D2D]">
-                  <h3 className="font-display text-xl uppercase text-charcoal mb-2">
-                    Why shouldn&apos;t I just run &quot;killall node&quot;?
-                  </h3>
-                  <p className="text-charcoal/80 text-sm leading-relaxed">
-                    Running <code className="bg-charcoal text-cream px-1.5 py-0.5 font-mono text-xs">killall node</code> kills <em>all</em> Node.js processes running on your computer—including your code editor LSP servers, other projects, ESLint daemons, and background tasks. Kill9 targets only the specific process holding that port.
-                  </p>
-                </div>
-
-                <div className="border-2 border-charcoal bg-cream p-6 shadow-[2px_2px_0px_0px_#2D2D2D]">
-                  <h3 className="font-display text-xl uppercase text-charcoal mb-2">
-                    How does Kill9 safely terminate processes?
-                  </h3>
-                  <p className="text-charcoal/80 text-sm leading-relaxed">
-                    Kill9 uses a two-stage termination sequence. It issues a gentle <code className="bg-charcoal text-cream px-1.5 py-0.5 font-mono text-xs">SIGTERM</code> first, giving the server time to cleanly close SQLite/Postgres connections and flush logs. If the process does not terminate within the timeout, it sends <code className="bg-charcoal text-cream px-1.5 py-0.5 font-mono text-xs">SIGKILL</code> (kill -9).
-                  </p>
-                </div>
-
-                <div className="border-2 border-charcoal bg-cream p-6 shadow-[2px_2px_0px_0px_#2D2D2D]">
-                  <h3 className="font-display text-xl uppercase text-charcoal mb-2">
-                    Does Kill9 consume battery or CPU while idle?
-                  </h3>
-                  <p className="text-charcoal/80 text-sm leading-relaxed">
-                    No. Kill9 has 0% idle CPU usage. Unlike background polling daemons, it only queries the macOS kernel TCP listener table when you click the menu bar status item.
-                  </p>
-                </div>
-              </div>
-            </motion.section>
-          </>
-        )}
       </div>
     </div>
   );
 }
-

@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getSoftwareById } from '@/lib/software';
 import AppDetailView from './AppDetailView';
+import Kill9Page from '@/components/kill9/Kill9Page';
+import { kill9 } from '@/lib/kill9';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -18,52 +20,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const isKill9 = app.slug === 'kill9' || app.name.toLowerCase().includes('kill9');
+  const isKill9 = app.slug === 'kill9' || app.name.toLowerCase() === 'kill9';
 
-  const title = isKill9
-    ? 'Kill9 — How to Kill Running Server Ports on macOS (Stop Port 3000, 8080)'
-    : `${app.name} — ${app.tagline}`;
-
-  const description = isKill9
-    ? 'The fastest way to kill hung development server ports (port 3000, 8080, 5173) and fix EADDRINUSE errors on macOS. A native menu bar utility with zero terminal commands.'
-    : (app.description || `${app.name}: ${app.tagline}`);
-
-  const canonicalUrl = `https://adityamali.com/cafe/${app.slug || app.id}`;
-  const ogImageUrl = `https://adityamali.com/cafe/${app.slug || app.id}/opengraph-image`;
-
-  const keywords = isKill9
-    ? [
-        'how to kill running server port',
-        'kill port mac',
-        'how to kill port 3000',
-        'kill running dev server',
-        'EADDRINUSE 3000',
-        'kill port macos',
-        'stop hung process port',
-        'lsof kill 9 alternative',
-        'free up port mac',
-        'kill9 mac app',
-        'macOS menu bar dev ports',
-        'Aditya Mali',
-        'Software Café',
-      ]
-    : [
-        app.name,
-        app.category,
-        ...(app.tags || []),
-        'Software Café',
-        'Aditya Mali',
-        'Developer Tools',
-        'macOS Apps',
-      ];
+  const title = isKill9 ? kill9.title : `${app.name} — ${app.tagline}`;
+  const description = isKill9 ? kill9.description : (app.description || `${app.name}: ${app.tagline}`);
+  const canonicalUrl = isKill9 ? kill9.url : `https://www.adityamali.com/cafe/${app.slug || app.id}`;
+  const ogImageUrl = `${canonicalUrl}/opengraph-image`;
+  const keywords = isKill9 ? ['Kill9', 'macOS developer utility', 'local TCP ports', 'Aditya Mali'] : [app.name, app.category, ...(app.tags || [])];
 
   return {
-    title,
+    title: isKill9 ? { absolute: title } : title,
     description,
     keywords,
-    authors: [{ name: 'Aditya Mali', url: 'https://adityamali.com' }],
+    authors: [{ name: 'Aditya Mali', url: 'https://www.adityamali.com' }],
     creator: 'Aditya Mali',
     publisher: 'Aditya Mali',
+    robots: { index: true, follow: true, 'max-image-preview': 'large' },
     alternates: {
       canonical: canonicalUrl,
     },
@@ -91,7 +63,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       creator: '@theadityamali',
       images: [ogImageUrl],
     },
-    other: {
+    other: isKill9 ? undefined : {
       'og:price:amount': app.price.toString(),
       'og:price:currency': 'USD',
       'product:category': app.category,
@@ -108,120 +80,61 @@ export default async function AppDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const isKill9 = app.slug === 'kill9' || app.name.toLowerCase().includes('kill9');
-  const canonicalUrl = `https://adityamali.com/cafe/${app.slug || app.id}`;
-  const ogImageUrl = `https://adityamali.com/cafe/${app.slug || app.id}/opengraph-image`;
-
-  // SoftwareApplication JSON-LD Schema
+  const isKill9 = app.slug === 'kill9' || app.name.toLowerCase() === 'kill9';
+  const canonicalUrl = isKill9 ? kill9.url : `https://www.adityamali.com/cafe/${app.slug || app.id}`;
+  const ogImageUrl = `${canonicalUrl}/opengraph-image`;
+  const applicationId = `${canonicalUrl}#software`;
+  const personId = 'https://www.adityamali.com/#person';
+  const websiteId = 'https://www.adityamali.com/#website';
+  const screenshots = app.images.filter((url) => url !== app.icon && !/kill9_icon|placeholder-app/.test(url));
   const softwareSchema = {
-    '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
+    '@id': applicationId,
     name: app.name,
-    operatingSystem: 'macOS 14.0 or later',
-    applicationCategory: 'DeveloperApplication',
-    description: app.description,
-    offers: {
-      '@type': 'Offer',
-      price: app.price.toString(),
-      priceCurrency: 'USD',
-    },
+    ...(isKill9 ? {
+      operatingSystem: kill9.operatingSystem,
+      applicationCategory: 'DeveloperApplication',
+      applicationSubCategory: 'macOS developer utility',
+      featureList: [...kill9.features],
+      sameAs: kill9.sourceUrl,
+      softwareRequirements: 'macOS 13.0 or later; Apple silicon or Intel Mac',
+    } : { applicationCategory: app.category }),
+    description: isKill9 ? kill9.summary : app.description,
+    // Kill9 pricing is omitted: no ratings, reviews, endorsements, or inferred offers.
+    ...(!isKill9 ? { offers: { '@type': 'Offer', price: app.price.toString(), priceCurrency: 'USD' } } : {}),
+    softwareVersion: app.version,
     url: canonicalUrl,
-    downloadUrl: app.downloadUrl,
-    image: ogImageUrl,
-    author: {
-      '@type': 'Person',
-      name: 'Aditya Mali',
-      url: 'https://adityamali.com',
-    },
+    ...(app.downloadUrl ? { downloadUrl: app.downloadUrl, installUrl: `${canonicalUrl}#installation` } : {}),
+    image: app.icon.startsWith('http') ? app.icon : ogImageUrl,
+    ...(screenshots.length ? { screenshot: screenshots } : {}),
+    author: { '@id': personId },
+    publisher: { '@id': personId },
+    mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
+  };
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'Person', '@id': personId, name: 'Aditya Mali', url: 'https://www.adityamali.com', },
+      softwareSchema,
+      {
+        '@type': 'WebPage',
+        '@id': `${canonicalUrl}#webpage`,
+        url: canonicalUrl,
+        name: isKill9 ? kill9.title : `${app.name} — ${app.tagline}`,
+        description: isKill9 ? kill9.description : app.description,
+        inLanguage: 'en',
+        isPartOf: { '@id': websiteId },
+        mainEntity: { '@id': applicationId },
+        author: { '@id': personId },
+      },
+    ],
   };
 
-  // Specialized FAQ and HowTo schemas for Kill9 to optimize for AI Answer Engines & Google AI Overviews
-  const faqSchema = isKill9
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: 'How do I kill a running server port on Mac?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'The easiest way to kill a running dev server port on macOS without remembering terminal commands is to use Kill9, a free menu bar utility that lists active TCP listeners and allows you to terminate them with one click. Alternatively, run the terminal command: lsof -ti :<PORT> | xargs kill -9 (for example: lsof -ti :3000 | xargs kill -9).',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'How do I fix "Error: listen EADDRINUSE: address already in use :::3000"?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'The EADDRINUSE :::3000 error happens when a previous development server (Node.js, Next.js, Vite) failed to shut down properly and is still holding port 3000. You can stop the lingering process immediately using the Kill9 macOS menu bar app, or by running lsof -ti :3000 | xargs kill -9 in your terminal.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'How is Kill9 safer than kill -9 in the terminal?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Kill9 sends a graceful SIGTERM signal first, allowing the dev server to release database connections and cleanup locks. It only falls back to a forceful SIGKILL (kill -9) if the hung process does not respond within a timeout. Terminal kill -9 immediately terminates processes forcefully without cleanup.',
-            },
-          },
-          {
-            '@type': 'Question',
-            name: 'Which ports does Kill9 support?',
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: 'Kill9 supports all TCP ports used in web and backend development, including 3000 (React, Next.js), 5173 (Vite), 8080 (Java, Web servers), 8000 (Django, Python), 4200 (Angular), 8888, and custom dev ports.',
-            },
-          },
-        ],
-      }
-    : null;
-
-  const howToSchema = isKill9
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'HowTo',
-        name: 'How to Kill a Running Server Port on macOS',
-        description: 'Step-by-step guide to stopping hung development ports like 3000, 8080, or 5173 on macOS using Kill9 or Terminal.',
-        step: [
-          {
-            '@type': 'HowToStep',
-            name: 'Open Kill9 in macOS menu bar',
-            text: 'Click the Kill9 status icon in your macOS menu bar to view active TCP dev servers.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Locate the blocked port and project',
-            text: 'Find the port number (e.g. 3000) and verify the detected project directory name.',
-          },
-          {
-            '@type': 'HowToStep',
-            name: 'Click Kill to free the port',
-            text: 'Click the Kill button to safely terminate the process and immediately free the port.',
-          },
-        ],
-      }
-    : null;
-
+  // Google retired FAQ rich results in May 2026. Keep the FAQ visible without FAQPage/HowTo markup.
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-      />
-      {faqSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-      )}
-      {howToSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
-        />
-      )}
-      <AppDetailView app={app} initialSlug={slug} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }} />
+      {isKill9 ? <Kill9Page app={app} /> : <AppDetailView app={app} initialSlug={slug} />}
     </>
   );
 }
