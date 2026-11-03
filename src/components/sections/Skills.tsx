@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { SkillType } from "@/types";
 
 function Skills() {
@@ -11,20 +11,33 @@ function Skills() {
   useEffect(() => {
     let mounted = true;
     async function fetchSkills() {
-      setLoading(true);
-      const { data, error } = await supabase.from("skills").select("*");
-      if (!mounted) return;
-      if (error) {
-        console.error(error);
-        setError("Failed to load skills.");
-        setSkills([]);
-      } else {
-        const ordered = (data || []).slice().sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-        setSkills(ordered);
+      if (!isSupabaseConfigured) {
+        if (mounted) {
+          setLoading(false);
+          setSkills([]);
+        }
+        return;
       }
-      setLoading(false);
+      setLoading(true);
+      try {
+        const { data, error } = await supabase.from("skills").select("*");
+        if (!mounted) return;
+        if (error) {
+          console.warn("Could not fetch skills:", error.message || error);
+          setSkills([]);
+        } else {
+          const ordered = (data || []).slice().sort((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+          setSkills(ordered);
+        }
+      } catch (err) {
+        if (!mounted) return;
+        console.warn("Network error fetching skills:", err);
+        setSkills([]);
+      } finally {
+        if (mounted) setLoading(false);
+      }
     }
     fetchSkills();
     return () => {

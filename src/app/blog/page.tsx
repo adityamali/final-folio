@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { BlogPost } from '@/types/blog';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -12,19 +12,27 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 
 async function getPosts() {
-    const { data, error } = await supabase
-        .from('posts')
-        .select('*')
-        .eq('published', true)
-        .order('created_at', { ascending: false });
-
-    if (error) {
-        console.error('Error fetching posts:', error);
+    if (!isSupabaseConfigured) {
         return [];
     }
 
-    console.log('Fetched posts:', data);
-    return data as BlogPost[];
+    try {
+        const { data, error } = await supabase
+            .from('posts')
+            .select('*')
+            .eq('published', true)
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.warn('Error fetching posts:', error.message || error);
+            return [];
+        }
+
+        return (data || []) as BlogPost[];
+    } catch (err) {
+        console.warn('Network error fetching posts:', err);
+        return [];
+    }
 }
 
 export default async function BlogPage() {

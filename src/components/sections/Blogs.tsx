@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { BlogType } from "@/types";
 import BlogCard from "../ui/BlogCard";
 
@@ -13,39 +13,55 @@ function Blogs() {
   useEffect(() => {
     let mounted = true;
     async function fetchBlogs() {
-      setLoading(true);
-      const [{ data: internalPosts, error: internalError }, { data: externalBlogs, error: externalError }] = await Promise.all([
-        supabase.from("posts").select("*").eq("published", true),
-        supabase.from("external_blogs").select("*"),
-      ]);
-      if (!mounted) return;
-      if (internalError || externalError) {
-        console.error("Error fetching blogs:", internalError || externalError);
-        setError("Failed to load blogs.");
-        setBlogs([]);
-      } else {
-        // Map internal posts to BlogType
-        const internalBlogsMapped: BlogType[] = (internalPosts || []).map((post) => ({
-          id: post.id,
-          title: post.title,
-          description: post.excerpt || "",
-          image_url: post.cover_image || "/placeholder-blog.jpg", // Fallback image
-          date: post.created_at,
-          type: "internal",
-          slug: post.slug,
-          content: post.content,
-        }));
-
-        const all: BlogType[] = [
-          ...internalBlogsMapped,
-          ...(externalBlogs || []).map((b) => ({ ...b, type: "external" as const })),
-        ];
-        const ordered = all
-          .filter((b) => !!b.date)
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        setBlogs(ordered);
+      if (!isSupabaseConfigured) {
+        if (mounted) {
+          setLoading(false);
+          setBlogs([]);
+        }
+        return;
       }
-      setLoading(false);
+
+      setLoading(true);
+      try {
+        const [{ data: internalPosts, error: internalError }, { data: externalBlogs, error: externalError }] = await Promise.all([
+          supabase.from("posts").select("*").eq("published", true),
+          supabase.from("external_blogs").select("*"),
+        ]);
+        if (!mounted) return;
+        if (internalError || externalError) {
+          console.warn("Could not fetch blogs from Supabase:", (internalError || externalError)?.message);
+          setBlogs([]);
+        } else {
+          // Map internal posts to BlogType
+          const internalBlogsMapped: BlogType[] = (internalPosts || []).map((post) => ({
+            id: post.id,
+            title: post.title,
+            description: post.excerpt || "",
+            image_url: post.cover_image || "/placeholder-blog.jpg", // Fallback image
+            date: post.created_at,
+            type: "internal",
+            slug: post.slug,
+            content: post.content,
+          }));
+
+          const all: BlogType[] = [
+            ...internalBlogsMapped,
+            ...(externalBlogs || []).map((b) => ({ ...b, type: "external" as const })),
+          ];
+          const ordered = all
+            .filter((b) => !!b.date)
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          setBlogs(ordered);
+        }
+      } catch (err) {
+        if (!mounted) return;
+        console.warn("Network error fetching blogs:", err);
+        setBlogs([]);
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
     }
     fetchBlogs();
     return () => {

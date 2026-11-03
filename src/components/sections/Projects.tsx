@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { ProjectType } from "@/types";
 import ProjectCard from "../ui/ProjectCard";
 import { ArrowRight } from "lucide-react";
@@ -15,18 +15,31 @@ function Projects() {
   useEffect(() => {
     let mounted = true;
     async function fetchProjects() {
-      setLoading(true);
-      const { data, error } = await supabase.from("projects").select("*");
-      if (!mounted) return;
-      if (error) {
-        console.error(error);
-        setError("Failed to load projects.");
-        setProjects([]);
-      } else {
-        const ordered = (data || []).slice();
-        setProjects(ordered);
+      if (!isSupabaseConfigured) {
+        if (mounted) {
+          setLoading(false);
+          setProjects([]);
+        }
+        return;
       }
-      setLoading(false);
+      setLoading(true);
+      try {
+        const { data, error } = await supabase.from("projects").select("*");
+        if (!mounted) return;
+        if (error) {
+          console.warn("Could not fetch projects:", error.message || error);
+          setProjects([]);
+        } else {
+          const ordered = (data || []).slice();
+          setProjects(ordered);
+        }
+      } catch (err) {
+        if (!mounted) return;
+        console.warn("Network error fetching projects:", err);
+        setProjects([]);
+      } finally {
+        if (mounted) setLoading(false);
+      }
     }
     fetchProjects();
     return () => {
