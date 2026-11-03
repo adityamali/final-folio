@@ -1,5 +1,6 @@
 export interface Software {
   id: string;
+  slug: string;
   name: string;
   tagline: string;
   description: string;

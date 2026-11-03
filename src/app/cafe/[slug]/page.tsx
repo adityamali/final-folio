@@ -27,11 +27,14 @@ export default function AppDetailPage() {
   useEffect(() => {
     async function fetchApp() {
       setIsLoading(true);
-      console.log('Slug:', params.slug); // Debug: Check slug value
       const data = await getSoftwareById(params.slug as string);
-      console.log('Fetched data:', data); // Debug: Check returned data
       setApp(data);
       setIsLoading(false);
+
+      // If visited via UUID, update address bar to clean slug without reloading
+      if (data && data.slug && params.slug !== data.slug && typeof window !== 'undefined') {
+        window.history.replaceState(null, '', `/cafe/${data.slug}`);
+      }
     }
     fetchApp();
   }, [params.slug]);

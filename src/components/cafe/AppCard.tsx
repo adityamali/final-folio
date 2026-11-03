@@ -25,7 +25,7 @@ export default function AppCard({ app, index, featured = false }: AppCardProps) 
   };
 
   return (
-    <Link href={`/cafe/${app.id}`}>
+    <Link href={`/cafe/${app.slug || app.id}`}>
       <motion.article
         variants={cardVariants}
         initial="hidden"

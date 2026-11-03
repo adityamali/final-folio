@@ -16,7 +16,7 @@ export default function FeaturedHeroCard({ app, index, size = 'large' }: Feature
   const isLarge = size === 'large';
   
   return (
-    <Link href={`/cafe/${app.id}`} className={`group block ${isLarge ? 'col-span-2' : ''}`}>
+    <Link href={`/cafe/${app.slug || app.id}`} className={`group block ${isLarge ? 'col-span-2' : ''}`}>
       <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

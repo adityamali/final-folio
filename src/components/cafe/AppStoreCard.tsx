@@ -21,7 +21,7 @@ export default function AppStoreCard({ app, index }: AppStoreCardProps) {
       className="flex-shrink-0 w-[240px] md:w-[280px]"
     >
       <Link
-        href={`/cafe/${app.id}`}
+        href={`/cafe/${app.slug || app.id}`}
         className="flex flex-col group bg-cream border-2 md:border-4 border-charcoal shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-[4px_4px_0px_0px_#2D2D2D] hover:shadow-[4px_4px_0px_0px_#E05228] md:hover:shadow-[6px_6px_0px_0px_#E05228] hover:-translate-y-1 transition-all duration-300"
       >
         {/* App Icon with Overlay */}

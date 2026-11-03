@@ -24,16 +24,25 @@ export async function getAllSoftware(): Promise<Software[]> {
 }
 
 /**
+ * Convert app name to clean URL slug (e.g. 'Kill9' -> 'kill9', 'Viora - VS Code Theme' -> 'viora')
+ */
+export function slugify(text: string): string {
+  const primary = (text || '').split(/[-–—:]/)[0].trim();
+  const slug = primary.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return slug || (text || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+/**
  * Fetch software by ID or slug from Supabase
  */
-export async function getSoftwareById(id: string): Promise<Software | null> {
-  const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
+export async function getSoftwareById(idOrSlug: string): Promise<Software | null> {
+  const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idOrSlug);
   try {
     if (isUUID) {
       const { data, error } = await supabase
         .from('software_full')
         .select('*')
-        .eq('id', id)
+        .eq('id', idOrSlug)
         .single();
 
       if (!error && data) {
@@ -41,18 +50,27 @@ export async function getSoftwareById(id: string): Promise<Software | null> {
       }
     }
 
-    // Fallback to name search for human-readable slugs like /cafe/kill9, /cafe/macapult, /cafe/viora
+    // Try name match directly or by prefix (e.g. /cafe/kill9, /cafe/macapult, /cafe/viora)
+    const cleanSlug = idOrSlug.toLowerCase().trim();
+    const prefix = cleanSlug.split('-')[0];
+
     const { data: byName, error: nameError } = await supabase
       .from('software_full')
       .select('*')
-      .ilike('name', `${id}%`)
-      .limit(1);
+      .or(`name.ilike.${cleanSlug}%,name.ilike.${prefix}%`)
+      .limit(5);
 
     if (!nameError && byName && byName.length > 0) {
-      return mapSupabaseSoftware(byName[0]);
+      // Find closest slug match
+      const matched = byName.find((item: any) => {
+        const itemSlug = item.slug || slugify(item.name);
+        return itemSlug === cleanSlug || item.name.toLowerCase().startsWith(cleanSlug);
+      }) || byName[0];
+
+      return mapSupabaseSoftware(matched);
     }
   } catch (err) {
-    console.error('Error fetching software by ID:', err);
+    console.error('Error fetching software by ID or slug:', err);
   }
 
   return null;
@@ -114,8 +132,11 @@ function mapSupabaseSoftware(data: any): Software {
     icon = icon.replace('Kill9/kill9.png', 'Kill9/kill9_icon.png');
   }
 
+  const slug = data.slug || slugify(data.name || '');
+
   return {
     id: data.id,
+    slug,
     name: data.name,
     tagline: data.tagline,
     description: data.description,
