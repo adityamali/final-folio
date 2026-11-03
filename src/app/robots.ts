@@ -26,7 +26,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin', '/admin/*'],
       },
     ],
-    sitemap: 'https://adityamali.com/sitemap.xml',
+    sitemap: 'https://www.adityamali.com/sitemap.xml',
   };
 }
 

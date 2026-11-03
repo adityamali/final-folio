@@ -5,7 +5,7 @@ import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 export const revalidate = 3600; // Revalidate every hour
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://adityamali.com';
+  const baseUrl = 'https://www.adityamali.com';
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -22,9 +22,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/cafe/kill9`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1.0, // High priority for Kill9 port-killing authority
+      changeFrequency: 'monthly',
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/about`,
@@ -54,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/cafe/${app.slug || app.id}`,
       lastModified: app.releaseDate ? new Date(app.releaseDate) : new Date(),
       changeFrequency: 'weekly',
-      priority: app.name.toLowerCase() === 'kill9' ? 1.0 : 0.85,
+      priority: 0.85,
     }));
   } catch (err) {
     console.warn('Error generating software sitemap:', err);
@@ -83,7 +82,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   // Deduplicate routes by URL
-  const allRoutes = [...staticRoutes, ...softwareRoutes, ...blogRoutes];
+  // Keep the explicit Kill9 entry; a binary release date is not the page modification date.
+  const allRoutes = [...softwareRoutes, ...staticRoutes, ...blogRoutes];
   const uniqueRoutesMap = new Map<string, (typeof allRoutes)[0]>();
   for (const route of allRoutes) {
     uniqueRoutesMap.set(route.url, route);

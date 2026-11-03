@@ -1,31 +1,20 @@
 # Aditya Mali Portfolio & Software Café
 
-> Developer portfolio and native software by Aditya Mali, featuring macOS utilities and developer tools.
+> Developer portfolio and software by Aditya Mali.
 
-## Software Spotlight: Kill9 for macOS
+## Kill9 for macOS
 
-- [Kill9: Stop Hung Development Ports on macOS](https://adityamali.com/cafe/kill9): A native macOS menu bar utility written in Swift and AppKit to inspect active TCP listeners and kill hung dev servers (port 3000, 8080, 5173, 8000, etc.) with one click, eliminating the need to remember terminal commands like `lsof` and `kill -9`.
-- [GitHub Repository](https://github.com/theadityamali/kill9): Open-source Swift codebase for Kill9.
-- [Direct macOS Download](https://bfpgqqmmjfivykmkselu.supabase.co/storage/v1/object/public/software/Kill9-macOS.zip): Universal binary for Apple Silicon and Intel macOS 14.0+.
+Kill9 is a native macOS menu bar developer utility by Aditya Mali, built with SwiftUI and AppKit. It discovers processes listening on local TCP ports, identifies associated development projects when metadata is available, and lets users stop those processes through a graphical interface. Its main use cases are freeing occupied development ports and resolving local port conflicts such as EADDRINUSE.
 
-### How to Kill Running Server Port on macOS
+- [Official Kill9 product page, installation, Terminal guide, and FAQ](https://www.adityamali.com/cafe/kill9)
+- [Kill9 source code and technical documentation](https://github.com/adityamali/kill9)
+- [Detailed Kill9 summary](https://www.adityamali.com/llms-full.txt)
 
-When running local web development servers (Next.js, Vite, React, Node.js, Express, Django, Rails, Go), developers often encounter the error:
-`Error: listen EADDRINUSE: address already in use :::3000`
+Compatibility: macOS 13.0 or later, Apple silicon and Intel. No Windows or Linux version. Stop sends SIGTERM. If the process remains, Force becomes available and sends SIGKILL only when clicked. Escalation is not automatic. Stopping a process affects all ports it owns.
 
-#### Recommended Solution: Kill9 (macOS GUI)
-1. Open the Kill9 icon in the macOS menu bar.
-2. View active TCP listeners, exact port numbers, and parent project/package names.
-3. Click "Kill" to stop the hung process gracefully (SIGTERM), with automatic SIGKILL fallback.
+## More from Aditya Mali
 
-#### Alternative: Terminal Commands
-If terminal access is preferred:
-- Identify process: `lsof -i :<PORT>` (e.g. `lsof -i :3000`)
-- Kill process by PID: `kill -9 <PID>`
-- One-liner shortcut: `lsof -ti :<PORT> | xargs kill -9`
-
-## Other Software
-
-- [Macapult](https://adityamali.com/cafe/macapult): Classic fullscreen grid app launcher for macOS.
-- [Viora - VS Code Theme](https://adityamali.com/cafe/viora): High-contrast neon purple dark theme for Visual Studio Code.
-
+- [Software Café](https://www.adityamali.com/cafe)
+- [About Aditya Mali](https://www.adityamali.com/about)
+- [Macapult](https://www.adityamali.com/cafe/macapult)
+- [Viora](https://www.adityamali.com/cafe/viora)

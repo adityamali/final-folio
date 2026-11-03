@@ -1,47 +1,36 @@
-# Kill9: Native macOS Developer Port Killer Utility
+# Kill9 by Aditya Mali
 
-Kill9 is a free, open-source macOS menu bar utility built in Swift and AppKit. It solves the common developer problem of hung development server ports (such as port 3000, 8080, 5173, 8000, 4200, 80) and `EADDRINUSE: address already in use` errors without requiring users to memorize terminal commands.
+Official product page: https://www.adityamali.com/cafe/kill9
+Developer: Aditya Mali — https://www.adityamali.com/about
+Source code: https://github.com/adityamali/kill9
+Category: macOS developer utility
+Platform: macOS 13.0 or later, Apple silicon and Intel
+Technologies: SwiftUI and AppKit
 
-## Key Features
+Kill9 is a native macOS menu bar utility that finds processes listening on local TCP ports, identifies associated development projects when metadata is available, and lets users stop those processes through a graphical interface. It helps developers free occupied localhost ports and investigate EADDRINUSE errors without typing Terminal commands.
 
-- **No Idle Polling:** Zero CPU overhead. Only inspects TCP socket tables when the menu bar item is clicked.
-- **Smart Project Discovery:** Reads surrounding directory information to display the project name and package.json name next to the port number.
-- **Two-Step Safe Process Termination:** Sends a graceful `SIGTERM` first, followed by `SIGKILL` (kill -9) only if the process refuses to exit within a timeout.
-- **Configurable Port Filters:** Whitelist or blacklist specific port ranges.
-- **Native macOS Performance:** Written in Swift 5.9+, runs natively on Apple Silicon (M1/M2/M3/M4) and Intel Macs on macOS 14 Sonoma and macOS 15 Sequoia.
+## How it works
 
-## Comparison: Kill9 vs Terminal Commands
+Open the KILL9 menu bar panel to inspect detected development listeners. Check the port, runtime, PID, and project information before stopping a process. Kill9 uses lsof to inspect TCP listeners. Automatic discovery focuses on development servers owned by the current user. UDP and non-listening TCP connections are outside this workflow. Port inclusion and exclusion filters customize discovery.
 
-| Feature | Kill9 (GUI) | Terminal (`lsof + kill`) |
-| :--- | :--- | :--- |
-| **Command required** | None (1-click from menu bar) | `lsof -ti :3000 \| xargs kill -9` |
-| **Project Name Resolution** | Automatically shows project name | Shows only raw binary (e.g. `node`) |
-| **Safety** | Graceful SIGTERM with SIGKILL fallback | Immediate forceful SIGKILL |
-| **Multiple Ports** | Visual list with one-click kill | Multiple manual commands required |
-| **Speed** | Instant | Requires opening terminal, typing command |
+Project identification uses working-directory and project metadata. A package.json name is used when available, with project-folder inference as a fallback. Not every process can be associated with a project.
 
-## How to Kill a Port on macOS
+Stop sends SIGTERM, allowing an opportunity for graceful shutdown. If the same process remains after refresh, Force becomes available. It sends SIGKILL only when explicitly clicked. Escalation is not automatic. Kill9 checks ownership and process start time before signaling. It does not stop processes owned by other users. Stopping a process affects every port it owns, and a supervisor may restart it.
 
-### Method 1: Using Kill9 (Fastest & Safest)
-Download Kill9 from https://adityamali.com/cafe/kill9. Launch the app to access the menu bar icon. Whenever a port is blocked, click the menu bar item, find the port, and click "Kill".
+## Installation
 
-### Method 2: Using the macOS Terminal
-1. Find the Process ID (PID) holding the port:
-   `lsof -i :3000`
-2. Terminate the process:
-   `kill -9 <PID>`
-3. One-line command:
-   `lsof -ti :3000 | xargs kill -9`
+Use the download link on the official product page. Extract the ZIP, move Kill9.app to Applications, and open it. Kill9 appears in the menu bar rather than a conventional app window or Dock icon. The current app requires macOS 13.0 or later and supports Apple silicon and Intel Macs. There is no Windows or Linux version.
 
-## Common Errors Solved
-- `Error: listen EADDRINUSE: address already in use :::3000`
-- `Port 5173 is in use, trying another one...`
-- `Address already in use - bind(2) for "127.0.0.1" port 8080`
-- `Failed to bind to 0.0.0.0:8000`
+## macOS Terminal alternative
 
-## Author & Project Information
-- Creator: Aditya Mali (https://adityamali.com)
-- Official Page: https://adityamali.com/cafe/kill9
-- Source Code: https://github.com/theadityamali/kill9
-- License: Open Source (MIT)
+Inspect port 3000:
+    lsof -nP -iTCP:3000 -sTCP:LISTEN
 
+Check the command and PID, then request shutdown of the verified process:
+    kill -TERM <PID>
+
+Replace <PID> with the numeric process ID. Inspect the port again. Use kill -KILL <PID> (kill -9) only for an unresponsive, verified process when forced termination is appropriate. Forced termination does not allow cleanup. Substitute 8080, 5173, or another TCP port number as needed.
+
+EADDRINUSE means the requested address and port are already in use. The existing service may be functioning normally. Stop it only if appropriate, or configure the new server to use another port.
+
+For installation links, FAQs, and current product information, use the official product page.
