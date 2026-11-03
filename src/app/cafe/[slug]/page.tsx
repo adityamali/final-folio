@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { useParams, useRouter } from 'next/navigation';
 import { getSoftwareById } from '@/lib/software';
-import { ArrowLeft, Download, ExternalLink, Github } from 'lucide-react';
+import { ArrowLeft, Download, ExternalLink, Github, Coffee } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Software } from '@/types/software';
@@ -37,11 +37,6 @@ export default function AppDetailPage() {
   }, [params.slug]);
 
   const [selectedImage, setSelectedImage] = useState(0);
-  const screenshots = app?.images.map((url, index) => ({
-    id: index,
-    url,
-    title: `${app?.name} Screenshot ${index + 1}`,
-  })) || [];
 
   // Show loading state while fetching
   if (isLoading) {
@@ -71,6 +66,22 @@ export default function AppDetailPage() {
     );
   }
 
+  const isImageIcon = Boolean(app.icon && (app.icon.startsWith('/') || app.icon.startsWith('http')));
+  const screenshots = (app.images && app.images.length > 0)
+    ? app.images.map((url, index) => ({
+        id: index,
+        url,
+        title: `${app.name} Screenshot ${index + 1}`,
+      }))
+    : [
+        {
+          id: 0,
+          url: isImageIcon ? app.icon : '/placeholder-app.jpg',
+          title: `${app.name} Preview`,
+        },
+      ];
+  const activeScreenshot = screenshots[selectedImage] || screenshots[0];
+
   return (
     <div className="min-h-screen bg-cream text-charcoal">
 
@@ -99,9 +110,24 @@ export default function AppDetailPage() {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-8xl md:text-9xl"
+              className="shrink-0"
             >
-              <Image src={app.icon} alt={`${app.name} Icon`} width={150} height={150} />
+              {isImageIcon ? (
+                <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl md:rounded-3xl border-4 border-charcoal shadow-retro bg-cream flex items-center justify-center p-3 overflow-hidden">
+                  <Image
+                    src={app.icon}
+                    alt={`${app.name} Icon`}
+                    width={140}
+                    height={140}
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
+              ) : (
+                <div className="text-8xl md:text-9xl">
+                  {app.icon}
+                </div>
+              )}
             </motion.div>
 
             {/* Info */}
@@ -136,6 +162,21 @@ export default function AppDetailPage() {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4">
+                {/* Buy Me A Coffee Button */}
+                {app.buyMeACoffeeUrl && (
+                  <motion.a
+                    href={app.buyMeACoffeeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="px-8 py-4 font-display uppercase bg-[#FFDD00] text-charcoal hover:bg-[#FFDD00]/90 flex items-center gap-2 border-2 md:border-4 border-charcoal shadow-retro hover:shadow-[6px_6px_0px_0px_#2D2D2D] transition-all"
+                  >
+                    <Coffee className="w-5 h-5 text-charcoal" strokeWidth={2.5} />
+                    Buy Me A Coffee
+                  </motion.a>
+                )}
+
                 {app.downloadUrl && (
                   <motion.a
                     href={app.downloadUrl}
@@ -165,6 +206,8 @@ export default function AppDetailPage() {
                 {app.githubUrl && (
                   <motion.a
                     href={app.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="px-8 py-4 font-display uppercase border-4 border-charcoal text-charcoal hover:bg-charcoal hover:text-cream flex items-center gap-2 bg-cream shadow-retro transition-all"
@@ -217,41 +260,43 @@ export default function AppDetailPage() {
             transition={{ duration: 0.3 }}
           >
             <Image
-              src={screenshots[selectedImage].url}
-              alt={screenshots[selectedImage].title}
+              src={activeScreenshot.url}
+              alt={activeScreenshot.title}
               fill
               className="object-cover"
               unoptimized
             />
             <div className="absolute bottom-0 left-0 right-0 bg-charcoal/80 backdrop-blur-sm p-4 border-t-2 border-cream">
-              <p className="font-display uppercase text-cream">{screenshots[selectedImage].title}</p>
+              <p className="font-display uppercase text-cream">{activeScreenshot.title}</p>
             </div>
           </motion.div>
 
           {/* Thumbnail Navigation */}
-          <div className="grid grid-cols-4 gap-4">
-            {screenshots.map((screenshot, index) => (
-              <motion.button
-                key={screenshot.id}
-                onClick={() => setSelectedImage(index)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`relative aspect-video border-4 transition-all ${
-                  selectedImage === index 
-                    ? 'border-orange shadow-retro' 
-                    : 'border-charcoal hover:border-teal'
-                }`}
-              >
-                <Image
-                  src={screenshot.url}
-                  alt={screenshot.title}
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              </motion.button>
-            ))}
-          </div>
+          {screenshots.length > 1 && (
+            <div className="grid grid-cols-4 gap-4">
+              {screenshots.map((screenshot, index) => (
+                <motion.button
+                  key={screenshot.id}
+                  onClick={() => setSelectedImage(index)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`relative aspect-video border-4 transition-all ${
+                    selectedImage === index 
+                      ? 'border-orange shadow-retro' 
+                      : 'border-charcoal hover:border-teal'
+                  }`}
+                >
+                  <Image
+                    src={screenshot.url}
+                    alt={screenshot.title}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                </motion.button>
+              ))}
+            </div>
+          )}
         </motion.section>
 
         {/* Features */}
