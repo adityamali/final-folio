@@ -57,9 +57,9 @@ export function Sidebar() {
                 {/* Header / Brand */}
                 <div className="p-6 md:p-8 border-b-4 border-cream/20">
                     <Link href="/" className="block" onClick={() => setIsOpen(false)}>
-                        <h1 className="font-display text-4xl md:text-5xl uppercase leading-none tracking-tighter text-orange drop-shadow-md">
+                        <p className="font-display text-4xl md:text-5xl uppercase leading-none tracking-tighter text-orange drop-shadow-md">
                             Aditya<br/>Mali
-                        </h1>
+                        </p>
                         <p className="font-accent text-teal text-base md:text-lg mt-2 -rotate-2">
                             Developer & Designer
                         </p>

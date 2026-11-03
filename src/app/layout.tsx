@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Anton, DM_Sans, Permanent_Marker } from "next/font/google";
 import CommandBar from "@/components/ui/CommandBar";
@@ -27,6 +27,7 @@ const permanentMarker = Permanent_Marker({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.adityamali.com'),
   title: {
     default: "Aditya Mali - Full Stack Developer",
     template: "%s | Aditya Mali",
@@ -38,12 +39,6 @@ export const metadata: Metadata = {
   creator: "Aditya Mali",
   publisher: "Aditya Mali",
   robots: "index, follow",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -71,6 +66,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -79,6 +81,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${anton.variable} ${dmSans.variable} ${permanentMarker.variable}`}>
       <body className="antialiased bg-cream text-charcoal selection:bg-orange selection:text-cream overflow-hidden">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          '@id': 'https://www.adityamali.com/#website',
+          url: 'https://www.adityamali.com',
+          name: 'Aditya Mali',
+          inLanguage: 'en',
+          publisher: { '@type': 'Person', '@id': 'https://www.adityamali.com/#person', name: 'Aditya Mali', url: 'https://www.adityamali.com' },
+        }) }} />
         <ThemeProvider>
           <div className="flex h-[calc(100vh-1rem)] md:h-[calc(100vh-2rem)] border-4 md:border-8 border-charcoal m-2 md:m-4 relative shadow-[4px_4px_0px_0px_#2D2D2D] md:shadow-retro-lg text-charcoal bg-cream">
             <Sidebar />
