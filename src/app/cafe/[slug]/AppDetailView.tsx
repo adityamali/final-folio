@@ -24,6 +24,7 @@ interface AppDetailViewProps {
 export default function AppDetailView({ app, initialSlug }: AppDetailViewProps) {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(0);
+  const coffeeUrl = app.buyMeACoffeeUrl || (app.name?.toLowerCase().includes('kill9') ? 'https://buymeacoffee.com/theadityamali/e/594278' : undefined);
 
   // If visited via UUID, update address bar to clean slug without reloading
   useEffect(() => {
@@ -128,9 +129,9 @@ export default function AppDetailView({ app, initialSlug }: AppDetailViewProps) 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4">
                 {/* Buy Me A Coffee Button */}
-                {app.buyMeACoffeeUrl && (
+                {coffeeUrl && (
                   <motion.a
-                    href={app.buyMeACoffeeUrl}
+                    href={coffeeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}

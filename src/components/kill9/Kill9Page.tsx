@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Download, Github, ArrowLeft } from 'lucide-react';
+import { Download, Github, ArrowLeft, Coffee } from 'lucide-react';
 import { Software } from '@/types/software';
 import { kill9, kill9Faqs } from '@/lib/kill9';
 
@@ -11,6 +11,7 @@ const button = 'inline-flex items-center justify-center gap-2 border-2 border-ch
 // Server-rendered product information stays readable with JavaScript disabled.
 export default function Kill9Page({ app }: { app: Software }) {
   const screenshots = app.images.filter((url) => url !== app.icon && !/kill9_icon|placeholder-app/.test(url));
+  const coffeeUrl = app.buyMeACoffeeUrl || kill9.buyMeACoffeeUrl;
 
   return (
     <article className="min-h-screen bg-cream text-charcoal">
@@ -27,8 +28,19 @@ export default function Kill9Page({ app }: { app: Software }) {
               <h1 className="font-display text-5xl md:text-6xl uppercase text-orange drop-shadow-md mb-4">Kill9 for macOS</h1>
               <p className="font-accent text-2xl text-teal mb-6 -rotate-1">Find the port. Know the project. Stop the process.</p>
               <div className="flex flex-wrap gap-4 mb-4">
+                {coffeeUrl && (
+                  <a
+                    href={coffeeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${button} bg-[#FFDD00] text-charcoal hover:bg-[#FFDD00]/90`}
+                  >
+                    <Coffee aria-hidden="true" className="w-5 h-5 text-charcoal" strokeWidth={2.5} />
+                    Buy Me A Coffee
+                  </a>
+                )}
                 {app.downloadUrl && <a href={app.downloadUrl} className={`${button} bg-orange text-charcoal hover:bg-mustard`}><Download aria-hidden="true" className="w-5 h-5" /> Download Kill9 for macOS</a>}
-                <a href={kill9.sourceUrl} className={`${button} hover:bg-mustard`}><Github aria-hidden="true" className="w-5 h-5" /> View source on GitHub</a>
+                <a href={kill9.sourceUrl} target="_blank" rel="noopener noreferrer" className={`${button} hover:bg-mustard`}><Github aria-hidden="true" className="w-5 h-5" /> View source on GitHub</a>
               </div>
               <p className="text-sm font-medium mb-6">macOS 13.0 or later · Apple silicon and Intel · ZIP download</p>
               <p className="text-lg font-medium leading-relaxed mb-6 border-l-4 border-mustard pl-4">{kill9.summary}</p>
@@ -100,8 +112,29 @@ export default function Kill9Page({ app }: { app: Software }) {
         <footer className="border-4 border-charcoal p-6 md:p-8 shadow-retro bg-mustard">
           <h2 className="font-display text-3xl uppercase mb-4">Get back to building</h2>
           <p className="mb-6 text-lg">Inspect occupied development ports from your macOS menu bar.</p>
-          {app.downloadUrl && <a href={app.downloadUrl} className={`${button} bg-cream hover:bg-orange`}><Download aria-hidden="true" className="w-5 h-5" /> Download Kill9 for macOS</a>}
-          <p className="mt-6">Built by <Link href="/about" className="underline font-bold">Aditya Mali</Link>. Explore more tools in <Link href="/cafe" className="underline font-bold">Software Café</Link>.{app.buyMeACoffeeUrl && <> <a href={app.buyMeACoffeeUrl} className="underline font-bold">Support the developer</a>.</>}</p>
+          <div className="flex flex-wrap gap-4 mb-6">
+            {coffeeUrl && (
+              <a
+                href={coffeeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${button} bg-[#FFDD00] text-charcoal hover:bg-[#FFDD00]/90`}
+              >
+                <Coffee aria-hidden="true" className="w-5 h-5 text-charcoal" strokeWidth={2.5} />
+                Buy Me A Coffee
+              </a>
+            )}
+            {app.downloadUrl && (
+              <a
+                href={app.downloadUrl}
+                className={`${button} bg-cream hover:bg-orange`}
+              >
+                <Download aria-hidden="true" className="w-5 h-5" />
+                Download Kill9 for macOS
+              </a>
+            )}
+          </div>
+          <p className="mt-6">Built by <Link href="/about" className="underline font-bold">Aditya Mali</Link>. Explore more tools in <Link href="/cafe" className="underline font-bold">Software Café</Link>.{coffeeUrl && <> <a href={coffeeUrl} target="_blank" rel="noopener noreferrer" className="underline font-bold">Support the developer</a>.</>}</p>
         </footer>
       </div>
     </article>

@@ -6,6 +6,7 @@ export const kill9 = {
   url: 'https://www.adityamali.com/cafe/kill9',
   developerUrl: 'https://www.adityamali.com',
   sourceUrl: 'https://github.com/adityamali/kill9',
+  buyMeACoffeeUrl: 'https://buymeacoffee.com/theadityamali/e/594278',
   operatingSystem: 'macOS 13.0 or later',
   features: [
     'Inspect local TCP listeners from the macOS menu bar.',
