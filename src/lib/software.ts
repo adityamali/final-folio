@@ -108,12 +108,18 @@ export async function getSoftwareByCategory(category: string): Promise<Software[
  * Map Supabase data to Software type
  */
 function mapSupabaseSoftware(data: any): Software {
+  let icon = data.icon;
+  // Fallback if Kill9 icon in Supabase is set to kill9.png instead of kill9_icon.png
+  if (icon && typeof icon === 'string' && icon.includes('Kill9/kill9.png')) {
+    icon = icon.replace('Kill9/kill9.png', 'Kill9/kill9_icon.png');
+  }
+
   return {
     id: data.id,
     name: data.name,
     tagline: data.tagline,
     description: data.description,
-    icon: data.icon,
+    icon: icon,
     category: data.category,
     price: parseFloat(data.price) || 0,
     images: Array.isArray(data.images) ? data.images : [],

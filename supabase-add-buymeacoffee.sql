@@ -10,7 +10,11 @@ ADD COLUMN IF NOT EXISTS buymeacoffee_url TEXT;
 
 COMMENT ON COLUMN public.software.buymeacoffee_url IS 'Buy Me a Coffee or sponsor link for the software product';
 
--- 2. (Optional) Set the Kill9 Buy Me A Coffee URL
+-- 2. Fix Kill9 icon filename (Storage has kill9_icon.png) and set Buy Me a Coffee URL
+UPDATE public.software
+SET icon = 'https://bfpgqqmmjfivykmkselu.supabase.co/storage/v1/object/public/software_images/Kill9/kill9_icon.png'
+WHERE name ILIKE 'kill9%' AND (icon LIKE '%kill9.png' OR icon IS NULL);
+
 UPDATE public.software
 SET buymeacoffee_url = 'https://buymeacoffee.com/theadityamali/e/594278'
 WHERE name ILIKE 'kill9%' AND buymeacoffee_url IS NULL;
