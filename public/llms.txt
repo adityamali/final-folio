@@ -28,3 +28,4 @@ If terminal access is preferred:
 
 - [Macapult](https://adityamali.com/cafe/macapult): Classic fullscreen grid app launcher for macOS.
 - [Viora - VS Code Theme](https://adityamali.com/cafe/viora): High-contrast neon purple dark theme for Visual Studio Code.
+

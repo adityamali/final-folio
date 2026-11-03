@@ -29,3 +29,4 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: 'https://adityamali.com/sitemap.xml',
   };
 }
+
