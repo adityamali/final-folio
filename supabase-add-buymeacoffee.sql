@@ -19,8 +19,11 @@ UPDATE public.software
 SET buymeacoffee_url = 'https://buymeacoffee.com/theadityamali/e/594278'
 WHERE name ILIKE 'kill9%' AND buymeacoffee_url IS NULL;
 
--- 3. Recreate the software_full view to include buymeacoffee_url
-CREATE OR REPLACE VIEW public.software_full AS
+-- 3. Drop existing view and recreate it with the new column
+-- (PostgreSQL does not allow inserting columns into the middle of an existing view with CREATE OR REPLACE)
+DROP VIEW IF EXISTS public.software_full CASCADE;
+
+CREATE VIEW public.software_full AS
 SELECT
   s.id,
   s.name,
