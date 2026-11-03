@@ -5,7 +5,6 @@ import { Software } from "@/types/software";
 import Link from "next/link";
 import Image from "next/image";
 import { Star, Download } from "lucide-react";
-import { a } from "framer-motion/client";
 
 interface AppStoreCardProps {
   app: Software;
@@ -29,13 +28,20 @@ export default function AppStoreCard({ app, index }: AppStoreCardProps) {
         <div className="relative bg-gradient-to-br from-cream to-cream/80 p-6 md:p-8 flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 bg-orange/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           
-          <Image
-            src={app.icon}
-            alt={`${app.name} icon`}
-            width={96}
-            height={96}
-            className="relative z-10 group-hover:scale-110 transition-transform duration-300"
-          />
+          {app.icon && (app.icon.startsWith('/') || app.icon.startsWith('http')) ? (
+            <Image
+              src={app.icon}
+              alt={`${app.name} icon`}
+              width={96}
+              height={96}
+              className="relative z-10 group-hover:scale-110 transition-transform duration-300 object-contain"
+              unoptimized
+            />
+          ) : (
+            <span className="text-6xl md:text-7xl relative z-10 group-hover:scale-110 transition-transform duration-300">
+              {app.icon}
+            </span>
+          )}
 
           {/* Rating Badge */}
           <div className="absolute top-3 right-3 flex items-center gap-1 md:gap-1.5 bg-teal backdrop-blur-sm border-2 border-charcoal px-2 py-0.5 md:px-2.5 md:py-1 shadow-[2px_2px_0px_0px_#2D2D2D]">
@@ -59,7 +65,9 @@ export default function AppStoreCard({ app, index }: AppStoreCardProps) {
           <div className="flex items-center justify-between pt-2 border-t-2 border-charcoal/10">
             <div className="flex items-center gap-1.5 text-charcoal/60">
               <Download className="w-3.5 h-3.5" strokeWidth={2.5} />
-              <span className="text-xs font-bold uppercase">{app.download_size}</span>
+              <span className="text-xs font-bold uppercase">
+                {app.download_size || (app.platforms && app.platforms.length > 0 ? app.platforms[0] : 'Free')}
+              </span>
             </div>
             <motion.button
               whileHover={{ scale: 1.05 }}

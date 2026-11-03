@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Software } from '@/types/software';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface AppCardProps {
   app: Software;
@@ -53,9 +54,21 @@ export default function AppCard({ app, index, featured = false }: AppCardProps) 
             {/* Icon */}
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
-              className={`${featured ? 'text-6xl md:text-8xl' : 'text-5xl md:text-6xl'}`}
+              className={`${featured ? 'text-6xl md:text-8xl' : 'text-5xl md:text-6xl'} shrink-0`}
             >
-              {app.icon}
+              {app.icon && (app.icon.startsWith('/') || app.icon.startsWith('http')) ? (
+                <div className={`relative ${featured ? 'w-16 h-16 md:w-20 md:h-20' : 'w-12 h-12 md:w-14 md:h-14'} rounded-xl overflow-hidden border-2 border-charcoal bg-cream p-1.5 shadow-[2px_2px_0px_0px_#2D2D2D]`}>
+                  <Image
+                    src={app.icon}
+                    alt={app.name}
+                    fill
+                    className="object-contain p-1"
+                    unoptimized
+                  />
+                </div>
+              ) : (
+                <span>{app.icon}</span>
+              )}
             </motion.div>
             
             {/* Price Badge */}

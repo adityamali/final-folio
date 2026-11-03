@@ -29,14 +29,17 @@ export default function FeaturedHeroCard({ app, index, size = 'large' }: Feature
       }}
       >
       {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image 
-        src={app.images[0]} 
-        alt={`${app.name} screenshot`} 
-        fill 
-        className="object-fill group-hover:opacity-40 transition-opacity duration-500"
-        />
-      </div>
+      {app.images && app.images.length > 0 && app.images[0] && (
+        <div className="absolute inset-0">
+          <Image 
+          src={app.images[0]} 
+          alt={`${app.name} screenshot`} 
+          fill 
+          className="object-cover group-hover:opacity-40 transition-opacity duration-500"
+          unoptimized
+          />
+        </div>
+      )}
       
       {/* Background Gradient Overlay */}
       <div 
@@ -69,7 +72,11 @@ export default function FeaturedHeroCard({ app, index, size = 'large' }: Feature
         <div className="flex flex-col sm:flex-row items-start gap-3 bg-cream border-2 border-charcoal p-3 shadow-[2px_2px_0px_0px_#2D2D2D] md:shadow-retro">
           <div className="w-10 h-10 md:w-12 md:h-12 border-2 border-charcoal flex items-center justify-center text-xl md:text-2xl flex-shrink-0"
           style={{ backgroundColor: `${app.color}40` }}>
-          <Image src={app.icon} alt={`${app.name} icon`} width={32} height={32} />
+            {app.icon && (app.icon.startsWith('/') || app.icon.startsWith('http')) ? (
+              <Image src={app.icon} alt={`${app.name} icon`} width={32} height={32} className="object-contain" unoptimized />
+            ) : (
+              <span>{app.icon}</span>
+            )}
           </div>
           <div className="flex-1 min-w-0">
           <p className="text-charcoal font-display uppercase text-sm md:text-lg mb-1">

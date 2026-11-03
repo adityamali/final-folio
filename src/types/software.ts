@@ -11,6 +11,7 @@ export interface Software {
   downloadUrl?: string;
   demoUrl?: string;
   githubUrl?: string;
+  buyMeACoffeeUrl?: string;
   version: string;
   releaseDate: string;
   platforms: ('web' | 'mac' | 'windows' | 'linux' | 'ios' | 'android')[];

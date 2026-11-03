@@ -84,7 +84,7 @@ interface Software {
 ## Customization
 
 ### Adding New Apps
-Edit the `softwareData` array in `src/app/cafe/page.tsx`:
+Add software entries directly in your Supabase `software` table (along with `software_platforms`, `software_features`, `software_images`, and `software_tags`). The `software_full` view automatically aggregates and serves the published apps to the Software Café.
 
 ```typescript
 {
